@@ -38,6 +38,18 @@
         }
         .screen { display: none; }
         .screen.active { display: flex; }
+        .avatar-circle {
+            width: 64px;
+            height: 64px;
+            background-color: #fdfbf7;
+            border: 2.5px solid #5c4738;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 2px 2px 0px rgba(92, 71, 56, 0.2);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-3">
@@ -73,62 +85,61 @@
             </div>
         </div>
 
-        <!-- MÀN HÌNH GAMEPLAY TRONG NHÀ (THIẾT KẾ CĂN PHÒNG & NHÂN VẬT) -->
+        <!-- MÀN HÌNH GAMEPLAY CHÍNH -->
         <div id="screen-game" class="screen flex-col items-center w-full space-y-3">
             
+            <!-- HEADER TRONG GAME -->
             <div class="w-full flex justify-between items-center bg-[#f2ecdc] px-3 py-2 rounded-xl border border-[#c4b59d] text-xs font-bold">
-                <button onclick="switchScreen('screen-menu')" class="vintage-btn px-2 py-1 rounded-lg bg-[#e6dfcd]">🏠 Menu</button>
-                <div class="text-[#4a3b32]" id="current-room-title">📍 Sảnh & Phòng Khách Trệt</div>
+                <button onclick="switchScreen('screen-menu')" class="vintage-btn px-2.5 py-1 rounded-lg bg-[#e6dfcd]">🏠 Menu</button>
+                <div class="text-[#4a3b32] flex items-center gap-1">
+                    <span>📍</span> <span id="current-room-title">Sảnh & Phòng Khách Trệt</span>
+                </div>
                 <div class="flex items-center gap-1 text-[#8c4a32]">
                     <span>🪙</span> <span id="hud-coins">350</span>
                 </div>
             </div>
 
-            <!-- KHUNG HIỂN THỊ CĂN PHÒNG (MÔ PHỎNG NHƯ GAME QUẢN LÝ NHÀ TRỌ) -->
-            <div class="w-full aspect-[4/3] bg-[#f5f0e1] rounded-xl border-2 border-[#5c4738] relative overflow-hidden flex flex-col justify-between p-3 shadow-inner" id="room-view-box">
+            <!-- KHUNG GIAO DIỆN PHÒNG (Y HỆT MẪU BẠN GỬI) -->
+            <div class="w-full bg-[#fdfbf7] rounded-xl border-2 border-[#5c4738] p-3 shadow-inner flex flex-col space-y-3 relative">
                 
-                <!-- Thanh tiêu đề phòng bên trong -->
-                <div class="flex justify-between items-center bg-[#fdfbf7]/90 px-3 py-1.5 rounded-lg border border-[#d4c7b0]">
+                <!-- Thanh Tên Phòng & Tầng -->
+                <div class="flex justify-between items-center bg-[#f5f0e1] px-3 py-2 rounded-lg border border-[#d4c7b0]">
                     <span id="room-name" class="font-bold text-xs text-[#4a3b32]">Khu Vực Sảnh & Phòng Khách</span>
                     <span class="text-[10px] bg-[#d4e4bc] text-[#2c4a1d] px-2 py-0.5 rounded font-bold" id="room-floor-tag">Tầng Trệt</span>
                 </div>
 
-                <!-- Khu vực tương tác nhân vật & nội thất căn phòng -->
-                <div class="flex justify-around items-center my-auto relative px-2">
-                    <!-- Chủ nhà Eco Buddy luôn xuất hiện -->
-                    <div class="flex flex-col items-center animate-bounce">
-                        <div class="w-14 h-14 bg-[#fdfbf7] border-2 border-[#5c4738] rounded-full flex items-center justify-center text-3xl shadow-md">
-                            ☁️
-                        </div>
-                        <span class="text-[10px] font-bold text-[#4a3b32] mt-1 bg-[#f2ecdc] px-2 py-0.5 rounded border border-[#c4b59d]">Eco Buddy</span>
+                <!-- 3 KHUNG AVATAR TRÒN TRUNG TÂM -->
+                <div class="flex justify-around items-center py-4">
+                    <!-- 1. Chủ nhà Eco Buddy -->
+                    <div class="flex flex-col items-center">
+                        <div class="avatar-circle">☁️</div>
+                        <span class="text-[10px] font-bold text-[#4a3b32] mt-1.5 bg-[#f2ecdc] px-2 py-0.5 rounded border border-[#c4b59d]">Eco Buddy</span>
                     </div>
 
-                    <!-- Đồ vật nội thất đặc trưng của phòng -->
+                    <!-- 2. Nội thất / Thiết bị phòng -->
                     <div class="flex flex-col items-center">
-                        <div id="room-furniture-icon" class="text-5xl mb-1 filter drop-shadow">🛋️</div>
-                        <span class="text-[9px] text-[#735d4c] font-semibold italic" id="room-furniture-label">Sofa & Thảm dệt</span>
+                        <div class="avatar-circle" id="room-furniture-icon">🛋️</div>
+                        <span class="text-[10px] font-bold text-[#4a3b32] mt-1.5 bg-[#f2ecdc] px-2 py-0.5 rounded border border-[#c4b59d] max-w-[90px] truncate text-center" id="room-furniture-label">Sofa</span>
                     </div>
 
-                    <!-- Khách trọ hoặc thú cưng trong phòng -->
+                    <!-- 3. Khách trọ hoặc Thú cưng -->
                     <div class="flex flex-col items-center">
-                        <div id="room-guest-avatar" class="w-14 h-14 bg-[#fdfbf7] border-2 border-[#5c4738] rounded-full flex items-center justify-center text-3xl shadow-md">
-                            🐾
-                        </div>
-                        <span id="room-guest-name" class="text-[10px] font-bold text-[#4a3b32] mt-1 bg-[#f2ecdc] px-2 py-0.5 rounded border border-[#c4b59d]">Milo</span>
+                        <div class="avatar-circle" id="room-guest-avatar">🐾</div>
+                        <span class="text-[10px] font-bold text-[#4a3b32] mt-1.5 bg-[#f2ecdc] px-2 py-0.5 rounded border border-[#c4b59d]" id="room-guest-name">Milo</span>
                     </div>
                 </div>
 
-                <!-- Bong bóng hội thoại tương tác của nhân vật -->
-                <div class="bg-[#fdfbf7] border-2 border-[#8c7355] px-3 py-2 rounded-xl shadow-md text-xs font-semibold text-[#5c4738] relative">
-                    <div class="absolute -top-2 left-6 w-3 h-3 bg-[#fdfbf7] border-t-2 border-l-2 border-[#8c7355] transform rotate-45"></div>
+                <!-- BONG BÓNG HỘI THOẠI -->
+                <div class="bg-[#f5f0e1] border-2 border-[#8c7355] px-3 py-2.5 rounded-xl shadow-sm text-xs font-semibold text-[#5c4738] relative">
+                    <div class="absolute -top-2 left-6 w-3 h-3 bg-[#f5f0e1] border-t-2 border-l-2 border-[#8c7355] transform rotate-45"></div>
                     <p id="dialog-bubble">💬 <b>Milo:</b> "Gâu! Chủ nhà Eco Buddy ơi, chơi đùa với Milo đi nào!"</p>
                 </div>
             </div>
 
-            <!-- Nút điều hướng các phòng trong nhà -->
+            <!-- CÁC NÚT ĐIỀU HƯỚNG & NÚT SƠ ĐỒ -->
             <div class="w-full grid grid-cols-3 gap-2 text-center">
                 <button onclick="changeRoom('left')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">⬅️ Trái</button>
-                <button onclick="changeRoom('down')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">⬇️ Sân Sau</button>
+                <button onclick="openModal('map-modal')" class="vintage-btn py-2 rounded-xl text-xs bg-[#f5e1a4] text-[#5c4738]">🗺️ Sơ Đồ</button>
                 <button onclick="changeRoom('right')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">Phải ➡️</button>
             </div>
             <div class="w-full grid grid-cols-2 gap-2">
@@ -140,15 +151,34 @@
 
     </div>
 
-    <!-- MODALS -->
+    <!-- MODAL SƠ ĐỒ NHÀ (MAP NAVIGATION GIỐNG HELLO NHÀ TRỌ) -->
+    <div id="map-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
+        <div class="vintage-card bg-[#fdfbf7] p-4 max-w-sm w-full space-y-3">
+            <div class="flex justify-between items-center border-b border-dashed border-[#8c7355] pb-2">
+                <h3 class="font-bold text-base text-[#4a3b32]">🗺️ Sơ Đồ Ngôi Nhà Trọ</h3>
+                <button onclick="closeModal('map-modal')" class="text-xs font-bold px-2 py-1 bg-[#e6dfcd] rounded border border-[#5c4738]">✕</button>
+            </div>
+            <p class="text-[11px] text-[#735d4c] font-semibold text-center">Nhấp vào khu vực để chuyển cảnh ngay lập tức:</p>
+            <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+                <button onclick="selectRoomByMap(0)" class="vintage-btn p-2 rounded-xl bg-[#f2ecdc]">🛋️ Sảnh & Khách</button>
+                <button onclick="selectRoomByMap(1)" class="vintage-btn p-2 rounded-xl bg-[#f2ecdc]">🍳 Bếp Chung</button>
+                <button onclick="selectRoomByMap(2)" class="vintage-btn p-2 rounded-xl bg-[#f2ecdc]">☁️ Phòng Eco Buddy</button>
+                <button onclick="selectRoomByMap(3)" class="vintage-btn p-2 rounded-xl bg-[#f2ecdc]">🛏️ Master Bedroom</button>
+                <button onclick="selectRoomByMap(4)" class="vintage-btn p-2 rounded-xl bg-[#f2ecdc]">📚 Phòng Bác Arthur</button>
+                <button onclick="selectRoomByMap(5)" class="vintage-btn p-2 rounded-xl bg-[#f2ecdc]">🛖 Gác Mái (Luna/Toby)</button>
+                <button onclick="selectRoomByMap(6)" class="vintage-btn p-2 rounded-xl bg-[#f2ecdc] col-span-2">🌳 Sân Sau & Nhà Kho</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALS KHÁC -->
     <div id="rules-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
         <div class="vintage-card bg-[#fdfbf7] p-5 max-w-xs w-full space-y-3">
             <h3 class="font-bold text-base text-[#4a3b32] border-b pb-1">📖 Hướng Dẫn Chơi</h3>
             <p class="text-xs text-[#5c4738] leading-relaxed">
                 - Quản lý ngôi nhà sinh thái cùng <b>Eco Buddy</b>.<br>
-                - Di chuyển giữa các phòng để tương tác với các thành viên.<br>
-                - Sử dụng Kho Đồ để thay đổi các Skin/Concept sự kiện cho thiết bị trong nhà.<br>
-                - Giữ gìn năng lượng và tối ưu hóa hóa đơn điện nước!
+                - Sử dụng nút <b>Sơ Đồ</b> để dịch chuyển nhanh giữa các phòng.<br>
+                - Tương tác với cư dân và tối ưu hóa năng lượng!
             </p>
             <button onclick="closeModal('rules-modal')" class="w-full vintage-btn py-2 bg-[#d4e4bc] text-[#2c4a1d] font-bold text-xs rounded-xl">Đã hiểu</button>
         </div>
@@ -171,7 +201,7 @@
             <div class="overflow-y-auto space-y-2.5 pr-1 text-xs">
                 <div class="bg-[#f2ecdc] p-2.5 rounded-xl border border-[#c4b59d]">
                     <p class="font-bold text-[#4a3b32]">☁️ Eco Buddy (Chủ nhà)</p>
-                    <p class="text-[10px] text-[#735d4c]">Phòng siêu bé trệt (có giường tầng, bàn làm việc, tủ đồ & sào treo).</p>
+                    <p class="text-[10px] text-[#735d4c]">Phòng siêu bé trệt (giường tầng, bàn làm việc, tủ đồ & sào treo).</p>
                 </div>
                 <div class="bg-[#f2ecdc] p-2.5 rounded-xl border border-[#c4b59d]">
                     <p class="font-bold text-[#4a3b32]">🐾 Milo (Chú chó cưng)</p>
@@ -179,15 +209,15 @@
                 </div>
                 <div class="bg-[#f2ecdc] p-2.5 rounded-xl border border-[#c4b59d]">
                     <p class="font-bold text-[#4a3b32]">👩‍🎨 Luna (Chị gái) & 👨‍💻 Toby (Em trai)</p>
-                    <p class="text-[10px] text-[#735d4c]">Ở gác mái lãng mạn, có WC mini riêng trên gác.</p>
+                    <p class="text-[10px] text-[#735d4c]">Gác mái lãng mạn, có WC mini riêng trên gác[cite: 7].</p>
                 </div>
                 <div class="bg-[#f2ecdc] p-2.5 rounded-xl border border-[#c4b59d]">
-                    <p class="font-bold text-[#4a3b32]">👫 Oliver & Mia (Cặp vợ chồng trẻ)</p>
+                    <p class="font-bold text-[#4a3b32]">👫 Oliver & Mia (Vợ chồng trẻ)</p>
                     <p class="text-[10px] text-[#735d4c]">Master Bedroom lầu 1 hướng ra đường, có WC khép kín riêng.</p>
                 </div>
                 <div class="bg-[#f2ecdc] p-2.5 rounded-xl border border-[#c4b59d]">
                     <p class="font-bold text-[#4a3b32]">👴 Arthur (Nhà văn về hưu)</p>
-                    <p class="text-[10px] text-[#735d4c]">Phòng nhỏ lầu 1 hướng ra vườn sau, tĩnh lặng và kỹ tính.</p>
+                    <p class="text-[10px] text-[#735d4c]">Phòng nhỏ lầu 1 hướng ra vườn sau, tĩnh lặng và ấm cúng.</p>
                 </div>
             </div>
             <button onclick="closeModal('chars-modal')" class="w-full vintage-btn py-2.5 bg-[#e6dfcd] text-xs rounded-xl font-bold">Đóng</button>
@@ -220,16 +250,11 @@
         }
 
         const skinList = [
-            "1. Spring Blossom (Hoa Nở)",
-            "2. Summer Beach (Mùa Hè)",
-            "3. Autumn Vintage (Lá Vàng)",
-            "4. Cozy Christmas (Giáng Sinh)",
-            "5. Lunar New Year (Tết Sum Vầy)",
-            "6. Cyberpunk Eco (Tương Lai)",
-            "7. Magical Forest (Rừng Cổ Tích)",
-            "8. Retro 80s (Hoài Niệm)",
-            "9. Gourmet Pastry (Tiệm Bánh)",
-            "10. Spooky Halloween (Ma Quái)"
+            "1. Spring Blossom (Hoa Nở)", "2. Summer Beach (Mùa Hè)",
+            "3. Autumn Vintage (Lá Vàng)", "4. Cozy Christmas (Giáng Sinh)",
+            "5. Lunar New Year (Tết Sum Vầy)", "6. Cyberpunk Eco (Tương Lai)",
+            "7. Magical Forest (Rừng Cổ Tích)", "8. Retro 80s (Hoài Niệm)",
+            "9. Gourmet Pastry (Tiệm Bánh)", "10. Spooky Halloween (Ma Quái)"
         ];
 
         function renderSkins() {
@@ -245,55 +270,47 @@
         }
         renderSkins();
 
-        // Danh sách các phòng mô phỏng cấu trúc căn nhà
         const rooms = [
             { 
-                id: 'living', title: '📍 Sảnh & Phòng Khách Trệt', 
-                floor: 'Tầng Trệt',
-                furnitureIcon: '🛋️', furnitureLabel: 'Sofa & Thảm dệt',
+                title: 'Sảnh & Phòng Khách Trệt', floor: 'Tầng Trệt',
+                furnitureIcon: '🛋️', furnitureLabel: 'Sofa',
                 guestAvatar: '🐾', guestName: 'Milo',
                 dialog: '💬 <b>Milo:</b> "Gâu! Chủ nhà Eco Buddy ơi, chơi đùa với Milo đi nào!"'
             },
             { 
-                id: 'kitchen', title: '🍳 Bếp Chung Tầng Trệt', 
-                floor: 'Tầng Trệt',
-                furnitureIcon: '🍳', furnitureLabel: 'Bếp điện & Tủ lạnh',
+                title: 'Bếp Chung Tầng Trệt', floor: 'Tầng Trệt',
+                furnitureIcon: '🍳', furnitureLabel: 'Bếp & Tủ lạnh',
                 guestAvatar: '👩‍🎨', guestName: 'Luna',
                 dialog: '💬 <b>Luna (Chị gái):</b> "Nhớ lau sạch bếp sau khi nấu nướng và úp bát khi khô nha Eco Buddy!"'
             },
             { 
-                id: 'eco-room', title: '☁️ Phòng Ngủ Của Eco Buddy', 
-                floor: 'Tầng Trệt',
-                furnitureIcon: '🛏️', furnitureLabel: 'Giường tầng & Sào treo',
+                title: 'Phòng Ngủ Eco Buddy', floor: 'Tầng Trệt',
+                furnitureIcon: '🛏️', furnitureLabel: 'Giường & Tủ đồ',
                 guestAvatar: '✨', guestName: 'Góc Riêng',
                 dialog: '☁️ <b>Eco Buddy:</b> "Phòng nhỏ nhưng có đủ tủ quần áo và sào treo đồ gọn gàng!"'
             },
             { 
-                id: 'master', title: '🛏️ Master Bedroom (Oliver & Mia)', 
-                floor: 'Lầu 1 (Hướng ra đường)',
-                furnitureIcon: '🪴', furnitureLabel: 'Giường đôi & Ban công',
+                title: 'Master Bedroom (Oliver & Mia)', floor: 'Lầu 1 (Mặt tiền)',
+                furnitureIcon: '🪴', furnitureLabel: 'Giường đôi',
                 guestAvatar: '👫', guestName: 'Oliver & Mia',
                 dialog: '💬 <b>Mia:</b> "Tụi mình vừa tưới cây ngoài ban công xong, xanh mướt luôn!"'
             },
             { 
-                id: 'arthur', title: '📚 Phòng Đọc Sách (Bác Arthur)', 
-                floor: 'Lầu 1 (Hướng ra vườn)',
-                furnitureIcon: '☕', furnitureLabel: 'Kệ sách & Bàn trà',
+                title: 'Phòng Đọc Sách (Bác Arthur)', floor: 'Lầu 1 (Sân sau)',
+                furnitureIcon: '☕', furnitureLabel: 'Kệ sách',
                 guestAvatar: '👴', guestName: 'Bác Arthur',
                 dialog: '👴 <b>Bác Arthur:</b> "Cháu Eco Buddy nhớ kiểm tra vòi nước ở vườn sau nhé, đừng để rỉ nước."'
             },
             { 
-                id: 'attic', title: '🛖 Gác Mái (Luna & Toby)', 
-                floor: 'Tầng Gác Mái',
-                furnitureIcon: '💻', furnitureLabel: 'Bàn PC & Kệ đồ',
+                title: 'Gác Mái (Luna & Toby)', floor: 'Tầng Gác Mái',
+                furnitureIcon: '💻', furnitureLabel: 'Bàn PC',
                 guestAvatar: '👨‍💻', guestName: 'Toby',
                 dialog: '💬 <b>Toby (Em trai):</b> "Chị Luna ơi, đừng bắt em đi đổ rác nữa mà, để em fix nốt bug này đã!"'
             },
             { 
-                id: 'yard', title: '🌳 Sân Sau & Nhà Kho', 
-                floor: 'Khu Vườn Ngoài Trời',
-                furnitureIcon: '🏡', furnitureLabel: 'Pin mặt trời & Kho',
-                guestAvatar: '🌿', guestName: 'Hệ Thống Xanh',
+                title: 'Sân Sau & Nhà Kho', floor: 'Khu Vườn',
+                furnitureIcon: '🏡', furnitureLabel: 'Pin mặt trời',
+                guestAvatar: '🌿', guestName: 'Hệ Thống',
                 dialog: '🌿 <b>[Khu Vườn]:</b> Năng lượng mặt trời đang sạc đầy 100% cho toàn bộ nhà trọ!'
             }
         ];
@@ -315,10 +332,16 @@
         function changeRoom(dir) {
             if (dir === 'right') currentRoomIdx = (currentRoomIdx + 1) % rooms.length;
             else if (dir === 'left') currentRoomIdx = (currentRoomIdx - 1 + rooms.length) % rooms.length;
-            else if (dir === 'down') currentRoomIdx = 6; // Sân sau
-            else if (dir === 'up') currentRoomIdx = 3;   // Lầu 1
-            else if (dir === 'attic') currentRoomIdx = 5;// Gác mái
+            else if (dir === 'down') currentRoomIdx = 6;
+            else if (dir === 'up') currentRoomIdx = 3;
+            else if (dir === 'attic') currentRoomIdx = 5;
             updateRoomView();
+        }
+
+        function selectRoomByMap(idx) {
+            currentRoomIdx = idx;
+            updateRoomView();
+            closeModal('map-modal');
         }
 
         let soundOn = true;
