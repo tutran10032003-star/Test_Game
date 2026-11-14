@@ -41,7 +41,9 @@
             transform: rotate(-3deg);
             font-weight: bold;
         }
-        /* Custom scrollbar for bill lists */
+        #game-area {
+            touch-action: none; /* Ngăn trình duyệt cuộn trang khi vuốt trên canvas */
+        }
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -104,27 +106,24 @@
             </div>
 
             <!-- Canvas Wrapper -->
-            <div class="w-full relative aspect-[3/4] bg-[#2a3625] rounded border-2 border-[#5c4738] overflow-hidden shadow-inner">
+            <div id="game-area" class="w-full relative aspect-[3/4] bg-[#2a3625] rounded border-2 border-[#5c4738] overflow-hidden shadow-inner cursor-pointer">
                 <canvas id="gameCanvas" class="w-full h-full block"></canvas>
-                
-                <!-- Touch Controls Overlay for Mobile -->
-                <div class="absolute inset-0 flex pointer-events-none">
-                    <div id="touch-left" class="w-1/3 h-full pointer-events-auto"></div>
-                    <div id="touch-mid" class="w-1/3 h-full pointer-events-auto"></div>
-                    <div id="touch-right" class="w-1/3 h-full pointer-events-auto"></div>
-                </div>
 
                 <!-- Floating notification popup inside game -->
-                <div id="game-popup" class="absolute top-10 left-1/2 transform -translate-x-1/2 bg-[#fdfbf7] border-2 border-[#8c7355] px-3 py-1 rounded shadow-lg text-xs font-bold text-[#8c4a32] opacity-0 transition-opacity duration-300 pointer-events-none">
+                <div id="game-popup" class="absolute top-8 left-1/2 transform -translate-x-1/2 bg-[#fdfbf7] border-2 border-[#8c7355] px-3 py-1 rounded shadow-lg text-xs font-bold text-[#8c4a32] opacity-0 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10">
                     +200đ Hóa Đơn!
+                </div>
+
+                <!-- Swipe Hint Overlay (fades out after start) -->
+                <div id="swipe-hint" class="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-black/60 text-white px-3 py-1.5 rounded-full text-[11px] pointer-events-none transition-opacity duration-500 whitespace-nowrap">
+                    👈 Vuốt hoặc bấm phím ⬅️ ➡️ 👉
                 </div>
             </div>
 
-            <!-- Mobile Controller Buttons -->
-            <div class="w-full grid grid-cols-3 gap-2">
-                <button onclick="movePlayer(-1)" class="vintage-btn py-3 font-black text-base rounded bg-[#ebdccb]">⬅️ Trái</button>
-                <button onclick="playerJump()" class="vintage-btn py-3 font-black text-base rounded bg-[#dcd2be]">⬆️ Nhảy</button>
-                <button onclick="movePlayer(1)" class="vintage-btn py-3 font-black text-base rounded bg-[#ebdccb]">Phải ➡️</button>
+            <!-- Mobile / Quick Controller Buttons (Chỉ còn Trái và Phải) -->
+            <div class="w-full grid grid-cols-2 gap-3">
+                <button onclick="movePlayer(-1)" class="vintage-btn py-3.5 font-black text-base rounded bg-[#ebdccb]">⬅️ Sang Trái</button>
+                <button onclick="movePlayer(1)" class="vintage-btn py-3.5 font-black text-base rounded bg-[#ebdccb]">Sang Phải ➡️</button>
             </div>
 
             <button onclick="quitGame()" class="text-xs text-[#8c4a32] underline font-bold mt-1">⚠️ Dừng & Quay lại Menu</button>
@@ -156,10 +155,10 @@
         <div class="vintage-card bg-[#fdfbf7] p-5 max-w-sm w-full space-y-3 relative">
             <h3 class="font-bold text-base text-[#4a3b32] border-b pb-1">📜 Hướng dẫn chơi Eco Runner</h3>
             <ul class="text-xs space-y-2 text-[#5c4738] list-disc pl-4">
-                <li><strong>Điều khiển:</strong> Dùng phím mũi tên Trái/Phải (hoặc nút bấm / vuốt màn hình) để chuyển 3 làn. Phím Lên để nhảy né vật cản.</li>
-                <li><strong>Giá điện & Khung giờ:</strong> Trò chơi chuyển đổi qua 3 khung giờ ☀️ Ngày (Bình thường), ⚡ Cao điểm (Xu nhân đôi nhưng vật cản nhanh), 🌙 Đêm (Ít chướng ngại, dễ tích lũy).</li>
-                <li><strong>Thanh toán hóa đơn:</strong> Nhặt các đồng xu điện năng và túi hóa đơn trên đường để hoàn thành chỉ tiêu tiền điện mục tiêu của tháng.</li>
-                <li><strong>Va chạm:</strong> Va vào chướng ngại vật (thiết bị tốn điện) sẽ mất 1 mạng ❤️ và rớt 20% số xu đang có!</li>
+                <li><strong>Điều khiển:</strong> Trên máy tính dùng phím mũi tên <strong>Trái/Phải</strong> (hoặc A/D). Trên điện thoại <strong>vuốt ngón tay sang trái/phải</strong> trên màn hình hoặc dùng 2 nút bấm bên dưới.</li>
+                <li><strong>Giá điện & Khung giờ:</strong> Trò chơi chuyển đổi qua 3 khung giờ ☀️ Ngày (Bình thường), ⚡ Cao điểm (Xu nhân đôi nhưng tốc độ nhanh), 🌙 Đêm (Ít chướng ngại, dễ tích lũy).</li>
+                <li><strong>Thanh toán hóa đơn:</strong> Nhặt các đồng xu 🪙 và túi hóa đơn 📄 để hoàn thành chỉ tiêu tiền điện của tháng.</li>
+                <li><strong>Tránh lãng phí điện:</strong> Né các thiết bị gây tốn điện (Máy lạnh 16°C, Tủ lạnh hở cửa, Đèn bật ban ngày...). Va chạm sẽ mất 1 mạng ❤️ và rớt 20% xu!</li>
             </ul>
             <button onclick="closeRulesModal()" class="w-full vintage-btn py-2 bg-[#d4e4bc] text-[#2c4a1d] font-bold text-xs rounded">Đã hiểu, vào game!</button>
         </div>
@@ -177,6 +176,18 @@
             { id: 6, name: "Tháng 6 (Đỉnh Điểm Mùa Hè)", target: 2000, reward: 150, unlocked: false, completed: false, stars: 0 }
         ];
 
+        // Danh sách chướng ngại vật đa dạng chủ đề tiết kiệm điện
+        const OBSTACLE_TYPES = [
+            { icon: '❄️', label: 'Máy lạnh 16°C', color: '#2b6cb0' },
+            { icon: '🔥', label: 'Bình nóng lạnh', color: '#c53030' },
+            { icon: '🧺', label: 'Máy sấy đồ', color: '#b7791f' },
+            { icon: '💡', label: 'Đèn bật ngày', color: '#d69e2e' },
+            { icon: '📺', label: 'Tivi chạy không', color: '#4a5568' },
+            { icon: '🔌', label: 'Sạc qua đêm', color: '#805ad5' },
+            { icon: '♨️', label: 'Lò sưởi điện', color: '#dd6b20' },
+            { icon: '🧊', label: 'Tủ lạnh hở', color: '#319795' }
+        ];
+
         let gameState = {
             totalCoins: 0,
             currentMonthId: null,
@@ -192,7 +203,6 @@
             isPlaying: false
         };
 
-        // Load saved data from localStorage
         function loadSavedData() {
             const savedCoins = localStorage.getItem('eco_runner_coins');
             if (savedCoins !== null) gameState.totalCoins = parseInt(savedCoins);
@@ -242,7 +252,7 @@
             const container = document.getElementById('months-list');
             container.innerHTML = '';
 
-            MONTHS_DATA.forEach((month, index) => {
+            MONTHS_DATA.forEach((month) => {
                 let statusBadge = '';
                 let bgClass = 'bg-[#fdfbf7]';
                 let btnDisabled = '';
@@ -253,7 +263,7 @@
                     statusBadge = '<span class="text-[10px] text-gray-500 font-bold">🔒 Khóa</span>';
                 } else if (month.completed) {
                     let starsStr = '⭐'.repeat(month.stars);
-                    statusBadge = `<span class="text-[10px] text-amber-700 font-bold">${starsStr} Hoàn thành</span>`;
+                    statusBadge = `<span class="text-[10px] text-amber-700 font-bold">${starsStr} Xong</span>`;
                 } else {
                     statusBadge = '<span class="text-[10px] text-green-700 font-bold">✨ Sẵn sàng</span>';
                 }
@@ -286,27 +296,24 @@
         // --- CANVAS GAME ENGINE ---
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
+        const gameArea = document.getElementById('game-area');
 
         let player = {
             lane: 1, // 0: Left, 1: Middle, 2: Right
             x: 0,
             y: 0,
-            width: 36,
-            height: 50,
-            targetX: 0,
-            isJumping: false,
-            jumpOffsetY: 0,
-            jumpVel: 0
+            width: 38,
+            height: 52
         };
 
         let obstacles = [];
         let collectibles = [];
-        let particles = [];
         let gameFrame = 0;
         let spawnTimer = 0;
+        let roadOffset = 0;
 
         function resizeCanvas() {
-            const rect = canvas.parentElement.getBoundingClientRect();
+            const rect = gameArea.getBoundingClientRect();
             canvas.width = rect.width;
             canvas.height = rect.height;
         }
@@ -342,14 +349,18 @@
             gameState.isPlaying = true;
 
             player.lane = 1;
-            player.isJumping = false;
-            player.jumpOffsetY = 0;
-            player.jumpVel = 0;
+            let laneWidth = canvas.width / 3;
+            player.x = player.lane * laneWidth + laneWidth / 2 - player.width / 2;
 
             obstacles = [];
             collectibles = [];
-            particles = [];
             gameFrame = 0;
+            spawnTimer = 0;
+
+            // Hiện gợi ý điều khiển 3 giây đầu
+            const hint = document.getElementById('swipe-hint');
+            hint.style.opacity = '1';
+            setTimeout(() => { hint.style.opacity = '0'; }, 3000);
 
             updateHUD();
             requestAnimationFrame(gameLoop);
@@ -368,7 +379,7 @@
             }
         }
 
-        // Controls
+        // --- CONTROLS (Laptop Keyboard + Mobile Swipe + Tap) ---
         function movePlayer(dir) {
             if (!gameState.isPlaying) return;
             player.lane += dir;
@@ -376,49 +387,61 @@
             if (player.lane > 2) player.lane = 2;
         }
 
-        function playerJump() {
-            if (!gameState.isPlaying) return;
-            if (!player.isJumping) {
-                player.isJumping = true;
-                player.jumpVel = -11;
-            }
-        }
-
-        // Keyboard bindings
+        // Bàn phím Laptop (Mũi tên trái/phải hoặc A/D)
         window.addEventListener('keydown', (e) => {
             if (!gameState.isPlaying) return;
-            if (e.key === 'ArrowLeft' || e.key === 'a') movePlayer(-1);
-            if (e.key === 'ArrowRight' || e.key === 'd') movePlayer(1);
-            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === ' ') playerJump();
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') movePlayer(-1);
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') movePlayer(1);
         });
 
-        // Touch swipe handling on canvas container
+        // Vuốt ngón tay trên điện thoại (Swipe Left / Right) & Chạm nửa trái/phải
         let touchStartX = 0;
-        let touchStartY = 0;
-        canvas.addEventListener('touchstart', (e) => {
+        let touchMoved = false;
+
+        gameArea.addEventListener('touchstart', (e) => {
             if (!gameState.isPlaying) return;
             touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }, {passive: true});
+            touchMoved = false;
+        }, { passive: true });
 
-        canvas.addEventListener('touchend', (e) => {
-            if (!gameState.isPlaying) return;
-            let diffX = e.changedTouches[0].clientX - touchStartX;
-            let diffY = e.changedTouches[0].clientY - touchStartY;
+        gameArea.addEventListener('touchmove', (e) => {
+            if (!gameState.isPlaying || touchMoved) return;
+            let currentX = e.touches[0].clientX;
+            let diffX = currentX - touchStartX;
 
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (diffX > 30) movePlayer(1);
-                else if (diffX < -30) movePlayer(-1);
-            } else {
-                if (diffY < -30) playerJump();
+            // Nhạy ngay khi vuốt quá 25px mà không cần đợi nhấc ngón tay
+            if (diffX > 25) {
+                movePlayer(1);
+                touchMoved = true;
+            } else if (diffX < -25) {
+                movePlayer(-1);
+                touchMoved = true;
             }
-        }, {passive: true});
+        }, { passive: true });
 
-        // Specific touch areas buttons
-        document.getElementById('touch-left').addEventListener('click', () => movePlayer(-1));
-        document.getElementById('touch-mid').addEventListener('click', () => playerJump());
-        document.getElementById('touch-right').addEventListener('click', () => movePlayer(1));
+        gameArea.addEventListener('touchend', (e) => {
+            if (!gameState.isPlaying || touchMoved) return;
+            // Nếu người chơi chỉ chạm nhẹ (tap) vào bên trái hoặc bên phải màn hình game
+            const rect = gameArea.getBoundingClientRect();
+            const tapX = e.changedTouches[0].clientX - rect.left;
+            if (tapX < rect.width / 2) {
+                movePlayer(-1);
+            } else {
+                movePlayer(1);
+            }
+        }, { passive: true });
 
+        // Click chuột trên màn hình game (tiện cho người dùng laptop thích click)
+        gameArea.addEventListener('click', (e) => {
+            if (!gameState.isPlaying) return;
+            const rect = gameArea.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            if (clickX < rect.width / 2) {
+                movePlayer(-1);
+            } else {
+                movePlayer(1);
+            }
+        });
 
         // --- MAIN GAME LOOP ---
         function gameLoop() {
@@ -427,22 +450,24 @@
             gameFrame++;
             gameState.zoneTimer++;
 
-            // Zone cycle: Day (0-600f) -> Peak (600-1200f) -> Night (1200-1800f)
+            // Zone cycle: Day -> Peak -> Night
             let cycle = gameState.zoneTimer % 1800;
             if (cycle < 600) {
                 gameState.zone = 'day';
-                gameState.gameSpeed = 5.5;
+                gameState.gameSpeed = 5.2;
             } else if (cycle < 1200) {
                 gameState.zone = 'peak';
-                gameState.gameSpeed = 7.5; // faster during peak hours
+                gameState.gameSpeed = 7.2;
             } else {
                 gameState.zone = 'night';
-                gameState.gameSpeed = 4.5; // calmer night
+                gameState.gameSpeed = 4.3;
             }
+
+            roadOffset = (roadOffset + gameState.gameSpeed) % 40;
 
             // Spawn obstacles & collectibles
             spawnTimer++;
-            let spawnInterval = gameState.zone === 'peak' ? 55 : 75;
+            let spawnInterval = gameState.zone === 'peak' ? 48 : 65;
             if (spawnTimer > spawnInterval) {
                 spawnTimer = 0;
                 spawnEntities();
@@ -451,7 +476,6 @@
             updatePhysics();
             renderGame();
 
-            // Check Win Condition for normal months
             if (!gameState.isEndless && gameState.progressScore >= gameState.targetScore) {
                 endGameSession(true);
                 return;
@@ -461,28 +485,38 @@
         }
 
         function spawnEntities() {
-            let lane = Math.floor(Math.random() * 3);
-            let typeRand = Math.random();
+            // Đảm bảo luôn có ít nhất 1 làn trống để người chơi lách qua được
+            let lanes = [0, 1, 2];
+            // Xáo trộn làn
+            lanes.sort(() => Math.random() - 0.5);
 
-            if (typeRand < 0.55) {
-                // Obstacle (High-watt appliance)
-                let obsTypes = ['AC', 'Heater', 'Fridge', 'Iron'];
-                let chosenType = obsTypes[Math.floor(Math.random() * obsTypes.length)];
+            // Số lượng chướng ngại vật (1 hoặc 2 làn ở giờ cao điểm)
+            let numObstacles = (gameState.zone === 'peak' && Math.random() < 0.45) ? 2 : 1;
+            if (gameState.zone === 'night') numObstacles = 1;
+
+            for (let i = 0; i < numObstacles; i++) {
+                let obsLane = lanes[i];
+                let chosenObs = OBSTACLE_TYPES[Math.floor(Math.random() * OBSTACLE_TYPES.length)];
                 obstacles.push({
-                    lane: lane,
-                    y: -60,
-                    width: 40,
-                    height: 40,
-                    type: chosenType
+                    lane: obsLane,
+                    y: -70,
+                    width: 68,
+                    height: 54,
+                    icon: chosenObs.icon,
+                    label: chosenObs.label,
+                    color: chosenObs.color
                 });
-            } else {
-                // Collectible (Coin or Bill bag)
+            }
+
+            // Sinh vật phẩm (xu hoặc hóa đơn) ở làn còn trống
+            let freeLane = lanes[numObstacles];
+            if (Math.random() < 0.75) {
                 let isBill = Math.random() < 0.3;
                 collectibles.push({
-                    lane: lane,
-                    y: -50,
-                    width: 30,
-                    height: 30,
+                    lane: freeLane,
+                    y: -60,
+                    width: 34,
+                    height: 34,
                     isBill: isBill,
                     value: isBill ? 200 : 50
                 });
@@ -490,36 +524,28 @@
         }
 
         function updatePhysics() {
-            // Lane X position calculation
             let laneWidth = canvas.width / 3;
             let targetLaneX = player.lane * laneWidth + laneWidth / 2 - player.width / 2;
-            player.x += (targetLaneX - player.x) * 0.2;
+            player.x += (targetLaneX - player.x) * 0.25;
 
-            // Jump physics
-            if (player.isJumping) {
-                player.jumpOffsetY += player.jumpVel;
-                player.jumpVel += 0.6; // gravity
-                if (player.jumpOffsetY >= 0) {
-                    player.jumpOffsetY = 0;
-                    player.isJumping = false;
-                }
-            }
+            let playerTop = canvas.height - 90;
+            let playerBottom = canvas.height - 40;
 
             // Update obstacles
             for (let i = obstacles.length - 1; i >= 0; i--) {
                 obstacles[i].y += gameState.gameSpeed;
 
-                // Collision detection with player
-                if (obstacles[i].lane === player.lane && obstacles[i].y > canvas.height - 120 && obstacles[i].y < canvas.height - 50) {
-                    if (player.jumpOffsetY > -25) { // Hit obstacle if not jumping high enough
-                        hitObstacle();
-                        obstacles.splice(i, 1);
-                        continue;
-                    }
+                let obsTop = obstacles[i].y;
+                let obsBottom = obstacles[i].y + obstacles[i].height;
+
+                // Va chạm theo làn và tọa độ Y
+                if (obstacles[i].lane === player.lane && obsBottom > playerTop + 8 && obsTop < playerBottom - 8) {
+                    hitObstacle(obstacles[i]);
+                    obstacles.splice(i, 1);
+                    continue;
                 }
 
-                // Remove off-screen
-                if (obstacles[i] && obstacles[i].y > canvas.height + 50) {
+                if (obstacles[i] && obstacles[i].y > canvas.height + 60) {
                     obstacles.splice(i, 1);
                 }
             }
@@ -528,26 +554,27 @@
             for (let i = collectibles.length - 1; i >= 0; i--) {
                 collectibles[i].y += gameState.gameSpeed;
 
-                // Collection detection
-                if (collectibles[i].lane === player.lane && collectibles[i].y > canvas.height - 110 && collectibles[i].y < canvas.height - 40) {
+                let colTop = collectibles[i].y;
+                let colBottom = collectibles[i].y + collectibles[i].height;
+
+                if (collectibles[i].lane === player.lane && colBottom > playerTop && colTop < playerBottom) {
                     collectItem(collectibles[i]);
                     collectibles.splice(i, 1);
                     continue;
                 }
 
-                if (collectibles[i] && collectibles[i].y > canvas.height + 50) {
+                if (collectibles[i] && collectibles[i].y > canvas.height + 60) {
                     collectibles.splice(i, 1);
                 }
             }
         }
 
-        function hitObstacle() {
+        function hitObstacle(obs) {
             gameState.lives--;
-            // Lose 20% of accumulated coins
             let penalty = Math.floor(gameState.coinsCollected * 0.2);
             gameState.coinsCollected = Math.max(0, gameState.coinsCollected - penalty);
             
-            showPopup(`💥 Va chạm! Mất 1 mạng & 20% xu!`, '#b94a39');
+            showPopup(`💥 Đụng ${obs.label}! -1❤️ & -20% xu`, '#b94a39');
             updateHUD();
 
             if (gameState.lives <= 0) {
@@ -569,14 +596,16 @@
             updateHUD();
         }
 
+        let popupTimeout;
         function showPopup(text, color) {
             const popup = document.getElementById('game-popup');
             popup.innerText = text;
             popup.style.color = color;
             popup.style.opacity = '1';
-            setTimeout(() => {
+            clearTimeout(popupTimeout);
+            popupTimeout = setTimeout(() => {
                 popup.style.opacity = '0';
-            }, 1000);
+            }, 1100);
         }
 
         function updateHUD() {
@@ -601,78 +630,93 @@
 
         // --- RENDER GRAPHICS (Canvas) ---
         function renderGame() {
-            // Background color based on zone
             if (gameState.zone === 'day') ctx.fillStyle = '#eaf0e6';
             else if (gameState.zone === 'peak') ctx.fillStyle = '#fceade';
             else ctx.fillStyle = '#dce3ed';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Draw 3 lanes markers
+            // Vẽ vạch kẻ đường chuyển động tạo cảm giác đang chạy
             let laneWidth = canvas.width / 3;
             ctx.strokeStyle = '#c8bc9f';
             ctx.lineWidth = 2;
-            ctx.setLineDash([10, 10]);
+            ctx.setLineDash([20, 20]);
+            ctx.lineDashOffset = -roadOffset;
             ctx.beginPath();
             ctx.moveTo(laneWidth, 0); ctx.lineTo(laneWidth, canvas.height);
             ctx.moveTo(laneWidth * 2, 0); ctx.lineTo(laneWidth * 2, canvas.height);
             ctx.stroke();
             ctx.setLineDash([]);
 
-            // Draw road side borders
+            // Lề đường 2 bên
             ctx.fillStyle = '#d4c7b0';
             ctx.fillRect(0, 0, 8, canvas.height);
             ctx.fillRect(canvas.width - 8, 0, 8, canvas.height);
 
-            // Draw Obstacles
+            // Vẽ chướng ngại vật đa dạng (Biển cảnh báo thiết bị tốn điện)
             obstacles.forEach(obs => {
-                let ox = obs.lane * laneWidth + laneWidth / 2 - obs.width / 2;
+                let w = Math.min(laneWidth - 14, 78);
+                let ox = obs.lane * laneWidth + (laneWidth - w) / 2;
                 let oy = obs.y;
                 
-                ctx.fillStyle = '#b94a39';
-                ctx.fillRect(ox, oy, obs.width, obs.height);
-                ctx.fillStyle = '#fdfbf7';
-                ctx.font = '12px Courier Prime';
+                // Khung thẻ chướng ngại vật
+                ctx.fillStyle = obs.color;
+                ctx.beginPath();
+                ctx.roundRect(ox, oy, w, obs.height, 8);
+                ctx.fill();
+
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#3b302a';
+                ctx.stroke();
+
+                // Icon thiết bị
+                ctx.font = '20px sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText(obs.type, ox + obs.width / 2, oy + obs.height / 2 + 4);
+                ctx.fillText(obs.icon, ox + w / 2, oy + 24);
+
+                // Tên thiết bị tốn điện
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 9px Courier Prime';
+                ctx.fillText(obs.label, ox + w / 2, oy + 43);
             });
 
-            // Draw Collectibles
+            // Vẽ vật phẩm (Xu & Hóa đơn)
             collectibles.forEach(col => {
                 let cx = col.lane * laneWidth + laneWidth / 2;
-                let cy = col.y;
+                let cy = col.y + 15;
 
                 ctx.beginPath();
-                ctx.arc(cx, cy + 15, col.isBill ? 16 : 12, 0, Math.PI * 2);
+                ctx.arc(cx, cy, col.isBill ? 18 : 14, 0, Math.PI * 2);
                 ctx.fillStyle = col.isBill ? '#467551' : '#d4af37';
                 ctx.fill();
                 ctx.lineWidth = 2;
                 ctx.strokeStyle = '#5c4738';
                 ctx.stroke();
 
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 11px Courier Prime';
+                ctx.font = '15px sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText(col.isBill ? '📄' : '🪙', cx, cy + 19);
+                ctx.fillText(col.isBill ? '📄' : '🪙', cx, cy + 5);
             });
 
-            // Draw Player (Runner avatar)
+            // Vẽ nhân vật chạy (Có hiệu ứng nhún chân theo nhịp chạy)
+            let runBob = Math.sin(gameFrame * 0.3) * 2.5;
             let px = player.x;
-            let py = canvas.height - 90 + player.jumpOffsetY;
+            let py = canvas.height - 92 + runBob;
             
-            // Shadow under player
-            ctx.fillStyle = 'rgba(0,0,0,0.15)';
+            // Bóng dưới chân
+            ctx.fillStyle = 'rgba(0,0,0,0.18)';
             ctx.beginPath();
-            ctx.ellipse(px + player.width / 2, canvas.height - 40, player.width / 2 * (1 + player.jumpOffsetY/50), 6, 0, 0, Math.PI * 2);
+            ctx.ellipse(px + player.width / 2, canvas.height - 38, player.width / 2, 6, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Player body
+            // Thân nhân vật
             ctx.fillStyle = '#5c4738';
-            ctx.fillRect(px + 6, py + 15, player.width - 12, player.height - 20); // body
+            ctx.fillRect(px + 6, py + 16, player.width - 12, player.height - 20);
+            // Đầu
             ctx.fillStyle = '#d9c3a9';
-            ctx.fillRect(px + 10, py, 16, 16); // head
-            // Hat/Cap
+            ctx.fillRect(px + 10, py, 18, 16);
+            // Mũ xanh tiết kiệm năng lượng
             ctx.fillStyle = '#2c4a1d';
-            ctx.fillRect(px + 8, py - 4, 20, 6);
+            ctx.fillRect(px + 8, py - 4, 22, 6);
         }
 
         // --- END GAME SESSION ---
@@ -688,23 +732,19 @@
                 stampEl.style.color = "#2c4a1d";
                 stampEl.style.borderColor = "#2c4a1d";
 
-                // Calculate stars based on remaining lives and progress
                 if (gameState.lives === 3) starsCount = 3;
                 else if (gameState.lives === 2) starsCount = 2;
                 else starsCount = 1;
 
-                // Update month status
                 if (!gameState.isEndless && gameState.currentMonthId) {
                     const currentM = MONTHS_DATA.find(m => m.id === gameState.currentMonthId);
                     if (currentM) {
                         currentM.completed = true;
                         currentM.stars = Math.max(currentM.stars, starsCount);
 
-                        // Unlock next month
                         const nextM = MONTHS_DATA.find(m => m.id === gameState.currentMonthId + 1);
                         if (nextM) nextM.unlocked = true;
 
-                        // Add reward coins
                         gameState.totalCoins += currentM.reward + gameState.coinsCollected;
                     }
                 }
@@ -713,12 +753,11 @@
                 stampEl.style.color = "#b94a39";
                 stampEl.style.borderColor = "#b94a39";
                 starsCount = 0;
-                gameState.totalCoins += gameState.coinsCollected; // keep collected coins
+                gameState.totalCoins += gameState.coinsCollected;
             }
 
             saveGameData();
 
-            // Display results
             document.getElementById('res-title').innerText = gameState.isEndless ? "Chế độ Chạy Tự Do" : `Hóa đơn tháng ${gameState.currentMonthId}`;
             document.getElementById('res-progress').innerText = `${gameState.progressScore} / ${gameState.targetScore} đ`;
             document.getElementById('res-coins').innerText = `🪙 ${gameState.coinsCollected}`;
@@ -729,12 +768,10 @@
             switchScreen('menu');
         }
 
-        // Window resize
         window.addEventListener('resize', () => {
             if (gameState.isPlaying) resizeCanvas();
         });
 
-        // Initialize on load
         window.onload = function() {
             loadSavedData();
             switchScreen('menu');
