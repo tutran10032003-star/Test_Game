@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Eco Runner: Pay Your Bills</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Đồng bộ font Quicksand cho tiếng Việt sắc nét và Playfair Display cho tiêu đề -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -70,25 +69,37 @@
                 <h1 class="font-black text-lg sm:text-xl text-[#4a3b32] tracking-wider" style="font-family: 'Playfair Display', serif;">ECO RUNNER</h1>
                 <p class="text-[11px] sm:text-xs text-[#735d4c] font-medium">Pay Your Bills & Save Energy</p>
             </div>
-            <button onclick="openRulesModal()" class="vintage-btn px-3 py-1.5 text-xs rounded-lg">📜 Hướng dẫn</button>
+            <button onclick="openRulesModal()" class="vintage-btn px-3 py-1.5 text-xs rounded-lg flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-[#5c4738]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                Hướng dẫn
+            </button>
         </div>
 
         <!-- SCREEN: MENU / MONTH SELECTOR -->
         <div id="screen-menu" class="w-full flex flex-col items-center space-y-4 py-2">
+            <!-- Tổng xu tích lũy (Dùng SVG thay thế emoji tránh lỗi font) -->
             <div class="w-full bg-[#f2ecdc] p-3.5 rounded-xl border border-[#c4b59d] text-center shadow-sm">
                 <p class="text-xs text-[#614e3e] font-medium">Số dư xu tiết kiệm tích lũy:</p>
-                <p id="total-coins" class="text-2xl font-bold text-[#8c4a32] mt-0.5">🪙 0</p>
-            </div>
-
-            <div class="w-full">
-                <h2 class="text-xs font-bold uppercase tracking-wide text-[#5c4738] mb-2">📅 Chọn Tháng Thanh Toán Hóa Đơn:</h2>
-                <div id="months-list" class="space-y-2 max-h-60 overflow-y-auto pr-1">
-                    <!-- Dynamically populated months -->
+                <div class="flex items-center justify-center gap-1.5 mt-1">
+                    <svg class="w-5 h-5 text-amber-600 inline-block" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="#d4af37" stroke="#5c4738" stroke-width="2"/><text x="12" y="16" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">$</text></svg>
+                    <span id="total-coins" class="text-2xl font-bold text-[#8c4a32]">0</span>
                 </div>
             </div>
 
-            <button onclick="openEndlessMode()" class="w-full vintage-btn py-3 px-4 rounded-xl font-bold text-sm bg-[#d4e4bc] text-[#2c4a1d] border-[#3e6629] shadow-[3px_3px_0px_#3e6629]">
-                ♾️ Chế độ Chạy Tự Do (Endless Runner)
+            <div class="w-full">
+                <div class="flex items-center gap-1.5 mb-2">
+                    <svg class="w-4 h-4 text-[#5c4738]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <h2 class="text-xs font-bold uppercase tracking-wide text-[#5c4738]">Chọn 30 Tháng Thanh Toán Hóa Đơn:</h2>
+                </div>
+                <!-- Khung chứa 30 màn chơi, tăng chiều cao lên 280px cho dễ cuộn -->
+                <div id="months-list" class="space-y-2 max-h-[280px] overflow-y-auto pr-1">
+                    <!-- Dynamically populated 30 months -->
+                </div>
+            </div>
+
+            <button onclick="openEndlessMode()" class="w-full vintage-btn py-3 px-4 rounded-xl font-bold text-sm bg-[#d4e4bc] text-[#2c4a1d] border-[#3e6629] shadow-[3px_3px_0px_#3e6629] flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                Chế độ Chạy Tự Do (Endless Runner)
             </button>
         </div>
 
@@ -101,7 +112,10 @@
                 </div>
                 <div class="flex items-center gap-2">
                     <span id="hud-zone" class="font-bold px-2 py-0.5 rounded-md text-[10px] bg-amber-200 text-amber-900">☀️ Giờ Ngày</span>
-                    <span id="hud-score" class="font-bold text-[#8c4a32]">🪙 0</span>
+                    <div class="flex items-center gap-1 font-bold text-[#8c4a32]">
+                        <svg class="w-3.5 h-3.5 inline-block" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="#d4af37" stroke="#5c4738" stroke-width="2"/><text x="12" y="16" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">$</text></svg>
+                        <span id="hud-score">0</span>
+                    </div>
                 </div>
                 <div class="font-bold text-[#4a3b32]">
                     Tiến độ: <span id="hud-progress">0</span>/<span id="hud-target">1000</span>đ
@@ -141,7 +155,13 @@
             <div class="w-full bg-[#f2ecdc] p-3.5 rounded-xl border border-[#c4b59d] space-y-1.5 text-xs text-left font-medium">
                 <p id="res-title" class="font-bold text-sm text-[#4a3b32] text-center mb-2">Hóa đơn tháng 1</p>
                 <div class="flex justify-between"><span>Tiến độ đạt được:</span> <strong id="res-progress">1200 / 1000 đ</strong></div>
-                <div class="flex justify-between"><span>Xu nhặt được:</span> <strong id="res-coins">🪙 45</strong></div>
+                <div class="flex justify-between items-center">
+                    <span>Xu nhặt được:</span> 
+                    <div class="flex items-center gap-1 font-bold">
+                        <svg class="w-3.5 h-3.5 inline-block" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="#d4af37" stroke="#5c4738" stroke-width="2"/><text x="12" y="16" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">$</text></svg>
+                        <strong id="res-coins">45</strong>
+                    </div>
+                </div>
                 <div class="flex justify-between"><span>Đánh giá sao:</span> <strong id="res-stars">⭐⭐⭐</strong></div>
             </div>
 
@@ -160,7 +180,7 @@
             <ul class="text-xs space-y-2 text-[#5c4738] list-disc pl-4 font-medium leading-relaxed">
                 <li><strong>Điều khiển:</strong> Trên máy tính dùng phím mũi tên <strong>Trái/Phải</strong> (hoặc A/D). Trên điện thoại <strong>vuốt ngón tay sang trái/phải</strong> hoặc dùng 2 nút bấm bên dưới.</li>
                 <li><strong>Giá điện & Khung giờ:</strong> Trò chơi chuyển đổi qua 3 khung giờ ☀️ Ngày (Bình thường), ⚡ Cao điểm (Xu nhân đôi nhưng tốc độ nhanh), 🌙 Đêm (Ít chướng ngại, dễ tích lũy).</li>
-                <li><strong>Thanh toán hóa đơn:</strong> Nhặt các đồng xu 🪙 và túi hóa đơn 📄 để hoàn thành chỉ tiêu tiền điện của tháng.</li>
+                <li><strong>Thanh toán hóa đơn:</strong> Nhặt các đồng xu và túi hóa đơn 📄 để hoàn thành chỉ tiêu tiền điện của 30 tháng thử thách.</li>
                 <li><strong>Tránh lãng phí điện:</strong> Né các thiết bị gây tốn điện (Máy lạnh 16°C, Tủ lạnh hở cửa, Đèn bật ban ngày...). Va chạm sẽ mất 1 mạng ❤️ và rớt 20% xu!</li>
             </ul>
             <button onclick="closeRulesModal()" class="w-full vintage-btn py-2.5 bg-[#d4e4bc] text-[#2c4a1d] font-bold text-xs rounded-xl">Đã hiểu, vào game!</button>
@@ -169,14 +189,27 @@
 
     <!-- SCRIPT LOGIC -->
     <script>
-        const MONTHS_DATA = [
-            { id: 1, name: "Tháng 1 (Tết Nguyên Đán)", target: 800, reward: 50, unlocked: true, completed: false, stars: 0 },
-            { id: 2, name: "Tháng 2 (Mùa Đông Lạnh)", target: 1000, reward: 60, unlocked: false, completed: false, stars: 0 },
-            { id: 3, name: "Tháng 3 (Giao Mùa)", target: 1200, reward: 70, unlocked: false, completed: false, stars: 0 },
-            { id: 4, name: "Tháng 4 (Nóng Đầu Sớm)", target: 1400, reward: 80, unlocked: false, completed: false, stars: 0 },
-            { id: 5, name: "Tháng 5 (Cao Điểm Nóng)", target: 1600, reward: 100, unlocked: false, completed: false, stars: 0 },
-            { id: 6, name: "Tháng 6 (Đỉnh Điểm Mùa Hè)", target: 2000, reward: 150, unlocked: false, completed: false, stars: 0 }
+        // --- HỆ THỐNG 30 THÁNG THỬ THÁCH TIẾT KIỆM ĐIỆN ---
+        const THEMES_POOL = [
+            "Tết Nguyên Đán", "Mùa Đông Lạnh", "Giao Mùa Xuân", "Nóng Đầu Sớm", "Cao Điểm Nóng", "Đỉnh Điểm Mùa Hè",
+            "Mùa Mưa Bão", "Tựu Trường", "Đêm Hội Trung Thu", "Chuyển Mùa Gió Bấc", "Chuẩn Bị Cuối Năm", "Tổng Kết Năng Lượng",
+            "Nắng Hạn Kéo Dài", "Đợt Lạnh Kỷ Lục", "Mùa Hoa Nở", "Nắng Gắt Tháng Tư", "Bật Điều Hòa Suốt", "Hè Sôi Động",
+            "Mùa Tự Lập", "Tiết Trời Mát Mẻ", "Lá Rụng Mùa Thu", "Gió Lạnh Đầu Đông", "Ấm Áp Gia Đình", "Đêm Đông Giá Rét",
+            "Mùa Xuân Ấm Áp", "Nắng Sớm Mai", "Bứt Phá Năng Lượng", "Đỉnh Điểm Tiêu Thụ", "Tháng Cân Bằng Xanh", "Về Đích Net-Zero"
         ];
+
+        const MONTHS_DATA = [];
+        for (let i = 1; i <= 30; i++) {
+            MONTHS_DATA.push({
+                id: i,
+                name: `Tháng ${i} (${THEMES_POOL[i-1] || 'Tiết Kiệm Xanh'})`,
+                target: 700 + i * 150, // Mục tiêu tăng dần độ khó qua 30 bàn
+                reward: 40 + i * 10,
+                unlocked: i === 1 ? true : false,
+                completed: false,
+                stars: 0
+            });
+        }
 
         const OBSTACLE_TYPES = [
             { icon: '❄️', label: 'Máy lạnh 16°C', color: '#2b6cb0' },
@@ -240,7 +273,7 @@
             if (screenName === 'menu') {
                 document.getElementById('screen-menu').classList.remove('hidden');
                 renderMonthsList();
-                document.getElementById('total-coins').innerText = `🪙 ${gameState.totalCoins}`;
+                document.getElementById('total-coins').innerText = gameState.totalCoins;
             } else if (screenName === 'game') {
                 document.getElementById('screen-game').classList.remove('hidden');
             } else if (screenName === 'result') {
@@ -273,7 +306,7 @@
                 item.innerHTML = `
                     <div>
                         <p class="font-bold text-xs text-[#4a3b32]">${month.name}</p>
-                        <p class="text-[10px] text-[#735d4c] font-medium">Mục tiêu: ${month.target}đ | Thưởng: 🪙${month.reward}</p>
+                        <p class="text-[10px] text-[#735d4c] font-medium">Mục tiêu: ${month.target}đ | Thưởng: ${month.reward} xu</p>
                     </div>
                     <div class="flex items-center gap-2">
                         ${statusBadge}
@@ -330,7 +363,7 @@
         function openEndlessMode() {
             gameState.currentMonthId = null;
             gameState.isEndless = true;
-            gameState.targetScore = 5000;
+            gameState.targetScore = 10000;
             initGameSession();
         }
 
@@ -593,7 +626,7 @@
         function updateHUD() {
             let livesStr = '❤️'.repeat(gameState.lives) + '🖤'.repeat(3 - gameState.lives);
             document.getElementById('hud-lives').innerText = livesStr;
-            document.getElementById('hud-score').innerText = `🪙 ${gameState.coinsCollected}`;
+            document.getElementById('hud-score').innerText = gameState.coinsCollected;
             document.getElementById('hud-progress').innerText = gameState.progressScore;
             document.getElementById('hud-target').innerText = gameState.targetScore;
 
@@ -728,7 +761,7 @@
 
             document.getElementById('res-title').innerText = gameState.isEndless ? "Chế độ Chạy Tự Do" : `Hóa đơn tháng ${gameState.currentMonthId}`;
             document.getElementById('res-progress').innerText = `${gameState.progressScore} / ${gameState.targetScore} đ`;
-            document.getElementById('res-coins').innerText = `🪙 ${gameState.coinsCollected}`;
+            document.getElementById('res-coins').innerText = `${gameState.coinsCollected}`;
             document.getElementById('res-stars').innerText = '⭐'.repeat(starsCount) + (starsCount === 0 ? '❌' : '');
         }
 
