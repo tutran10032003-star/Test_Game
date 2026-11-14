@@ -63,20 +63,20 @@
     <!-- MAIN APP CONTAINER -->
     <div id="app" class="w-full max-w-md mx-auto vintage-card p-4 sm:p-5 flex flex-col items-center relative overflow-hidden">
         
-        <!-- HEADER -->
+        <!-- HEADER (Đã fix 3 nút bằng nhau, chỉ dùng icon cho gọn) -->
         <div class="w-full flex justify-between items-center mb-3 border-b-2 border-dashed border-[#8c7355] pb-2">
             <div>
                 <h1 class="font-black text-lg sm:text-xl text-[#4a3b32] tracking-wider" style="font-family: 'Playfair Display', serif;">ECO SURFER</h1>
                 <p class="text-[11px] text-[#735d4c] font-semibold">Tích Hũ Năng Lượng & Thanh Toán Hóa Đơn</p>
             </div>
             <div class="flex items-center gap-1.5">
-                <button onclick="openShopModal()" class="vintage-btn px-2 py-1.5 text-xs rounded-lg bg-[#f5e1a4] text-[#5c4738] flex items-center gap-1">
-                    🔋 Kho Đồ
+                <button onclick="openShopModal()" title="Kho Đồ" class="vintage-btn w-9 h-9 text-base rounded-lg bg-[#f5e1a4] text-[#5c4738] flex items-center justify-center">
+                    🔋
                 </button>
-                <button onclick="openRulesModal()" class="vintage-btn px-2 py-1.5 text-xs rounded-lg flex items-center gap-1">
-                    📜 Luật
+                <button onclick="openRulesModal()" title="Luật chơi" class="vintage-btn w-9 h-9 text-base rounded-lg flex items-center justify-center">
+                    📜
                 </button>
-                <button onclick="openAudioModal()" id="header-audio-btn" title="Cài đặt âm thanh" class="vintage-btn px-2 py-1.5 text-xs rounded-lg bg-[#e6dfcd]">
+                <button onclick="openAudioModal()" id="header-audio-btn" title="Cài đặt âm thanh" class="vintage-btn w-9 h-9 text-base rounded-lg bg-[#e6dfcd] flex items-center justify-center">
                     🔊
                 </button>
             </div>
@@ -197,7 +197,6 @@
             <h3 class="font-bold text-base text-[#4a3b32] border-b border-dashed border-[#8c7355] pb-2 text-center">🎛️ Cài Đặt Âm Thanh</h3>
             
             <div class="space-y-3 text-xs font-semibold">
-                <!-- Toggle Nhạc nền (BGM) -->
                 <div class="flex items-center justify-between bg-[#f2ecdc] p-3 rounded-xl border border-[#c4b59d]">
                     <div>
                         <p class="font-bold text-[#4a3b32]">🎵 Nhạc nền khi chạy</p>
@@ -208,7 +207,6 @@
                     </button>
                 </div>
 
-                <!-- Toggle Hiệu ứng & Nút bấm (SFX) -->
                 <div class="flex items-center justify-between bg-[#f2ecdc] p-3 rounded-xl border border-[#c4b59d]">
                     <div>
                         <p class="font-bold text-[#4a3b32]">🔊 Hiệu ứng & Nút bấm</p>
@@ -224,12 +222,12 @@
         </div>
     </div>
 
-    <!-- SHOP MODAL (KHO ĐỒ & NHÂN VẬT ĐÃ ĐƯỢC ĐẠNG HÓA & KHÓ HƠN) -->
+    <!-- SHOP MODAL (KHO ĐỒ: KÍNH LÚP NHỎ GỌN & GIAO DIỆN TỐI ƯU) -->
     <div id="shop-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
         <div class="vintage-card bg-[#fdfbf7] p-4 max-w-sm w-full space-y-3 relative max-h-[85vh] flex flex-col">
             <div class="flex justify-between items-center border-b border-dashed border-[#8c7355] pb-2">
-                <h3 class="font-bold text-base text-[#4a3b32]">🔋 Kho Thiết Bị Năng Lượng Xanh</h3>
-                <div class="flex items-center gap-1 bg-[#f2ecdc] px-2.5 py-1 rounded-lg border border-[#c4b59d] text-xs font-bold text-[#8c4a32]">
+                <h3 class="font-bold text-base text-[#4a3b32]">🔋 Kho Năng Lượng Xanh</h3>
+                <div class="flex items-center gap-1 bg-[#f2ecdc] px-2 py-1 rounded-lg border border-[#c4b59d] text-xs font-bold text-[#8c4a32]">
                     <svg class="w-3.5 h-3.5 inline-block" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#d4af37" stroke="#5c4738" stroke-width="2"/><text x="12" y="16" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">$</text></svg>
                     <span id="shop-coins">0</span>
                 </div>
@@ -237,12 +235,12 @@
 
             <div class="overflow-y-auto space-y-4 pr-1 flex-1">
                 <div>
-                    <h4 class="text-xs font-bold uppercase text-[#5c4738] mb-2">👤 Chọn Nhân Vật (Eco Buddies):</h4>
+                    <h4 class="text-xs font-bold uppercase text-[#5c4738] mb-2">👤 Nhân Vật (Eco Buddies):</h4>
                     <div id="shop-chars-list" class="space-y-2"></div>
                 </div>
 
                 <div>
-                    <h4 class="text-xs font-bold uppercase text-[#5c4738] mb-2">⚡ Chọn Balo Siêu Tụ Điện:</h4>
+                    <h4 class="text-xs font-bold uppercase text-[#5c4738] mb-2">⚡ Balo Siêu Tụ Điện:</h4>
                     <div id="shop-packs-list" class="space-y-2"></div>
                 </div>
             </div>
@@ -251,7 +249,7 @@
         </div>
     </div>
 
-    <!-- REVIEW CHARACTER MODAL (USER REVIEW TRƯỚC KHI MUA) -->
+    <!-- REVIEW CHARACTER MODAL (HIỂN THỊ THÔNG TIN GỌN GÀNG KHI BẤM KÍNH LÚP) -->
     <div id="review-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
         <div class="vintage-card bg-[#fdfbf7] p-5 max-w-xs w-full space-y-3 relative">
             <div class="border-b border-dashed border-[#8c7355] pb-2 text-center">
@@ -261,18 +259,28 @@
             
             <div class="space-y-2 text-xs font-medium text-[#5c4738]">
                 <div class="bg-[#f2ecdc] p-2.5 rounded-xl border border-[#c4b59d]">
-                    <p class="font-bold mb-1 text-[#4a3b32]">📝 Đánh giá kỹ năng:</p>
-                    <p id="rev-desc" class="text-[11px] text-[#735d4c]">Mô tả chi tiết kỹ năng đặc biệt của nhân vật này khi chạy trên đường băng.</p>
+                    <p class="font-bold mb-1 text-[#4a3b32]">📝 Mô tả:</p>
+                    <p id="rev-desc" class="text-[11px] text-[#735d4c]">Mô tả chi tiết kỹ năng đặc biệt của nhân vật.</p>
                 </div>
                 
-                <div class="space-y-1 bg-[#fdfbf7] p-2 rounded-lg border border-[#d6c9b4]">
-                    <div class="flex justify-between"><span>🛡️ Độ bền chịu va chạm:</span> <strong id="rev-stat-defense">Tốt</strong></div>
-                    <div class="flex justify-between"><span>🪙 Khả năng hút xu:</span> <strong id="rev-stat-magnet">Tiêu chuẩn</strong></div>
-                    <div class="flex justify-between"><span>⭐ Hệ số điểm hóa đơn:</span> <strong id="rev-stat-score">x1.0</strong></div>
+                <!-- Đã thu gọn chữ ở ô vuông thông số để không bị rối mắt -->
+                <div class="space-y-1.5 bg-[#fdfbf7] p-2.5 rounded-lg border border-[#d6c9b4]">
+                    <div class="flex justify-between items-center">
+                        <span class="flex items-center gap-1">🛡️ Độ bền va chạm:</span> 
+                        <strong id="rev-stat-defense" class="text-[#8c4a32]">Tốt</strong>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="flex items-center gap-1">🧲 Hút xu:</span> 
+                        <strong id="rev-stat-magnet" class="text-[#8c4a32]">Nhanh</strong>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="flex items-center gap-1">⭐ Hệ số điểm:</span> 
+                        <strong id="rev-stat-score" class="text-[#8c4a32]">x1.3</strong>
+                    </div>
                 </div>
 
                 <div class="text-center pt-1">
-                    <span class="text-xs font-bold text-[#8c4a32]" id="rev-price-tag">Giá: 1500 xu</span>
+                    <span class="text-xs font-bold text-[#8c4a32]" id="rev-price-tag">Giá: 3500 xu</span>
                 </div>
             </div>
 
@@ -289,13 +297,12 @@
             <h3 class="font-bold text-base text-[#4a3b32] border-b pb-1">📜 Hướng dẫn chơi Eco Surfer</h3>
             <ul class="text-xs space-y-2 text-[#5c4738] list-disc pl-4 font-medium leading-relaxed">
                 <li><strong>Di chuyển:</strong> Vuốt Trái/Phải trên màn hình (hoặc phím <strong>A/D</strong>, mũi tên).</li>
-                <li><strong>Bật Siêu Tụ Điện (Khiên Năng Lượng):</strong> Bấm nút <strong>⚡ Tụ Điện</strong> (hoặc chạm 2 lần vào màn hình / phím <strong>Space</strong>) để kích hoạt khiên bảo vệ trong 8 giây. Nếu đụng thiết bị tốn điện khi bật khiên, bạn sẽ <strong>không bị mất mạng</strong>!</li>
+                <li><strong>Bật Siêu Tụ Điện (Khiên Năng Lượng):</strong> Bấm nút <strong>⚡ Tụ Điện</strong> (hoặc chạm 2 lần vào màn hình / phím <strong>Space</strong>) để kích hoạt khiên bảo vệ trong 8 giây.</li>
                 <li><strong>Vật phẩm hỗ trợ:</strong>
-                    <br>- 🧲 <strong>Nam châm:</strong> Hút toàn bộ xu trên 3 làn (tốc độ mượt mà hơn).
+                    <br>- 🧲 <strong>Nam châm:</strong> Hút toàn bộ xu trên 3 làn.
                     <br>- ⚡ <strong>Pin Sạc Nhanh:</strong> Nhân đôi điểm hóa đơn.
                     <br>- 📄 <strong>Hóa đơn xanh:</strong> Cộng ngay 300đ vào mục tiêu tháng.
                 </li>
-                <li><strong>Độ khó tăng dần:</strong> Mỗi tháng tăng lên tốc độ sẽ nhanh hơn, chướng ngại vật nhiều hơn và mục tiêu cao hơn!</li>
             </ul>
             <button onclick="closeRulesModal()" class="w-full vintage-btn py-2.5 bg-[#d4e4bc] text-[#2c4a1d] font-bold text-xs rounded-xl">Đã hiểu, vào chạy ngay!</button>
         </div>
@@ -303,40 +310,39 @@
 
     <!-- SCRIPT LOGIC -->
     <script>
-        // --- DỮ LIỆU NHÂN VẬT ĐÃ ĐƯỢC ĐẠNG HÓA & MỞ RỘNG (GIÁ KHÓ HƠN) ---
         const CHARACTERS_DATA = [
             { 
-                id: 'buddy', name: 'Eco Buddy (Mây Xanh)', title: 'Linh vật thân thiện', desc: 'Linh vật tiết kiệm điện tiêu chuẩn, cực kỳ linh hoạt nhưng không có chỉ số phụ trợ đặc biệt.', price: 0, 
+                id: 'buddy', name: 'Eco Buddy (Mây Xanh)', title: 'Linh vật thân thiện', desc: 'Linh vật tiết kiệm điện tiêu chuẩn, linh hoạt.', price: 0, 
                 bodyColor: '#5c4738', headColor: '#f5f0e6', hatColor: '#467551', isCloud: true,
-                defense: 'Cơ bản (3 mạng)', magnetPower: 'Bình thường', scoreBonus: 'x1.0'
+                defense: '3 mạng', magnetPower: 'Bình thường', scoreBonus: 'x1.0'
             },
             { 
-                id: 'solar', name: 'Kỹ Sư Mặt Trời', title: 'Bậc thầy quang năng', desc: 'Sử dụng công nghệ pin hấp thu ánh sáng giúp tăng cường hiệu quả tích lũy hóa đơn xanh.', price: 1200, 
+                id: 'solar', name: 'Kỹ Sư Mặt Trời', title: 'Bậc thầy quang năng', desc: 'Tận dụng ánh sáng giúp tăng cường hiệu quả hóa đơn xanh.', price: 1200, 
                 bodyColor: '#d97706', headColor: '#fde68a', hatColor: '#1e3a8a', isCloud: false,
                 defense: 'Tốt', magnetPower: 'Khá', scoreBonus: 'x1.2'
             },
             { 
-                id: 'wind', name: 'Chiến Binh Gió', title: 'Cơn lốc năng lượng sạch', desc: 'Lướt nhẹ nhàng qua các giờ cao điểm, giúp giảm thiểu tối đa hệ số phạt khi va chạm chướng ngại vật.', price: 3500, 
+                id: 'wind', name: 'Chiến Binh Gió', title: 'Cơn lốc năng lượng sạch', desc: 'Lướt nhẹ nhàng qua giờ cao điểm, giảm thiểu phạt va chạm.', price: 3500, 
                 bodyColor: '#0284c7', headColor: '#e0f2fe', hatColor: '#0f766e', isCloud: false,
-                defense: 'Cao (Giảm phạt va chạm)', magnetPower: 'Nhanh', scoreBonus: 'x1.3'
+                defense: 'Giảm 50% phạt', magnetPower: 'Nhanh', scoreBonus: 'x1.3'
             },
             { 
-                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Trang bị giáp năng lượng tối tân, cho phép thu hút xu ở phạm vi siêu rộng và tối ưu hóa hóa đơn cực đỉnh.', price: 7500, 
+                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Giáp năng lượng tối tân, hút xu phạm vi siêu rộng.', price: 7500, 
                 bodyColor: '#15803d', headColor: '#dcfce7', hatColor: '#14532d', isCloud: false,
-                defense: 'Tuyệt đối', magnetPower: 'Siêu rộng (Bán kính lớn)', scoreBonus: 'x1.5'
+                defense: 'Cao cấp', magnetPower: 'Siêu rộng', scoreBonus: 'x1.5'
             },
             { 
-                id: 'quantum', name: 'Pháp Sư Lượng Tử', title: 'Đỉnh cao tương lai', desc: 'Công nghệ năng lượng lượng tử giúp nhân đôi mọi phần thưởng thu được trên đường chạy.', price: 15000, 
+                id: 'quantum', name: 'Pháp Sư Lượng Tử', title: 'Đỉnh cao tương lai', desc: 'Công nghệ lượng tử giúp nhân đôi mọi phần thưởng.', price: 15000, 
                 bodyColor: '#7e22ce', headColor: '#f3e8ff', hatColor: '#581c87', isCloud: false,
-                defense: 'Tối ưu', magnetPower: 'Tự động hút toàn làn', scoreBonus: 'x2.0'
+                defense: 'Tối ưu', magnetPower: 'Toàn làn', scoreBonus: 'x2.0'
             }
         ];
 
         const PACKS_DATA = [
-            { id: 'battery', name: '🔋 Pin Dự Phòng Cơ Bản', desc: 'Balo tích điện tiêu chuẩn (2 lần dùng/ván)', price: 0, color: '#467551', trim: '#a3e635', charges: 2 },
-            { id: 'supercap', name: '⚡ Siêu Tụ Điện Nhanh', desc: 'Tích trữ điện áp cao (3 lần dùng/ván)', price: 1500, color: '#d97706', trim: '#fef08a', charges: 3 },
-            { id: 'solarpack', name: '☀️ Balo Năng Lượng Mặt Trời', desc: 'Tự động tái tạo năng lượng (4 lần dùng/ván)', price: 4000, color: '#0369a1', trim: '#7dd3fc', charges: 4 },
-            { id: 'reactor', name: '⚛️ Lò Phản Ứng Xanh Miti', desc: 'Công nghệ Net-Zero đỉnh cao (5 lần dùng/ván)', price: 10000, color: '#7e22ce', trim: '#f0abfc', charges: 5 }
+            { id: 'battery', name: '🔋 Pin Dự Phòng Cơ Bản', desc: '2 lần dùng/ván', price: 0, color: '#467551', trim: '#a3e635', charges: 2 },
+            { id: 'supercap', name: '⚡ Siêu Tụ Điện Nhanh', desc: '3 lần dùng/ván', price: 1500, color: '#d97706', trim: '#fef08a', charges: 3 },
+            { id: 'solarpack', name: '☀️ Balo Năng Lượng Mặt Trời', desc: '4 lần dùng/ván', price: 4000, color: '#0369a1', trim: '#7dd3fc', charges: 4 },
+            { id: 'reactor', name: '⚛️ Lò Phản Ứng Xanh Miti', desc: '5 lần dùng/ván', price: 10000, color: '#7e22ce', trim: '#f0abfc', charges: 5 }
         ];
 
         const THEMES_POOL = [
@@ -396,7 +402,6 @@
             sfxEnabled: true
         };
 
-        // --- HỆ THỐNG ÂM THANH TÁCH BIỆT ---
         let audioCtx = null;
         let bgmTimer = null;
 
@@ -533,7 +538,6 @@
             }
         }
 
-        // --- QUẢN LÝ CÀI ĐẶT ÂM THANH ---
         function openAudioModal() {
             updateAudioUI();
             document.getElementById('audio-modal').classList.remove('hidden');
@@ -585,7 +589,6 @@
             }
         }
 
-        // --- LƯU & TẢI DỮ LIỆU ---
         function loadSavedData() {
             const savedCoins = localStorage.getItem('eco_surfer_coins');
             if (savedCoins !== null) gameState.totalCoins = parseInt(savedCoins);
@@ -640,7 +643,6 @@
             }))));
         }
 
-        // --- QUẢN LÝ MÀN HÌNH & KHO ĐỒ ---
         function switchScreen(screenName) {
             document.getElementById('screen-menu').classList.add('hidden');
             document.getElementById('screen-game').classList.add('hidden');
@@ -733,18 +735,18 @@
                 } else {
                     const canAfford = gameState.totalCoins >= char.price;
                     btnHtml = `
-                        <div class="flex gap-1">
-                            <button onclick="openReviewModal('${char.id}')" class="vintage-btn px-2 py-1 text-[10px] rounded-lg bg-[#d6c9b4]" title="Xem review">🔍 Review</button>
-                            <button onclick="buyChar('${char.id}')" class="vintage-btn px-2 py-1 text-[11px] rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${char.price} xu</button>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="openReviewModal('${char.id}')" class="vintage-btn w-8 h-8 text-sm rounded-lg bg-[#d6c9b4] flex items-center justify-center" title="Xem review">🔍</button>
+                            <button onclick="buyChar('${char.id}')" class="vintage-btn px-2.5 py-1.5 text-[11px] rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${char.price}</button>
                         </div>
                     `;
                 }
 
                 charList.innerHTML += `
                     <div class="p-2.5 rounded-xl border border-[#c4b59d] bg-[#f2ecdc] flex justify-between items-center">
-                        <div>
+                        <div class="pr-2">
                             <p class="font-bold text-xs text-[#4a3b32]">${char.name}</p>
-                            <p class="text-[10px] text-[#735d4c]">${char.title} • Giá: ${char.price} xu</p>
+                            <p class="text-[10px] text-[#735d4c]">${char.title}</p>
                         </div>
                         ${btnHtml}
                     </div>
@@ -762,12 +764,12 @@
                     btnHtml = `<button onclick="equipPack('${pack.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg bg-[#e6dfcd]">Chọn</button>`;
                 } else {
                     const canAfford = gameState.totalCoins >= pack.price;
-                    btnHtml = `<button onclick="buyPack('${pack.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${pack.price} xu</button>`;
+                    btnHtml = `<button onclick="buyPack('${pack.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${pack.price}</button>`;
                 }
 
                 packList.innerHTML += `
                     <div class="p-2.5 rounded-xl border border-[#c4b59d] bg-[#f2ecdc] flex justify-between items-center">
-                        <div>
+                        <div class="pr-2">
                             <p class="font-bold text-xs text-[#4a3b32]">${pack.name}</p>
                             <p class="text-[10px] text-[#735d4c]">${pack.desc}</p>
                         </div>
@@ -777,7 +779,6 @@
             });
         }
 
-        // --- TÍNH NĂNG REVIEW NHÂN VẬT ---
         function openReviewModal(charId) {
             const char = CHARACTERS_DATA.find(c => c.id === charId);
             if (!char) return;
@@ -846,7 +847,6 @@
             document.getElementById('rules-modal').classList.add('hidden');
         }
 
-        // --- ENGINE GAME ---
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const gameArea = document.getElementById('game-area');
@@ -1147,10 +1147,8 @@
             for (let i = collectibles.length - 1; i >= 0; i--) {
                 let col = collectibles[i];
                 col.y += gameState.gameSpeed;
-
                 col.x = col.lane * laneWidth + laneWidth / 2;
 
-                // Tối ưu nam châm hút xu mượt mà hơn, tránh bay loạn xạ quá hỗn độn
                 if (gameState.magnetTimer > 0 && (col.type === 'coin' || col.type === 'bill') && col.y > 20) {
                     col.x += (playerCenterX - col.x) * 0.12;
                     col.y += (playerCenterY - col.y) * 0.10;
