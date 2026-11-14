@@ -1,545 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Eco-Buddy Home Manager ⚡☁️</title>
-
-    <!-- PWA CONFIGURATION -->
-    <link rel="manifest" href="/Saving_Money/manifest.json">
-    <meta name="theme-color" content="#fcf8f2">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Eco-Buddy">
-    <link rel="apple-touch-icon" href="/Saving_Money/icons/icon-192.png">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subway Eco Runner 🏃‍♂️⚡</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700;900&display=swap" rel="stylesheet">
     <style>
-#report-subtab-upload input[type="number"],#report-subtab-upload input[type="date"],#billing-listing-container,#dash-stat-kwh,#dash-stat-bill,#dash-stat-savings,#donut-center-val{font-family:inherit;font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
-        * { box-sizing: border-box; caret-color: transparent; }
-
-        html {
-            -webkit-text-size-adjust: 100%;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: 'Quicksand', sans-serif;
             background-color: #fcf8f2;
             color: #4a3b32;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             min-height: 100vh;
-            min-height: 100dvh;
-            overflow-x: hidden;
-            padding-top: var(--header-height, 80px);
-        }
-
-        button, input, textarea, select { font-family: inherit; touch-action: manipulation; caret-color: auto; }
-        button { cursor: pointer; }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f4ecdf; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb { background: #d8c7b0; border-radius: 3px; }
-
-        .vintage-panel {
-            background: linear-gradient(145deg, #fffdfa 0%, #f7f1e5 100%);
-            border: 2px solid #5c4738;
-            box-shadow: 4px 4px 0 #5c4738;
-            border-radius: 1.5rem;
-            width: 100%;
-            max-width: 780px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .vint-card {
-            background: #fffaf4;
-            border: 1.5px solid #5c4738;
-            border-radius: 1rem;
-            box-shadow: 2px 2px 0 #5c4738;
-        }
-
-        /* FIXED HEADER */
-        header {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            z-index: 10000 !important;
-            width: 100%;
-            background: rgba(255,253,250,.97);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 3px 10px rgba(92,71,56,.10);
-        }
-
-        .header-inner {
-            width: 100%;
-            max-width: 860px;
-            margin: 0 auto;
-            padding: 12px 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 9px;
-        }
-
-        .header-inner > .flex.items-center.justify-between {
-            width: 100%;
-        }
-
-        /* TABS NAVIGATION */
-        .nav-pills {
-            width: 100%;
-            max-width: 100%;
-            padding: 5px;
-            display: grid;
-            grid-template-columns: repeat(7, minmax(0, 1fr));
-            gap: 3px;
-            background: #f0e6d6;
-            border-radius: 30px;
-            border: 1px solid #e4d8c5;
-            flex-shrink: 0;
-        }
-
-        .nav-btn {
-            min-width: 0;
-            min-height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid transparent;
-            border-radius: 20px;
-            padding: 7px 2px;
-            font-size: 12px;
-            font-weight: 700;
-            line-height: 1.15;
-            color: #4a3b32;
-            background: transparent;
-            transition: .2s;
-            text-align: center;
-            white-space: normal;
-            overflow-wrap: anywhere;
-        }
-        .nav-btn span {
-            display: block;
-            max-width: 100%;
-            overflow-wrap: anywhere;
-        }
-
-        .nav-btn.active {
-            background: #8c7355;
-            color: white;
-            border-color: #5c4738;
-            box-shadow: 2px 2px 0 #5c4738;
-        }
-
-        /* MASCOT */
-        .eco-mascot {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: visible;
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-        }
-
-        .eco-character {
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-            animation: mascot-float 3s ease-in-out infinite;
-            transform-origin: center bottom;
-        }
-
-        .eco-character.level-1 .mascot-body-fill { fill: #fff9ed; }
-        .eco-character.level-2 .mascot-body-fill { fill: #eef7eb; }
-        .eco-character.level-3 .mascot-body-fill { fill: #fcf3df; }
-
-        @keyframes mascot-float {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-
-        @media (max-width: 640px) {
-            .header-inner {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 9px;
-                padding: 10px 12px;
-            }
-            .nav-pills { max-width: none; width: 100%; }
-            .nav-btn { font-size: 11px; padding: 8px 2px; }
-            main { padding-left: 12px !important; padding-right: 12px !important; padding-top: 16px !important; }
-            .eco-mascot { width: 180px; height: 180px; }
-        }
-
-        /* ECO GAME HUB & SUBWAY SURFERS STYLE */
-        .eco-game-card {
-            min-width: 0;
-            min-height: 168px;
-            padding: 14px 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            text-align: center;
-            background: #fffaf4;
-            border: 1.5px solid #8c7355;
-            border-radius: 18px;
-            box-shadow: 2px 3px 0 #5c4738;
-            color: #4a3b32;
-            transition: transform .15s, background .15s;
-        }
-        .eco-game-card:hover { background: #f2f7ec; transform: translateY(-2px); }
-        .eco-game-card:active { transform: scale(.98); }
-        .eco-game-card strong { font-size: 13px; line-height: 1.25; }
-        .eco-game-card small { font-size: 10px; line-height: 1.35; color: #7a6452; font-weight: 600; }
-        .eco-game-emoji { font-size: 34px; line-height: 1.1; }
-        
-        #eco-game-stage.eco-game-fullscreen {
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 2147483000;
-            width: 100%;
-            height: 100vh;
-            height: 100dvh;
             margin: 0;
-            padding: 20px;
-            overflow-y: auto;
-            background: #fcf8f2;
+            user-select: none;
         }
-
-        .eco-playfield {
-            border: 2px solid #5c4738;
-            border-radius: 18px;
-            background: linear-gradient(145deg, #2b3a42, #1a252b);
-            padding: 16px;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
-            color: white;
+        .game-container {
+            width: 100%;
+            max-width: 400px;
+            background: linear-gradient(145deg, #fffdfa, #f7f1e5);
+            border: 3px solid #5c4738;
+            box-shadow: 6px 6px 0 #5c4738;
+            border-radius: 24px;
+            padding: 20px;
             text-align: center;
         }
-
-        .subway-track-container {
+        .track-box {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            background: #364954;
+            gap: 10px;
+            background: #2b3a42;
             border: 3px solid #5c4738;
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 12px;
-            min-height: 240px;
-            position: relative;
+            min-height: 280px;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+            margin: 15px 0;
         }
-
-        .subway-lane {
+        .lane {
             background: #1f2a30;
             border: 2px dashed #4b6270;
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            min-height: 210px;
-            font-size: 28px;
+            padding: 8px 0;
+            min-height: 250px;
+            font-size: 32px;
         }
-
-        .eco-action-btn {
-            border: 2px solid #5c4738;
+        .lane.active-lane {
+            background: #26353d;
+            border-color: #A8C7A0;
+        }
+        .control-btn {
             background: #A8C7A0;
+            border: 2px solid #5c4738;
             color: #2b3a42;
-            border-radius: 14px;
-            padding: 12px 18px;
             font-weight: 900;
-            font-size: 14px;
+            font-size: 18px;
+            padding: 14px;
+            border-radius: 16px;
             box-shadow: 0 4px 0 #5c4738;
-            transition: all 0.1s;
+            cursor: pointer;
+            transition: all 0.05s ease;
         }
-        .eco-action-btn:active {
+        .control-btn:active {
             transform: translateY(3px);
             box-shadow: 0 1px 0 #5c4738;
         }
     </style>
 </head>
+<body>
 
-<body class="min-h-screen flex flex-col justify-between selection:bg-amber-200">
-
-    <!-- HEADER + TABS -->
-    <header class="border-b-2 border-[#5c4738]">
-        <div class="header-inner">
-            <div class="flex items-center justify-between gap-3 mb-2 sm:mb-0">
-                <div class="flex items-center space-x-2.5">
-                    <span class="text-2xl">🌿</span>
-                    <div>
-                        <h1 class="font-bold text-xs sm:text-base text-[#4a3b32] leading-tight tracking-tight whitespace-nowrap">Eco-Buddy Home Manager</h1>
-                        <p class="text-xs text-[#7a6452] font-semibold mt-0.5">🕒 <span id="realtime-clock" class="text-[#5c4738] font-bold"></span></p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TABS -->
-            <nav class="nav-pills" aria-label="Main navigation">
-                <button onclick="switchTab('weather')" id="tab-btn-weather" class="nav-btn"><span>🌦️ Weather</span></button>
-                <button onclick="switchTab('tracker')" id="tab-btn-tracker" class="nav-btn active"><span>⚡ Tariff</span></button>
-                <button onclick="switchTab('reports')" id="tab-btn-reports" class="nav-btn"><span>📊 Reports</span></button>
-                <button onclick="switchTab('tips')" id="tab-btn-tips" class="nav-btn"><span>💡 Tips</span></button>
-                <button onclick="switchTab('chatbot')" id="tab-btn-chatbot" class="nav-btn"><span>☁️ Bé Mây</span></button>
-                <button onclick="switchTab('checklist')" id="tab-btn-checklist" class="nav-btn"><span>🍳 Cooking</span></button>
-                <button onclick="switchTab('calendar')" id="tab-btn-calendar" class="nav-btn"><span>📅 Calendar</span></button>
-            </nav>
+    <div class="game-container">
+        <div class="flex justify-between items-center mb-2 px-2">
+            <span class="font-black text-sm">🚇 SUBWAY ECO RUNNER</span>
+            <span id="score-display" class="bg-[#364954] text-amber-300 px-3 py-1 rounded-full text-xs font-black border border-[#5c4738]">⭐ 0</span>
         </div>
-    </header>
+        
+        <p class="text-xs text-[#7a6452] font-bold">Né chướng ngại vật 🚧 và ăn ngôi sao ⭐!</p>
 
-    <!-- MAIN -->
-    <main class="max-w-4xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
-
-        <!-- MASCOT CARD -->
-        <div id="mascot-global-card" class="vintage-panel p-6 flex flex-col items-center text-center">
-            <div class="w-full flex justify-between items-center px-2 mb-2 text-xs font-extrabold text-[#5c4738]">
-                <span id="mascot-level-badge" class="bg-[#f0e6d6] px-3 py-1 rounded-full border border-[#5c4738]">🌱 Level 1: Sprout</span>
-                <span id="mascot-xp-text" class="text-[#7a6452]">0 / 100 XP</span>
-            </div>
-            <div class="w-full bg-[#f0e6d6] h-2.5 rounded-full border border-[#5c4738] overflow-hidden mb-3">
-                <div id="mascot-xp-bar" class="bg-[#A8C7A0] h-full w-[0%] transition-all duration-500"></div>
-            </div>
-
-            <div class="relative mb-2 w-full flex justify-center">
-                <div class="eco-mascot">
-                    <svg id="main-mascot-svg" class="eco-character level-1" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                        <ellipse cx="150" cy="269" rx="66" ry="8" fill="#b9a27b" opacity=".18"/>
-                        <path d="M116 220 Q105 239 107 252 Q110 261 134 257 L145 229" fill="#fff9ed" stroke="#75604d" stroke-width="5" stroke-linejoin="round"/>
-                        <ellipse cx="121" cy="257" rx="19" ry="10" fill="#fff9ed" stroke="#75604d" stroke-width="4"/>
-                        <path d="M174 222 Q188 239 185 252 Q182 262 159 257 L151 229" fill="#fff9ed" stroke="#75604d" stroke-width="5" stroke-linejoin="round"/>
-                        <ellipse cx="176" cy="257" rx="19" ry="10" fill="#fff9ed" stroke="#75604d" stroke-width="4"/>
-                        <path class="mascot-body-fill" d="M83 164 Q65 153 69 134 Q53 119 65 101 Q71 82 91 81 Q96 58 119 62 Q137 43 153 57 Q171 43 189 61 Q215 58 224 82 Q246 89 241 111 Q257 129 240 147 Q249 168 229 184 Q232 207 211 220 Q194 236 170 233 Q150 241 128 233 Q102 237 87 218 Q68 207 77 186 Q64 176 83 164 Z" stroke="#75604d" stroke-width="5" stroke-linejoin="round"/>
-                        <g>
-                            <path d="M145 57 Q108 45 103 23 Q134 17 151 46 Z" fill="#a3a875" stroke="#756b49" stroke-width="4"/>
-                            <path d="M151 48 Q171 13 198 25 Q194 52 158 62 Z" fill="#7d9368" stroke="#756b49" stroke-width="4"/>
-                        </g>
-                    </svg>
-                </div>
-            </div>
-            <p id="mascot-speech" class="text-xs text-[#5c4738] font-medium bg-[#f5ede2] p-3 rounded-2xl border-1.5 border-[#5c4738] w-full mt-3 leading-relaxed">"Let's play Subway Surfers style Eco Runner! Avoid hazards & collect stars! 🤍"</p>
+        <!-- Khung đường ray -->
+        <div class="track-box" id="track-container">
+            <!-- Render bằng Javascript -->
         </div>
 
-        <!-- OTHER TABS -->
-        <div id="tab-content-weather" class="hidden vintage-panel p-6"><h3>Weather Tab</h3></div>
-        <div id="tab-content-tracker" class="vintage-panel p-6"><h3>Tariff Tracker Tab</h3></div>
-        <div id="tab-content-reports" class="hidden vintage-panel p-6"><h3>Reports Tab</h3></div>
-
-        <!-- TAB: TIPS & ECO GAME HUB -->
-        <div id="tab-content-tips" class="hidden space-y-6">
-            <section id="eco-game-hub-panel" class="vintage-panel p-5 sm:p-6 space-y-4">
-                <div class="border-b-2 border-[#5c4738] pb-3">
-                    <h2 class="font-bold text-[#4a3b32] text-lg">🎮 Eco Game Hub</h2>
-                    <p class="text-xs text-[#7a6452] mt-1">Play Subway Surfers style runner right inside your dashboard!</p>
-                </div>
-                <div id="eco-game-grid" class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <button class="eco-game-card" onclick="openEcoGame('runner')">
-                        <span class="eco-game-emoji">🏃‍♂️</span>
-                        <strong>Subway Eco Runner</strong>
-                        <small>Switch lanes, jump & dodge obstacles!</small>
-                    </button>
-                </div>
-            </section>
-            
-            <section id="eco-game-stage" class="hidden vintage-panel p-4 sm:p-6 space-y-4">
-                <div class="eco-game-toolbar flex justify-between items-center border-b border-[#5c4738] pb-2">
-                    <span class="font-bold text-sm text-[#4a3b32]">⚡ Subway Surfers Mode</span>
-                    <button onclick="closeEcoGame()" class="px-3 py-1.5 rounded-xl bg-[#f0e6d6] border border-[#5c4738] text-xs font-bold">✕ Close</button>
-                </div>
-                <div id="eco-game-play-area" class="space-y-3"></div>
-            </section>
+        <!-- Nút điều khiển 2 bên -->
+        <div class="grid grid-cols-2 gap-4 mt-3">
+            <button class="control-btn" onclick="move(-1)">⬅️ TRÁI</button>
+            <button class="control-btn" onclick="move(1)">PHẢI ➡️</button>
         </div>
+    </div>
 
-        <div id="tab-content-chatbot" class="hidden vintage-panel p-6"><h3>Bé Mây Chatbot</h3></div>
-        <div id="tab-content-checklist" class="hidden vintage-panel p-6"><h3>Cooking Tab</h3></div>
-        <div id="tab-content-calendar" class="hidden vintage-panel p-6"><h3>Calendar Tab</h3></div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="text-center py-5 text-xs text-[#7a6452] font-medium border-t-2 border-[#5c4738] bg-[#f7f1e5] mt-4">
-        Eco-Buddy Home Manager V2 · Vintage Pastel Edition 🌿🤍
-    </footer>
-
-    <!-- JAVASCRIPT LOGIC -->
     <script>
-        function switchTab(tabName) {
-            const tabs = ['weather', 'tracker', 'reports', 'tips', 'chatbot', 'checklist', 'calendar'];
-            tabs.forEach(t => {
-                const el = document.getElementById(`tab-content-${t}`);
-                const btn = document.getElementById(`tab-btn-${t}`);
-                if (el) el.classList.add('hidden');
-                if (btn) btn.classList.remove('active');
-            });
-            document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
-            document.getElementById(`tab-btn-${tabName}`).classList.add('active');
-            
-            const mascotCard = document.getElementById('mascot-global-card');
-            if(tabName === 'tracker') mascotCard.classList.remove('hidden');
-            else mascotCard.classList.add('hidden');
-        }
+        let lane = 1; // 0: Trái, 1: Giữa, 2: Phải
+        let score = 0;
+        let rows = [];
+        let timer = null;
 
-        setInterval(() => {
-            const clock = document.getElementById('realtime-clock');
-            if(clock) clock.innerText = new Date().toLocaleTimeString();
-        }, 1000);
-
-        // --- SUBWAY SURFERS STYLE RUNNER ENGINE ---
-        let runnerLane = 1; // 0: Trái, 1: Giữa, 2: Phải
-        let runnerScore = 0;
-        let trackRows = [];
-        let gameInterval = null;
-
-        function openEcoGame(id) {
-            if(id === 'runner') {
-                document.getElementById("eco-game-grid").classList.add("hidden");
-                const stage = document.getElementById("eco-game-stage");
-                stage.classList.remove("hidden");
-                stage.classList.add("eco-game-fullscreen");
-                startSubwayRunner();
-            }
-        }
-
-        function closeEcoGame() {
-            clearInterval(gameInterval);
-            const stage = document.getElementById("eco-game-stage");
-            stage.classList.remove("eco-game-fullscreen");
-            stage.classList.add("hidden");
-            document.getElementById("eco-game-grid").classList.remove("hidden");
-        }
-
-        function startSubwayRunner() {
-            runnerLane = 1;
-            runnerScore = 0;
-            trackRows = [
-                { obstacles: [null, '🚧', null], items: ['⭐', null, null] },
-                { obstacles: [null, null, '⚠️'], items: [null, '⭐', null] },
-                { obstacles: ['🚧', null, null], items: [null, null, '⭐'] },
-                { obstacles: [null, '⚠️', null], items: ['⭐', null, null] }
+        function initGame() {
+            lane = 1;
+            score = 0;
+            rows = [
+                { obs: [null, '🚧', null], item: ['⭐', null, null] },
+                { obs: [null, null, '⚠️'], item: [null, '⭐', null] },
+                { obs: ['🚧', null, null], item: [null, null, '⭐'] },
+                { obs: [null, '⚠️', null], item: ['⭐', null, null] }
             ];
-            renderSubwayBoard();
-
-            // Tự động cuộn đường chạy tạo cảm giác đang chạy liên tục như Subway Surfers
-            if(gameInterval) clearInterval(gameInterval);
-            gameInterval = setInterval(() => {
-                advanceRunnerWorld();
-            }, 1200);
+            render();
+            if(timer) clearInterval(timer);
+            timer = setInterval(gameLoop, 1100); // Tốc độ chạy tự động
         }
 
-        function advanceRunnerWorld() {
-            // Đẩy dòng mới từ trên xuống
-            const obsList = [null, '🚧', '⚠️', null];
-            const itemList = ['⭐', null, '🍃', '⭐'];
+        function gameLoop() {
+            // Tạo hàng mới phía trên rơi xuống
+            const oList = [null, '🚧', '⚠️', null];
+            const iList = ['⭐', null, '🍃', '⭐'];
             
             const newRow = {
-                obstacles: [obsList[Math.floor(Math.random()*4)], obsList[Math.floor(Math.random()*4)], obsList[Math.floor(Math.random()*4)]],
-                items: [itemList[Math.floor(Math.random()*4)], itemList[Math.floor(Math.random()*4)], itemList[Math.floor(Math.random()*4)]]
+                obs: [oList[Math.floor(Math.random()*4)], oList[Math.floor(Math.random()*4)], oList[Math.floor(Math.random()*4)]],
+                item: [iList[Math.floor(Math.random()*4)], iList[Math.floor(Math.random()*4)], iList[Math.floor(Math.random()*4)]]
             };
 
-            trackRows.pop();
-            trackRows.unshift(newRow);
+            rows.pop();
+            rows.unshift(newRow);
 
-            // Kiểm tra va chạm ở hàng dưới cùng (nơi nhân vật đang đứng)
-            const bottomRow = trackRows[trackRows.length - 1];
-            if(bottomRow.obstacles[runnerLane]) {
-                // Va phải chướng ngại vật!
-                alert("💥 Oops! Bạn đã va phải chướng ngại vật! Tổng điểm ngôi sao: " + runnerScore);
-                startSubwayRunner(); // Chơi lại từ đầu
+            // Kiểm tra va chạm ở hàng dưới cùng
+            const bottom = rows[rows.length - 1];
+            if(bottom.obs[lane]) {
+                alert("💥 Game Over! Va phải chướng ngại vật. Tổng điểm: " + score);
+                initGame();
                 return;
-            } else if(bottomRow.items[runnerLane]) {
-                // Ăn được quà / sao
-                runnerScore += 10;
-                bottomRow.items[runnerLane] = null; // Biến mất sau khi ăn
+            } else if(bottom.item[lane]) {
+                score += 10;
+                bottom.item[lane] = null; // Ăn xong mất sao
             }
 
-            renderSubwayBoard();
+            render();
         }
 
-        function renderSubwayBoard() {
-            const area = document.getElementById("eco-game-play-area");
-            
-            let tracksHTML = '';
-            // Vẽ 3 làn đường (Mỗi làn có 4 hàng dọc thể hiện khoảng cách)
-            for(let laneIdx = 0; laneIdx < 3; laneIdx++) {
+        function render() {
+            const container = document.getElementById('track-container');
+            let html = '';
+
+            for(let l = 0; l < 3; l++) {
                 let laneContent = '';
-                for(let rowIdx = 0; rowIdx < trackRows.length; rowIdx++) {
-                    const row = trackRows[rowIdx];
-                    let cellDisplay = '';
-                    
-                    // Nếu là hàng dưới cùng và trùng với vị trí nhân vật đang đứng
-                    if(rowIdx === trackRows.length - 1 && laneIdx === runnerLane) {
-                        cellDisplay = '🏃‍♂️'; // Nhân vật Bé Mây / Runner
-                    } else if(row.obstacles[laneIdx]) {
-                        cellDisplay = row.obstacles[laneIdx]; // Chướng ngại vật (🚧, ⚠️)
-                    } else if(row.items[laneIdx]) {
-                        cellDisplay = row.items[laneIdx]; // Vật phẩm (⭐, 🍃)
-                    } else {
-                        cellDisplay = '·';
+                for(let r = 0; r < rows.length; r++) {
+                    let cell = '·';
+                    if(r === rows.length - 1 && l === lane) {
+                        cell = '🏃‍♂️'; // Nhân vật
+                    } else if(rows[r].obs[l]) {
+                        cell = rows[r].obs[l];
+                    } else if(rows[r].item[l]) {
+                        cell = rows[r].item[l];
                     }
-                    laneContent += `<div style="height: 45px; display:flex; align-items:center; justify-content:center;">${cellDisplay}</div>`;
+                    laneContent += `<div style="height: 50px; display:flex; align-items:center; justify-content:center;">${cell}</div>`;
                 }
-
-                tracksHTML += `
-                    <div class="subway-lane" style="${laneIdx === runnerLane ? 'border-color: #A8C7A0; background: #26353d;' : ''}">
-                        ${laneContent}
-                    </div>
-                `;
+                html += `<div class="lane ${l === lane ? 'active-lane' : ''}">${laneContent}</div>`;
             }
 
-            area.innerHTML = `
-                <div class="eco-playfield space-y-3">
-                    <div class="flex justify-between items-center text-xs font-black px-2">
-                        <span>🚇 SUBWAY ECO RUNNER</span>
-                        <span class="bg-[#364954] px-3 py-1 rounded-full text-amber-300 border border-[#5c4738]">⭐ Score: ${runnerScore}</span>
-                    </div>
-                    <p class="text-[11px] text-gray-300">Dùng nút Trái / Phải để né chướng ngại vật 🚧 và ăn sao ⭐!</p>
-                    
-                    <div class="subway-track-container">
-                        ${tracksHTML}
-                    </div>
-
-                    <div class="flex justify-center gap-4 pt-2">
-                        <button class="eco-action-btn px-6" onclick="moveRunner(-1)">⬅️ TRÁI</button>
-                        <button class="eco-action-btn px-6" onclick="moveRunner(1)">PHẢI ➡️</button>
-                    </div>
-                </div>
-            `;
+            container.innerHTML = html;
+            document.getElementById('score-display').innerText = "⭐ " + score;
         }
 
-        function moveRunner(direction) {
-            runnerLane = Math.max(0, Math.min(2, runnerLane + direction));
+        function move(dir) {
+            lane = Math.max(0, Math.min(2, lane + dir));
             
-            // Kiểm tra ngay lập tức tại vị trí mới ở hàng dưới
-            const bottomRow = trackRows[trackRows.length - 1];
-            if(bottomRow.obstacles[runnerLane]) {
-                alert("💥 Va chạm chướng ngại vật! Điểm của bạn: " + runnerScore);
-                startSubwayRunner();
+            // Check ngay khi bấm đổi làn
+            const bottom = rows[rows.length - 1];
+            if(bottom.obs[lane]) {
+                alert("💥 Game Over! Va phải chướng ngại vật. Tổng điểm: " + score);
+                initGame();
                 return;
-            } else if(bottomRow.items[runnerLane]) {
-                runnerScore += 10;
-                bottomRow.items[runnerLane] = null;
+            } else if(bottom.item[lane]) {
+                score += 10;
+                bottom.item[lane] = null;
             }
-
-            renderSubwayBoard();
+            render();
         }
 
-        // Hỗ trợ bắt phím mũi tên trái phải bàn phím máy tính
+        // Bắt phím mũi tên bàn phím
         window.addEventListener('keydown', (e) => {
-            if(document.getElementById("eco-game-stage").classList.contains("hidden")) return;
-            if(e.key === 'ArrowLeft') moveRunner(-1);
-            if(e.key === 'ArrowRight') moveRunner(1);
+            if(e.key === 'ArrowLeft') move(-1);
+            if(e.key === 'ArrowRight') move(1);
         });
+
+        // Bắt đầu chạy ngay khi mở web
+        initGame();
     </script>
 </body>
 </html>
