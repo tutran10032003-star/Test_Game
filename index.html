@@ -1,744 +1,545 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Eco Runner: Pay Your Bills</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Eco-Buddy Home Manager ⚡☁️</title>
+
+    <!-- PWA CONFIGURATION -->
+    <link rel="manifest" href="/Saving_Money/manifest.json">
+    <meta name="theme-color" content="#fcf8f2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Eco-Buddy">
+    <link rel="apple-touch-icon" href="/Saving_Money/icons/icon-192.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
     <style>
+#report-subtab-upload input[type="number"],#report-subtab-upload input[type="date"],#billing-listing-container,#dash-stat-kwh,#dash-stat-bill,#dash-stat-savings,#donut-center-val{font-family:inherit;font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+        * { box-sizing: border-box; caret-color: transparent; }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Courier Prime', monospace;
-            background-color: #f7f4ea;
-            color: #3b302a;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fcf8f2;
+            color: #4a3b32;
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            padding-top: var(--header-height, 80px);
         }
-        .vintage-card {
-            background-color: #fdfbf7;
-            border: 3px double #8c7355;
-            box-shadow: 4px 4px 0px rgba(140, 115, 85, 0.3);
-        }
-        .vintage-btn {
-            background-color: #e6dfcd;
+
+        button, input, textarea, select { font-family: inherit; touch-action: manipulation; caret-color: auto; }
+        button { cursor: pointer; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f4ecdf; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: #d8c7b0; border-radius: 3px; }
+
+        .vintage-panel {
+            background: linear-gradient(145deg, #fffdfa 0%, #f7f1e5 100%);
             border: 2px solid #5c4738;
-            box-shadow: 3px 3px 0px #5c4738;
-            transition: all 0.1s ease;
+            box-shadow: 4px 4px 0 #5c4738;
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 780px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .vintage-btn:hover {
-            background-color: #d8ceb8;
-            transform: translate(-1px, -1px);
-            box-shadow: 4px 4px 0px #5c4738;
+
+        .vint-card {
+            background: #fffaf4;
+            border: 1.5px solid #5c4738;
+            border-radius: 1rem;
+            box-shadow: 2px 2px 0 #5c4738;
         }
-        .vintage-btn:active {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #5c4738;
+
+        /* FIXED HEADER */
+        header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 10000 !important;
+            width: 100%;
+            background: rgba(255,253,250,.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 3px 10px rgba(92,71,56,.10);
         }
-        .stamp {
-            border: 2px dashed #b94a39;
-            color: #b94a39;
-            transform: rotate(-3deg);
-            font-weight: bold;
+
+        .header-inner {
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 9px;
         }
-        /* Custom scrollbar for bill lists */
-        ::-webkit-scrollbar {
-            width: 6px;
+
+        .header-inner > .flex.items-center.justify-between {
+            width: 100%;
         }
-        ::-webkit-scrollbar-track {
-            background: #f1ebd9;
+
+        /* TABS NAVIGATION */
+        .nav-pills {
+            width: 100%;
+            max-width: 100%;
+            padding: 5px;
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 3px;
+            background: #f0e6d6;
+            border-radius: 30px;
+            border: 1px solid #e4d8c5;
+            flex-shrink: 0;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #b5a285;
-            border-radius: 3px;
+
+        .nav-btn {
+            min-width: 0;
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 7px 2px;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.15;
+            color: #4a3b32;
+            background: transparent;
+            transition: .2s;
+            text-align: center;
+            white-space: normal;
+            overflow-wrap: anywhere;
+        }
+        .nav-btn span {
+            display: block;
+            max-width: 100%;
+            overflow-wrap: anywhere;
+        }
+
+        .nav-btn.active {
+            background: #8c7355;
+            color: white;
+            border-color: #5c4738;
+            box-shadow: 2px 2px 0 #5c4738;
+        }
+
+        /* MASCOT */
+        .eco-mascot {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .eco-character {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            animation: mascot-float 3s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+
+        .eco-character.level-1 .mascot-body-fill { fill: #fff9ed; }
+        .eco-character.level-2 .mascot-body-fill { fill: #eef7eb; }
+        .eco-character.level-3 .mascot-body-fill { fill: #fcf3df; }
+
+        @keyframes mascot-float {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @media (max-width: 640px) {
+            .header-inner {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 9px;
+                padding: 10px 12px;
+            }
+            .nav-pills { max-width: none; width: 100%; }
+            .nav-btn { font-size: 11px; padding: 8px 2px; }
+            main { padding-left: 12px !important; padding-right: 12px !important; padding-top: 16px !important; }
+            .eco-mascot { width: 180px; height: 180px; }
+        }
+
+        /* ECO GAME HUB & SUBWAY SURFERS STYLE */
+        .eco-game-card {
+            min-width: 0;
+            min-height: 168px;
+            padding: 14px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            text-align: center;
+            background: #fffaf4;
+            border: 1.5px solid #8c7355;
+            border-radius: 18px;
+            box-shadow: 2px 3px 0 #5c4738;
+            color: #4a3b32;
+            transition: transform .15s, background .15s;
+        }
+        .eco-game-card:hover { background: #f2f7ec; transform: translateY(-2px); }
+        .eco-game-card:active { transform: scale(.98); }
+        .eco-game-card strong { font-size: 13px; line-height: 1.25; }
+        .eco-game-card small { font-size: 10px; line-height: 1.35; color: #7a6452; font-weight: 600; }
+        .eco-game-emoji { font-size: 34px; line-height: 1.1; }
+        
+        #eco-game-stage.eco-game-fullscreen {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 2147483000;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            margin: 0;
+            padding: 20px;
+            overflow-y: auto;
+            background: #fcf8f2;
+        }
+
+        .eco-playfield {
+            border: 2px solid #5c4738;
+            border-radius: 18px;
+            background: linear-gradient(145deg, #2b3a42, #1a252b);
+            padding: 16px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+            color: white;
+            text-align: center;
+        }
+
+        .subway-track-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background: #364954;
+            border: 3px solid #5c4738;
+            border-radius: 14px;
+            padding: 12px;
+            min-height: 240px;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+        }
+
+        .subway-lane {
+            background: #1f2a30;
+            border: 2px dashed #4b6270;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            min-height: 210px;
+            font-size: 28px;
+        }
+
+        .eco-action-btn {
+            border: 2px solid #5c4738;
+            background: #A8C7A0;
+            color: #2b3a42;
+            border-radius: 14px;
+            padding: 12px 18px;
+            font-weight: 900;
+            font-size: 14px;
+            box-shadow: 0 4px 0 #5c4738;
+            transition: all 0.1s;
+        }
+        .eco-action-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #5c4738;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-2 sm:p-4">
 
-    <!-- MAIN APP CONTAINER -->
-    <div id="app" class="w-full max-w-md mx-auto vintage-card p-4 sm:p-6 flex flex-col items-center relative overflow-hidden">
-        
-        <!-- HEADER -->
-        <div class="w-full flex justify-between items-center mb-3 border-b-2 border-dashed border-[#8c7355] pb-2">
-            <div>
-                <h1 class="font-black text-lg sm:text-xl text-[#4a3b32] tracking-wider" style="font-family: 'Playfair Display', serif;">ECO RUNNER</h1>
-                <p class="text-[10px] sm:text-xs text-[#735d4c]">Pay Your Bills & Save Energy</p>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-200">
+
+    <!-- HEADER + TABS -->
+    <header class="border-b-2 border-[#5c4738]">
+        <div class="header-inner">
+            <div class="flex items-center justify-between gap-3 mb-2 sm:mb-0">
+                <div class="flex items-center space-x-2.5">
+                    <span class="text-2xl">🌿</span>
+                    <div>
+                        <h1 class="font-bold text-xs sm:text-base text-[#4a3b32] leading-tight tracking-tight whitespace-nowrap">Eco-Buddy Home Manager</h1>
+                        <p class="text-xs text-[#7a6452] font-semibold mt-0.5">🕒 <span id="realtime-clock" class="text-[#5c4738] font-bold"></span></p>
+                    </div>
+                </div>
             </div>
-            <button onclick="openRulesModal()" class="vintage-btn px-2.5 py-1 text-xs font-bold rounded">📜 Hướng dẫn</button>
+
+            <!-- TABS -->
+            <nav class="nav-pills" aria-label="Main navigation">
+                <button onclick="switchTab('weather')" id="tab-btn-weather" class="nav-btn"><span>🌦️ Weather</span></button>
+                <button onclick="switchTab('tracker')" id="tab-btn-tracker" class="nav-btn active"><span>⚡ Tariff</span></button>
+                <button onclick="switchTab('reports')" id="tab-btn-reports" class="nav-btn"><span>📊 Reports</span></button>
+                <button onclick="switchTab('tips')" id="tab-btn-tips" class="nav-btn"><span>💡 Tips</span></button>
+                <button onclick="switchTab('chatbot')" id="tab-btn-chatbot" class="nav-btn"><span>☁️ Bé Mây</span></button>
+                <button onclick="switchTab('checklist')" id="tab-btn-checklist" class="nav-btn"><span>🍳 Cooking</span></button>
+                <button onclick="switchTab('calendar')" id="tab-btn-calendar" class="nav-btn"><span>📅 Calendar</span></button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="max-w-4xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+
+        <!-- MASCOT CARD -->
+        <div id="mascot-global-card" class="vintage-panel p-6 flex flex-col items-center text-center">
+            <div class="w-full flex justify-between items-center px-2 mb-2 text-xs font-extrabold text-[#5c4738]">
+                <span id="mascot-level-badge" class="bg-[#f0e6d6] px-3 py-1 rounded-full border border-[#5c4738]">🌱 Level 1: Sprout</span>
+                <span id="mascot-xp-text" class="text-[#7a6452]">0 / 100 XP</span>
+            </div>
+            <div class="w-full bg-[#f0e6d6] h-2.5 rounded-full border border-[#5c4738] overflow-hidden mb-3">
+                <div id="mascot-xp-bar" class="bg-[#A8C7A0] h-full w-[0%] transition-all duration-500"></div>
+            </div>
+
+            <div class="relative mb-2 w-full flex justify-center">
+                <div class="eco-mascot">
+                    <svg id="main-mascot-svg" class="eco-character level-1" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="150" cy="269" rx="66" ry="8" fill="#b9a27b" opacity=".18"/>
+                        <path d="M116 220 Q105 239 107 252 Q110 261 134 257 L145 229" fill="#fff9ed" stroke="#75604d" stroke-width="5" stroke-linejoin="round"/>
+                        <ellipse cx="121" cy="257" rx="19" ry="10" fill="#fff9ed" stroke="#75604d" stroke-width="4"/>
+                        <path d="M174 222 Q188 239 185 252 Q182 262 159 257 L151 229" fill="#fff9ed" stroke="#75604d" stroke-width="5" stroke-linejoin="round"/>
+                        <ellipse cx="176" cy="257" rx="19" ry="10" fill="#fff9ed" stroke="#75604d" stroke-width="4"/>
+                        <path class="mascot-body-fill" d="M83 164 Q65 153 69 134 Q53 119 65 101 Q71 82 91 81 Q96 58 119 62 Q137 43 153 57 Q171 43 189 61 Q215 58 224 82 Q246 89 241 111 Q257 129 240 147 Q249 168 229 184 Q232 207 211 220 Q194 236 170 233 Q150 241 128 233 Q102 237 87 218 Q68 207 77 186 Q64 176 83 164 Z" stroke="#75604d" stroke-width="5" stroke-linejoin="round"/>
+                        <g>
+                            <path d="M145 57 Q108 45 103 23 Q134 17 151 46 Z" fill="#a3a875" stroke="#756b49" stroke-width="4"/>
+                            <path d="M151 48 Q171 13 198 25 Q194 52 158 62 Z" fill="#7d9368" stroke="#756b49" stroke-width="4"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <p id="mascot-speech" class="text-xs text-[#5c4738] font-medium bg-[#f5ede2] p-3 rounded-2xl border-1.5 border-[#5c4738] w-full mt-3 leading-relaxed">"Let's play Subway Surfers style Eco Runner! Avoid hazards & collect stars! 🤍"</p>
         </div>
 
-        <!-- SCREEN: MENU / MONTH SELECTOR -->
-        <div id="screen-menu" class="w-full flex flex-col items-center space-y-4 py-2">
-            <div class="w-full bg-[#f2ecdc] p-3 rounded border border-[#c4b59d] text-center">
-                <p class="text-xs text-[#614e3e]">Số dư xu tiết kiệm tích lũy:</p>
-                <p id="total-coins" class="text-2xl font-black text-[#8c4a32]">🪙 0</p>
-            </div>
+        <!-- OTHER TABS -->
+        <div id="tab-content-weather" class="hidden vintage-panel p-6"><h3>Weather Tab</h3></div>
+        <div id="tab-content-tracker" class="vintage-panel p-6"><h3>Tariff Tracker Tab</h3></div>
+        <div id="tab-content-reports" class="hidden vintage-panel p-6"><h3>Reports Tab</h3></div>
 
-            <div class="w-full">
-                <h2 class="text-xs font-bold uppercase tracking-wide text-[#5c4738] mb-2">📅 Chọn Tháng Thanh Toán Hóa Đơn:</h2>
-                <div id="months-list" class="space-y-2 max-h-60 overflow-y-auto pr-1">
-                    <!-- Dynamically populated months -->
+        <!-- TAB: TIPS & ECO GAME HUB -->
+        <div id="tab-content-tips" class="hidden space-y-6">
+            <section id="eco-game-hub-panel" class="vintage-panel p-5 sm:p-6 space-y-4">
+                <div class="border-b-2 border-[#5c4738] pb-3">
+                    <h2 class="font-bold text-[#4a3b32] text-lg">🎮 Eco Game Hub</h2>
+                    <p class="text-xs text-[#7a6452] mt-1">Play Subway Surfers style runner right inside your dashboard!</p>
                 </div>
-            </div>
-
-            <button onclick="openEndlessMode()" class="w-full vintage-btn py-3 px-4 rounded font-bold text-sm bg-[#d4e4bc] text-[#2c4a1d] border-[#3e6629] shadow-[3px_3px_0px_#3e6629]">
-                ♾️ Chế độ Chạy Tự Do (Endless Runner)
-            </button>
-        </div>
-
-        <!-- SCREEN: GAMEPLAY -->
-        <div id="screen-game" class="w-full hidden flex flex-col items-center space-y-3">
-            <!-- Game HUD -->
-            <div class="w-full flex justify-between items-center text-xs bg-[#f2ecdc] px-3 py-2 rounded border border-[#c4b59d]">
-                <div class="flex items-center gap-1">
-                    <span id="hud-lives">❤️❤️❤️</span>
+                <div id="eco-game-grid" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <button class="eco-game-card" onclick="openEcoGame('runner')">
+                        <span class="eco-game-emoji">🏃‍♂️</span>
+                        <strong>Subway Eco Runner</strong>
+                        <small>Switch lanes, jump & dodge obstacles!</small>
+                    </button>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span id="hud-zone" class="font-bold px-1.5 py-0.5 rounded text-[10px] bg-amber-200 text-amber-900">☀️ Giờ Ngày</span>
-                    <span id="hud-score" class="font-bold text-[#8c4a32]">🪙 0</span>
-                </div>
-                <div class="font-bold text-[#4a3b32]">
-                    Tiến độ: <span id="hud-progress">0</span>/<span id="hud-target">1000</span>đ
-                </div>
-            </div>
-
-            <!-- Canvas Wrapper -->
-            <div class="w-full relative aspect-[3/4] bg-[#2a3625] rounded border-2 border-[#5c4738] overflow-hidden shadow-inner">
-                <canvas id="gameCanvas" class="w-full h-full block"></canvas>
-                
-                <!-- Touch Controls Overlay for Mobile -->
-                <div class="absolute inset-0 flex pointer-events-none">
-                    <div id="touch-left" class="w-1/3 h-full pointer-events-auto"></div>
-                    <div id="touch-mid" class="w-1/3 h-full pointer-events-auto"></div>
-                    <div id="touch-right" class="w-1/3 h-full pointer-events-auto"></div>
-                </div>
-
-                <!-- Floating notification popup inside game -->
-                <div id="game-popup" class="absolute top-10 left-1/2 transform -translate-x-1/2 bg-[#fdfbf7] border-2 border-[#8c7355] px-3 py-1 rounded shadow-lg text-xs font-bold text-[#8c4a32] opacity-0 transition-opacity duration-300 pointer-events-none">
-                    +200đ Hóa Đơn!
-                </div>
-            </div>
-
-            <!-- Mobile Controller Buttons -->
-            <div class="w-full grid grid-cols-3 gap-2">
-                <button onclick="movePlayer(-1)" class="vintage-btn py-3 font-black text-base rounded bg-[#ebdccb]">⬅️ Trái</button>
-                <button onclick="playerJump()" class="vintage-btn py-3 font-black text-base rounded bg-[#dcd2be]">⬆️ Nhảy</button>
-                <button onclick="movePlayer(1)" class="vintage-btn py-3 font-black text-base rounded bg-[#ebdccb]">Phải ➡️</button>
-            </div>
-
-            <button onclick="quitGame()" class="text-xs text-[#8c4a32] underline font-bold mt-1">⚠️ Dừng & Quay lại Menu</button>
-        </div>
-
-        <!-- SCREEN: GAME OVER / RESULT -->
-        <div id="screen-result" class="w-full hidden flex flex-col items-center space-y-4 py-3 text-center">
-            <div id="result-stamp" class="stamp px-4 py-2 text-2xl font-black rounded uppercase tracking-widest my-2">
-                ĐÃ THANH TOÁN
-            </div>
+            </section>
             
-            <div class="w-full bg-[#f2ecdc] p-3 rounded border border-[#c4b59d] space-y-1 text-xs text-left">
-                <p id="res-title" class="font-bold text-sm text-[#4a3b32] text-center mb-2">Hóa đơn tháng 1</p>
-                <div class="flex justify-between"><span>Tiến độ đạt được:</span> <strong id="res-progress">1200 / 1000 đ</strong></div>
-                <div class="flex justify-between"><span>Xu nhặt được:</span> <strong id="res-coins">🪙 45</strong></div>
-                <div class="flex justify-between"><span>Đánh giá sao:</span> <strong id="res-stars">⭐⭐⭐</strong></div>
-            </div>
-
-            <div class="w-full flex gap-2">
-                <button onclick="returnToMenu()" class="flex-1 vintage-btn py-2.5 rounded font-bold text-xs bg-[#e6dfcd]">🏠 Về Menu</button>
-                <button onclick="restartCurrentGame()" class="flex-1 vintage-btn py-2.5 rounded font-bold text-xs bg-[#d4e4bc] text-[#2c4a1d]">🔄 Chạy Lại</button>
-            </div>
+            <section id="eco-game-stage" class="hidden vintage-panel p-4 sm:p-6 space-y-4">
+                <div class="eco-game-toolbar flex justify-between items-center border-b border-[#5c4738] pb-2">
+                    <span class="font-bold text-sm text-[#4a3b32]">⚡ Subway Surfers Mode</span>
+                    <button onclick="closeEcoGame()" class="px-3 py-1.5 rounded-xl bg-[#f0e6d6] border border-[#5c4738] text-xs font-bold">✕ Close</button>
+                </div>
+                <div id="eco-game-play-area" class="space-y-3"></div>
+            </section>
         </div>
 
-    </div>
+        <div id="tab-content-chatbot" class="hidden vintage-panel p-6"><h3>Bé Mây Chatbot</h3></div>
+        <div id="tab-content-checklist" class="hidden vintage-panel p-6"><h3>Cooking Tab</h3></div>
+        <div id="tab-content-calendar" class="hidden vintage-panel p-6"><h3>Calendar Tab</h3></div>
+    </main>
 
-    <!-- RULES MODAL -->
-    <div id="rules-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
-        <div class="vintage-card bg-[#fdfbf7] p-5 max-w-sm w-full space-y-3 relative">
-            <h3 class="font-bold text-base text-[#4a3b32] border-b pb-1">📜 Hướng dẫn chơi Eco Runner</h3>
-            <ul class="text-xs space-y-2 text-[#5c4738] list-disc pl-4">
-                <li><strong>Điều khiển:</strong> Dùng phím mũi tên Trái/Phải (hoặc nút bấm / vuốt màn hình) để chuyển 3 làn. Phím Lên để nhảy né vật cản.</li>
-                <li><strong>Giá điện & Khung giờ:</strong> Trò chơi chuyển đổi qua 3 khung giờ ☀️ Ngày (Bình thường), ⚡ Cao điểm (Xu nhân đôi nhưng vật cản nhanh), 🌙 Đêm (Ít chướng ngại, dễ tích lũy).</li>
-                <li><strong>Thanh toán hóa đơn:</strong> Nhặt các đồng xu điện năng và túi hóa đơn trên đường để hoàn thành chỉ tiêu tiền điện mục tiêu của tháng.</li>
-                <li><strong>Va chạm:</strong> Va vào chướng ngại vật (thiết bị tốn điện) sẽ mất 1 mạng ❤️ và rớt 20% số xu đang có!</li>
-            </ul>
-            <button onclick="closeRulesModal()" class="w-full vintage-btn py-2 bg-[#d4e4bc] text-[#2c4a1d] font-bold text-xs rounded">Đã hiểu, vào game!</button>
-        </div>
-    </div>
+    <!-- FOOTER -->
+    <footer class="text-center py-5 text-xs text-[#7a6452] font-medium border-t-2 border-[#5c4738] bg-[#f7f1e5] mt-4">
+        Eco-Buddy Home Manager V2 · Vintage Pastel Edition 🌿🤍
+    </footer>
 
-    <!-- SCRIPT LOGIC -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- GAME DATA & STATE ---
-        const MONTHS_DATA = [
-            { id: 1, name: "Tháng 1 (Tết Nguyên Đán)", target: 800, reward: 50, unlocked: true, completed: false, stars: 0 },
-            { id: 2, name: "Tháng 2 (Mùa Đông Lạnh)", target: 1000, reward: 60, unlocked: false, completed: false, stars: 0 },
-            { id: 3, name: "Tháng 3 (Giao Mùa)", target: 1200, reward: 70, unlocked: false, completed: false, stars: 0 },
-            { id: 4, name: "Tháng 4 (Nóng Đầu Sớm)", target: 1400, reward: 80, unlocked: false, completed: false, stars: 0 },
-            { id: 5, name: "Tháng 5 (Cao Điểm Nóng)", target: 1600, reward: 100, unlocked: false, completed: false, stars: 0 },
-            { id: 6, name: "Tháng 6 (Đỉnh Điểm Mùa Hè)", target: 2000, reward: 150, unlocked: false, completed: false, stars: 0 }
-        ];
+        function switchTab(tabName) {
+            const tabs = ['weather', 'tracker', 'reports', 'tips', 'chatbot', 'checklist', 'calendar'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-content-${t}`);
+                const btn = document.getElementById(`tab-btn-${t}`);
+                if (el) el.classList.add('hidden');
+                if (btn) btn.classList.remove('active');
+            });
+            document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tab-btn-${tabName}`).classList.add('active');
+            
+            const mascotCard = document.getElementById('mascot-global-card');
+            if(tabName === 'tracker') mascotCard.classList.remove('hidden');
+            else mascotCard.classList.add('hidden');
+        }
 
-        let gameState = {
-            totalCoins: 0,
-            currentMonthId: null,
-            isEndless: false,
-            score: 0,
-            coinsCollected: 0,
-            lives: 3,
-            targetScore: 1000,
-            progressScore: 0,
-            zone: 'day', // 'day', 'peak', 'night'
-            zoneTimer: 0,
-            gameSpeed: 5,
-            isPlaying: false
-        };
+        setInterval(() => {
+            const clock = document.getElementById('realtime-clock');
+            if(clock) clock.innerText = new Date().toLocaleTimeString();
+        }, 1000);
 
-        // Load saved data from localStorage
-        function loadSavedData() {
-            const savedCoins = localStorage.getItem('eco_runner_coins');
-            if (savedCoins !== null) gameState.totalCoins = parseInt(savedCoins);
+        // --- SUBWAY SURFERS STYLE RUNNER ENGINE ---
+        let runnerLane = 1; // 0: Trái, 1: Giữa, 2: Phải
+        let runnerScore = 0;
+        let trackRows = [];
+        let gameInterval = null;
 
-            const savedMonths = localStorage.getItem('eco_runner_months');
-            if (savedMonths !== null) {
-                try {
-                    const parsed = JSON.parse(savedMonths);
-                    parsed.forEach((m, idx) => {
-                        if (MONTHS_DATA[idx]) {
-                            MONTHS_DATA[idx].unlocked = m.unlocked;
-                            MONTHS_DATA[idx].completed = m.completed;
-                            MONTHS_DATA[idx].stars = m.stars;
-                        }
-                    });
-                } catch(e) {}
+        function openEcoGame(id) {
+            if(id === 'runner') {
+                document.getElementById("eco-game-grid").classList.add("hidden");
+                const stage = document.getElementById("eco-game-stage");
+                stage.classList.remove("hidden");
+                stage.classList.add("eco-game-fullscreen");
+                startSubwayRunner();
             }
         }
 
-        function saveGameData() {
-            localStorage.setItem('eco_runner_coins', gameState.totalCoins);
-            localStorage.setItem('eco_runner_months', JSON.stringify(MONTHS_DATA.map(m => ({
-                unlocked: m.unlocked,
-                completed: m.completed,
-                stars: m.stars
-            }))));
+        function closeEcoGame() {
+            clearInterval(gameInterval);
+            const stage = document.getElementById("eco-game-stage");
+            stage.classList.remove("eco-game-fullscreen");
+            stage.classList.add("hidden");
+            document.getElementById("eco-game-grid").classList.remove("hidden");
         }
 
-        // --- UI NAVIGATION ---
-        function switchScreen(screenName) {
-            document.getElementById('screen-menu').classList.add('hidden');
-            document.getElementById('screen-game').classList.add('hidden');
-            document.getElementById('screen-result').classList.add('hidden');
+        function startSubwayRunner() {
+            runnerLane = 1;
+            runnerScore = 0;
+            trackRows = [
+                { obstacles: [null, '🚧', null], items: ['⭐', null, null] },
+                { obstacles: [null, null, '⚠️'], items: [null, '⭐', null] },
+                { obstacles: ['🚧', null, null], items: [null, null, '⭐'] },
+                { obstacles: [null, '⚠️', null], items: ['⭐', null, null] }
+            ];
+            renderSubwayBoard();
 
-            if (screenName === 'menu') {
-                document.getElementById('screen-menu').classList.remove('hidden');
-                renderMonthsList();
-                document.getElementById('total-coins').innerText = `🪙 ${gameState.totalCoins}`;
-            } else if (screenName === 'game') {
-                document.getElementById('screen-game').classList.remove('hidden');
-            } else if (screenName === 'result') {
-                document.getElementById('screen-result').classList.remove('hidden');
+            // Tự động cuộn đường chạy tạo cảm giác đang chạy liên tục như Subway Surfers
+            if(gameInterval) clearInterval(gameInterval);
+            gameInterval = setInterval(() => {
+                advanceRunnerWorld();
+            }, 1200);
+        }
+
+        function advanceRunnerWorld() {
+            // Đẩy dòng mới từ trên xuống
+            const obsList = [null, '🚧', '⚠️', null];
+            const itemList = ['⭐', null, '🍃', '⭐'];
+            
+            const newRow = {
+                obstacles: [obsList[Math.floor(Math.random()*4)], obsList[Math.floor(Math.random()*4)], obsList[Math.floor(Math.random()*4)]],
+                items: [itemList[Math.floor(Math.random()*4)], itemList[Math.floor(Math.random()*4)], itemList[Math.floor(Math.random()*4)]]
+            };
+
+            trackRows.pop();
+            trackRows.unshift(newRow);
+
+            // Kiểm tra va chạm ở hàng dưới cùng (nơi nhân vật đang đứng)
+            const bottomRow = trackRows[trackRows.length - 1];
+            if(bottomRow.obstacles[runnerLane]) {
+                // Va phải chướng ngại vật!
+                alert("💥 Oops! Bạn đã va phải chướng ngại vật! Tổng điểm ngôi sao: " + runnerScore);
+                startSubwayRunner(); // Chơi lại từ đầu
+                return;
+            } else if(bottomRow.items[runnerLane]) {
+                // Ăn được quà / sao
+                runnerScore += 10;
+                bottomRow.items[runnerLane] = null; // Biến mất sau khi ăn
             }
+
+            renderSubwayBoard();
         }
 
-        function renderMonthsList() {
-            const container = document.getElementById('months-list');
-            container.innerHTML = '';
-
-            MONTHS_DATA.forEach((month, index) => {
-                let statusBadge = '';
-                let bgClass = 'bg-[#fdfbf7]';
-                let btnDisabled = '';
-
-                if (!month.unlocked) {
-                    bgClass = 'bg-[#eae3d2] opacity-70';
-                    btnDisabled = 'opacity-50 cursor-not-allowed';
-                    statusBadge = '<span class="text-[10px] text-gray-500 font-bold">🔒 Khóa</span>';
-                } else if (month.completed) {
-                    let starsStr = '⭐'.repeat(month.stars);
-                    statusBadge = `<span class="text-[10px] text-amber-700 font-bold">${starsStr} Hoàn thành</span>`;
-                } else {
-                    statusBadge = '<span class="text-[10px] text-green-700 font-bold">✨ Sẵn sàng</span>';
+        function renderSubwayBoard() {
+            const area = document.getElementById("eco-game-play-area");
+            
+            let tracksHTML = '';
+            // Vẽ 3 làn đường (Mỗi làn có 4 hàng dọc thể hiện khoảng cách)
+            for(let laneIdx = 0; laneIdx < 3; laneIdx++) {
+                let laneContent = '';
+                for(let rowIdx = 0; rowIdx < trackRows.length; rowIdx++) {
+                    const row = trackRows[rowIdx];
+                    let cellDisplay = '';
+                    
+                    // Nếu là hàng dưới cùng và trùng với vị trí nhân vật đang đứng
+                    if(rowIdx === trackRows.length - 1 && laneIdx === runnerLane) {
+                        cellDisplay = '🏃‍♂️'; // Nhân vật Bé Mây / Runner
+                    } else if(row.obstacles[laneIdx]) {
+                        cellDisplay = row.obstacles[laneIdx]; // Chướng ngại vật (🚧, ⚠️)
+                    } else if(row.items[laneIdx]) {
+                        cellDisplay = row.items[laneIdx]; // Vật phẩm (⭐, 🍃)
+                    } else {
+                        cellDisplay = '·';
+                    }
+                    laneContent += `<div style="height: 45px; display:flex; align-items:center; justify-content:center;">${cellDisplay}</div>`;
                 }
 
-                const item = document.createElement('div');
-                item.className = `w-full p-2.5 rounded border border-[#c4b59d] flex justify-between items-center ${bgClass}`;
-                item.innerHTML = `
-                    <div>
-                        <p class="font-bold text-xs text-[#4a3b32]">${month.name}</p>
-                        <p class="text-[10px] text-[#735d4c]">Mục tiêu: ${month.target}đ | Thưởng: 🪙${month.reward}</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        ${statusBadge}
-                        <button onclick="startMonthGame(${month.id})" class="vintage-btn px-3 py-1 text-xs font-bold rounded bg-[#d4e4bc] text-[#2c4a1d] ${btnDisabled}" ${!month.unlocked ? 'disabled' : ''}>
-                            Chạy 🏃
-                        </button>
+                tracksHTML += `
+                    <div class="subway-lane" style="${laneIdx === runnerLane ? 'border-color: #A8C7A0; background: #26353d;' : ''}">
+                        ${laneContent}
                     </div>
                 `;
-                container.appendChild(item);
-            });
-        }
-
-        function openRulesModal() {
-            document.getElementById('rules-modal').classList.remove('hidden');
-        }
-        function closeRulesModal() {
-            document.getElementById('rules-modal').classList.add('hidden');
-        }
-
-        // --- CANVAS GAME ENGINE ---
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        let player = {
-            lane: 1, // 0: Left, 1: Middle, 2: Right
-            x: 0,
-            y: 0,
-            width: 36,
-            height: 50,
-            targetX: 0,
-            isJumping: false,
-            jumpOffsetY: 0,
-            jumpVel: 0
-        };
-
-        let obstacles = [];
-        let collectibles = [];
-        let particles = [];
-        let gameFrame = 0;
-        let spawnTimer = 0;
-
-        function resizeCanvas() {
-            const rect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = rect.width;
-            canvas.height = rect.height;
-        }
-
-        function startMonthGame(monthId) {
-            const month = MONTHS_DATA.find(m => m.id === monthId);
-            if (!month || !month.unlocked) return;
-
-            gameState.currentMonthId = monthId;
-            gameState.isEndless = false;
-            gameState.targetScore = month.target;
-            initGameSession();
-        }
-
-        function openEndlessMode() {
-            gameState.currentMonthId = null;
-            gameState.isEndless = true;
-            gameState.targetScore = 5000;
-            initGameSession();
-        }
-
-        function initGameSession() {
-            switchScreen('game');
-            resizeCanvas();
-
-            gameState.score = 0;
-            gameState.coinsCollected = 0;
-            gameState.lives = 3;
-            gameState.progressScore = 0;
-            gameState.zone = 'day';
-            gameState.zoneTimer = 0;
-            gameState.gameSpeed = 5;
-            gameState.isPlaying = true;
-
-            player.lane = 1;
-            player.isJumping = false;
-            player.jumpOffsetY = 0;
-            player.jumpVel = 0;
-
-            obstacles = [];
-            collectibles = [];
-            particles = [];
-            gameFrame = 0;
-
-            updateHUD();
-            requestAnimationFrame(gameLoop);
-        }
-
-        function quitGame() {
-            gameState.isPlaying = false;
-            switchScreen('menu');
-        }
-
-        function restartCurrentGame() {
-            if (gameState.isEndless) {
-                openEndlessMode();
-            } else if (gameState.currentMonthId) {
-                startMonthGame(gameState.currentMonthId);
-            }
-        }
-
-        // Controls
-        function movePlayer(dir) {
-            if (!gameState.isPlaying) return;
-            player.lane += dir;
-            if (player.lane < 0) player.lane = 0;
-            if (player.lane > 2) player.lane = 2;
-        }
-
-        function playerJump() {
-            if (!gameState.isPlaying) return;
-            if (!player.isJumping) {
-                player.isJumping = true;
-                player.jumpVel = -11;
-            }
-        }
-
-        // Keyboard bindings
-        window.addEventListener('keydown', (e) => {
-            if (!gameState.isPlaying) return;
-            if (e.key === 'ArrowLeft' || e.key === 'a') movePlayer(-1);
-            if (e.key === 'ArrowRight' || e.key === 'd') movePlayer(1);
-            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === ' ') playerJump();
-        });
-
-        // Touch swipe handling on canvas container
-        let touchStartX = 0;
-        let touchStartY = 0;
-        canvas.addEventListener('touchstart', (e) => {
-            if (!gameState.isPlaying) return;
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }, {passive: true});
-
-        canvas.addEventListener('touchend', (e) => {
-            if (!gameState.isPlaying) return;
-            let diffX = e.changedTouches[0].clientX - touchStartX;
-            let diffY = e.changedTouches[0].clientY - touchStartY;
-
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (diffX > 30) movePlayer(1);
-                else if (diffX < -30) movePlayer(-1);
-            } else {
-                if (diffY < -30) playerJump();
-            }
-        }, {passive: true});
-
-        // Specific touch areas buttons
-        document.getElementById('touch-left').addEventListener('click', () => movePlayer(-1));
-        document.getElementById('touch-mid').addEventListener('click', () => playerJump());
-        document.getElementById('touch-right').addEventListener('click', () => movePlayer(1));
-
-
-        // --- MAIN GAME LOOP ---
-        function gameLoop() {
-            if (!gameState.isPlaying) return;
-
-            gameFrame++;
-            gameState.zoneTimer++;
-
-            // Zone cycle: Day (0-600f) -> Peak (600-1200f) -> Night (1200-1800f)
-            let cycle = gameState.zoneTimer % 1800;
-            if (cycle < 600) {
-                gameState.zone = 'day';
-                gameState.gameSpeed = 5.5;
-            } else if (cycle < 1200) {
-                gameState.zone = 'peak';
-                gameState.gameSpeed = 7.5; // faster during peak hours
-            } else {
-                gameState.zone = 'night';
-                gameState.gameSpeed = 4.5; // calmer night
             }
 
-            // Spawn obstacles & collectibles
-            spawnTimer++;
-            let spawnInterval = gameState.zone === 'peak' ? 55 : 75;
-            if (spawnTimer > spawnInterval) {
-                spawnTimer = 0;
-                spawnEntities();
-            }
+            area.innerHTML = `
+                <div class="eco-playfield space-y-3">
+                    <div class="flex justify-between items-center text-xs font-black px-2">
+                        <span>🚇 SUBWAY ECO RUNNER</span>
+                        <span class="bg-[#364954] px-3 py-1 rounded-full text-amber-300 border border-[#5c4738]">⭐ Score: ${runnerScore}</span>
+                    </div>
+                    <p class="text-[11px] text-gray-300">Dùng nút Trái / Phải để né chướng ngại vật 🚧 và ăn sao ⭐!</p>
+                    
+                    <div class="subway-track-container">
+                        ${tracksHTML}
+                    </div>
 
-            updatePhysics();
-            renderGame();
+                    <div class="flex justify-center gap-4 pt-2">
+                        <button class="eco-action-btn px-6" onclick="moveRunner(-1)">⬅️ TRÁI</button>
+                        <button class="eco-action-btn px-6" onclick="moveRunner(1)">PHẢI ➡️</button>
+                    </div>
+                </div>
+            `;
+        }
 
-            // Check Win Condition for normal months
-            if (!gameState.isEndless && gameState.progressScore >= gameState.targetScore) {
-                endGameSession(true);
+        function moveRunner(direction) {
+            runnerLane = Math.max(0, Math.min(2, runnerLane + direction));
+            
+            // Kiểm tra ngay lập tức tại vị trí mới ở hàng dưới
+            const bottomRow = trackRows[trackRows.length - 1];
+            if(bottomRow.obstacles[runnerLane]) {
+                alert("💥 Va chạm chướng ngại vật! Điểm của bạn: " + runnerScore);
+                startSubwayRunner();
                 return;
+            } else if(bottomRow.items[runnerLane]) {
+                runnerScore += 10;
+                bottomRow.items[runnerLane] = null;
             }
 
-            requestAnimationFrame(gameLoop);
+            renderSubwayBoard();
         }
 
-        function spawnEntities() {
-            let lane = Math.floor(Math.random() * 3);
-            let typeRand = Math.random();
-
-            if (typeRand < 0.55) {
-                // Obstacle (High-watt appliance)
-                let obsTypes = ['AC', 'Heater', 'Fridge', 'Iron'];
-                let chosenType = obsTypes[Math.floor(Math.random() * obsTypes.length)];
-                obstacles.push({
-                    lane: lane,
-                    y: -60,
-                    width: 40,
-                    height: 40,
-                    type: chosenType
-                });
-            } else {
-                // Collectible (Coin or Bill bag)
-                let isBill = Math.random() < 0.3;
-                collectibles.push({
-                    lane: lane,
-                    y: -50,
-                    width: 30,
-                    height: 30,
-                    isBill: isBill,
-                    value: isBill ? 200 : 50
-                });
-            }
-        }
-
-        function updatePhysics() {
-            // Lane X position calculation
-            let laneWidth = canvas.width / 3;
-            let targetLaneX = player.lane * laneWidth + laneWidth / 2 - player.width / 2;
-            player.x += (targetLaneX - player.x) * 0.2;
-
-            // Jump physics
-            if (player.isJumping) {
-                player.jumpOffsetY += player.jumpVel;
-                player.jumpVel += 0.6; // gravity
-                if (player.jumpOffsetY >= 0) {
-                    player.jumpOffsetY = 0;
-                    player.isJumping = false;
-                }
-            }
-
-            // Update obstacles
-            for (let i = obstacles.length - 1; i >= 0; i--) {
-                obstacles[i].y += gameState.gameSpeed;
-
-                // Collision detection with player
-                if (obstacles[i].lane === player.lane && obstacles[i].y > canvas.height - 120 && obstacles[i].y < canvas.height - 50) {
-                    if (player.jumpOffsetY > -25) { // Hit obstacle if not jumping high enough
-                        hitObstacle();
-                        obstacles.splice(i, 1);
-                        continue;
-                    }
-                }
-
-                // Remove off-screen
-                if (obstacles[i] && obstacles[i].y > canvas.height + 50) {
-                    obstacles.splice(i, 1);
-                }
-            }
-
-            // Update collectibles
-            for (let i = collectibles.length - 1; i >= 0; i--) {
-                collectibles[i].y += gameState.gameSpeed;
-
-                // Collection detection
-                if (collectibles[i].lane === player.lane && collectibles[i].y > canvas.height - 110 && collectibles[i].y < canvas.height - 40) {
-                    collectItem(collectibles[i]);
-                    collectibles.splice(i, 1);
-                    continue;
-                }
-
-                if (collectibles[i] && collectibles[i].y > canvas.height + 50) {
-                    collectibles.splice(i, 1);
-                }
-            }
-        }
-
-        function hitObstacle() {
-            gameState.lives--;
-            // Lose 20% of accumulated coins
-            let penalty = Math.floor(gameState.coinsCollected * 0.2);
-            gameState.coinsCollected = Math.max(0, gameState.coinsCollected - penalty);
-            
-            showPopup(`💥 Va chạm! Mất 1 mạng & 20% xu!`, '#b94a39');
-            updateHUD();
-
-            if (gameState.lives <= 0) {
-                endGameSession(false);
-            }
-        }
-
-        function collectItem(item) {
-            if (item.isBill) {
-                gameState.progressScore += item.value;
-                showPopup(`⚡ +${item.value}đ Hóa đơn!`, '#2c4a1d');
-            } else {
-                let multiplier = gameState.zone === 'peak' ? 2 : 1;
-                let earned = item.value * multiplier;
-                gameState.coinsCollected += earned;
-                gameState.progressScore += Math.floor(earned / 2);
-                showPopup(`🪙 +${earned} Xu (${gameState.zone === 'peak' ? 'x2 Cao điểm' : 'Thường'})`, '#8c4a32');
-            }
-            updateHUD();
-        }
-
-        function showPopup(text, color) {
-            const popup = document.getElementById('game-popup');
-            popup.innerText = text;
-            popup.style.color = color;
-            popup.style.opacity = '1';
-            setTimeout(() => {
-                popup.style.opacity = '0';
-            }, 1000);
-        }
-
-        function updateHUD() {
-            let livesStr = '❤️'.repeat(gameState.lives) + '🖤'.repeat(3 - gameState.lives);
-            document.getElementById('hud-lives').innerText = livesStr;
-            document.getElementById('hud-score').innerText = `🪙 ${gameState.coinsCollected}`;
-            document.getElementById('hud-progress').innerText = gameState.progressScore;
-            document.getElementById('hud-target').innerText = gameState.targetScore;
-
-            const zoneEl = document.getElementById('hud-zone');
-            if (gameState.zone === 'day') {
-                zoneEl.innerText = '☀️ Giờ Ngày';
-                zoneEl.className = 'font-bold px-1.5 py-0.5 rounded text-[10px] bg-amber-200 text-amber-900';
-            } else if (gameState.zone === 'peak') {
-                zoneEl.innerText = '⚡ Cao Điểm (x2)';
-                zoneEl.className = 'font-bold px-1.5 py-0.5 rounded text-[10px] bg-red-200 text-red-900 animate-pulse';
-            } else {
-                zoneEl.innerText = '🌙 Giờ Đêm';
-                zoneEl.className = 'font-bold px-1.5 py-0.5 rounded text-[10px] bg-indigo-200 text-indigo-900';
-            }
-        }
-
-        // --- RENDER GRAPHICS (Canvas) ---
-        function renderGame() {
-            // Background color based on zone
-            if (gameState.zone === 'day') ctx.fillStyle = '#eaf0e6';
-            else if (gameState.zone === 'peak') ctx.fillStyle = '#fceade';
-            else ctx.fillStyle = '#dce3ed';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Draw 3 lanes markers
-            let laneWidth = canvas.width / 3;
-            ctx.strokeStyle = '#c8bc9f';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([10, 10]);
-            ctx.beginPath();
-            ctx.moveTo(laneWidth, 0); ctx.lineTo(laneWidth, canvas.height);
-            ctx.moveTo(laneWidth * 2, 0); ctx.lineTo(laneWidth * 2, canvas.height);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            // Draw road side borders
-            ctx.fillStyle = '#d4c7b0';
-            ctx.fillRect(0, 0, 8, canvas.height);
-            ctx.fillRect(canvas.width - 8, 0, 8, canvas.height);
-
-            // Draw Obstacles
-            obstacles.forEach(obs => {
-                let ox = obs.lane * laneWidth + laneWidth / 2 - obs.width / 2;
-                let oy = obs.y;
-                
-                ctx.fillStyle = '#b94a39';
-                ctx.fillRect(ox, oy, obs.width, obs.height);
-                ctx.fillStyle = '#fdfbf7';
-                ctx.font = '12px Courier Prime';
-                ctx.textAlign = 'center';
-                ctx.fillText(obs.type, ox + obs.width / 2, oy + obs.height / 2 + 4);
-            });
-
-            // Draw Collectibles
-            collectibles.forEach(col => {
-                let cx = col.lane * laneWidth + laneWidth / 2;
-                let cy = col.y;
-
-                ctx.beginPath();
-                ctx.arc(cx, cy + 15, col.isBill ? 16 : 12, 0, Math.PI * 2);
-                ctx.fillStyle = col.isBill ? '#467551' : '#d4af37';
-                ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = '#5c4738';
-                ctx.stroke();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 11px Courier Prime';
-                ctx.textAlign = 'center';
-                ctx.fillText(col.isBill ? '📄' : '🪙', cx, cy + 19);
-            });
-
-            // Draw Player (Runner avatar)
-            let px = player.x;
-            let py = canvas.height - 90 + player.jumpOffsetY;
-            
-            // Shadow under player
-            ctx.fillStyle = 'rgba(0,0,0,0.15)';
-            ctx.beginPath();
-            ctx.ellipse(px + player.width / 2, canvas.height - 40, player.width / 2 * (1 + player.jumpOffsetY/50), 6, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Player body
-            ctx.fillStyle = '#5c4738';
-            ctx.fillRect(px + 6, py + 15, player.width - 12, player.height - 20); // body
-            ctx.fillStyle = '#d9c3a9';
-            ctx.fillRect(px + 10, py, 16, 16); // head
-            // Hat/Cap
-            ctx.fillStyle = '#2c4a1d';
-            ctx.fillRect(px + 8, py - 4, 20, 6);
-        }
-
-        // --- END GAME SESSION ---
-        function endGameSession(isWin) {
-            gameState.isPlaying = false;
-            switchScreen('result');
-
-            let stampEl = document.getElementById('result-stamp');
-            let starsCount = 1;
-
-            if (isWin) {
-                stampEl.innerText = "HOÀN THÀNH HÓA ĐƠN";
-                stampEl.style.color = "#2c4a1d";
-                stampEl.style.borderColor = "#2c4a1d";
-
-                // Calculate stars based on remaining lives and progress
-                if (gameState.lives === 3) starsCount = 3;
-                else if (gameState.lives === 2) starsCount = 2;
-                else starsCount = 1;
-
-                // Update month status
-                if (!gameState.isEndless && gameState.currentMonthId) {
-                    const currentM = MONTHS_DATA.find(m => m.id === gameState.currentMonthId);
-                    if (currentM) {
-                        currentM.completed = true;
-                        currentM.stars = Math.max(currentM.stars, starsCount);
-
-                        // Unlock next month
-                        const nextM = MONTHS_DATA.find(m => m.id === gameState.currentMonthId + 1);
-                        if (nextM) nextM.unlocked = true;
-
-                        // Add reward coins
-                        gameState.totalCoins += currentM.reward + gameState.coinsCollected;
-                    }
-                }
-            } else {
-                stampEl.innerText = "HẾT MẠNG - THỬ LẠI";
-                stampEl.style.color = "#b94a39";
-                stampEl.style.borderColor = "#b94a39";
-                starsCount = 0;
-                gameState.totalCoins += gameState.coinsCollected; // keep collected coins
-            }
-
-            saveGameData();
-
-            // Display results
-            document.getElementById('res-title').innerText = gameState.isEndless ? "Chế độ Chạy Tự Do" : `Hóa đơn tháng ${gameState.currentMonthId}`;
-            document.getElementById('res-progress').innerText = `${gameState.progressScore} / ${gameState.targetScore} đ`;
-            document.getElementById('res-coins').innerText = `🪙 ${gameState.coinsCollected}`;
-            document.getElementById('res-stars').innerText = '⭐'.repeat(starsCount) + (starsCount === 0 ? '❌' : '');
-        }
-
-        function returnToMenu() {
-            switchScreen('menu');
-        }
-
-        // Window resize
-        window.addEventListener('resize', () => {
-            if (gameState.isPlaying) resizeCanvas();
+        // Hỗ trợ bắt phím mũi tên trái phải bàn phím máy tính
+        window.addEventListener('keydown', (e) => {
+            if(document.getElementById("eco-game-stage").classList.contains("hidden")) return;
+            if(e.key === 'ArrowLeft') moveRunner(-1);
+            if(e.key === 'ArrowRight') moveRunner(1);
         });
-
-        // Initialize on load
-        window.onload = function() {
-            loadSavedData();
-            switchScreen('menu');
-        };
     </script>
 </body>
 </html>
