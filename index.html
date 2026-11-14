@@ -306,29 +306,24 @@
     <script>
         const CHARACTERS_DATA = [
             { 
-                id: 'buddy', name: 'Eco Buddy (Mây Xanh)', title: 'Linh vật thân thiện', desc: 'Linh vật tiết kiệm điện tiêu chuẩn, trang bị áo mầm cây cơ bản.', price: 0, 
-                bodyColor: '#5c4738', headColor: '#f5f0e6', hatColor: '#467551', isCloud: true,
-                defense: '3 mạng', magnetPower: 'Bình thường', scoreBonus: 'x1.0', outfit: 'Mây xanh thân thiện'
+                id: 'buddy', name: 'Eco Buddy (Baby Cloud)', title: 'Linh vật mây xanh đáng yêu', desc: 'Mâm mây nhỏ nhắn, mang tai lá cây và chiếc khăn quàng xanh thân thiện[cite: 5].', price: 0, 
+                defense: '3 mạng', magnetPower: 'Bình thường', scoreBonus: 'x1.0', outfit: 'Khăn choàng & tai lá cây'
             },
             { 
-                id: 'solar', name: 'Kỹ Sư Mặt Trời', title: 'Bậc thầy quang năng', desc: 'Trang bị nón kỹ sư và kính quang năng, giúp tăng cường hiệu quả hóa đơn xanh.', price: 1200, 
-                bodyColor: '#d97706', headColor: '#fde68a', hatColor: '#1e3a8a', isCloud: false,
-                defense: 'Tốt', magnetPower: 'Khá', scoreBonus: 'x1.2', outfit: 'Nón bảo hộ & kính quang năng'
+                id: 'solar', name: 'Kỹ Sư Mặt Trời', title: 'Bậc thầy quang năng', desc: 'Trang bị nón bảo hộ chuyên dụng và kính quang năng, tối ưu hóa năng lượng mặt trời.', price: 1200, 
+                defense: 'Tốt', magnetPower: 'Khá', scoreBonus: 'x1.2', outfit: 'Nón kỹ sư & Kính quang năng'
             },
             { 
-                id: 'wind', name: 'Chiến Binh Gió', title: 'Cơn lốc năng lượng sạch', desc: 'Khoác áo choàng gió tung bay, giúp giảm thiểu 50% phạt khi va chạm.', price: 3500, 
-                bodyColor: '#0284c7', headColor: '#e0f2fe', hatColor: '#0f766e', isCloud: false,
-                defense: 'Giảm 50% phạt', magnetPower: 'Nhanh', scoreBonus: 'x1.3', outfit: 'Áo choàng gió lướt nhanh'
+                id: 'wind', name: 'Chiến Binh Gió', title: 'Cơn lốc năng lượng sạch', desc: 'Khoác áo choàng gió lướt đi mượt mà, giảm thiểu 50% sát thương va chạm.', price: 3500, 
+                defense: 'Giảm 50% phạt', magnetPower: 'Nhanh', scoreBonus: 'x1.3', outfit: 'Áo choàng gió tung bay'
             },
             { 
-                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Mặc giáp năng lượng xanh tối tân, hút xu phạm vi siêu rộng.', price: 7500, 
-                bodyColor: '#15803d', headColor: '#dcfce7', hatColor: '#14532d', isCloud: false,
+                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Mặc bộ giáp năng lượng tối tân với lõi phát sáng rực rỡ, hút xu phạm vi siêu rộng.', price: 7500, 
                 defense: 'Cao cấp', magnetPower: 'Siêu rộng', scoreBonus: 'x1.5', outfit: 'Giáp năng lượng xanh tối tân'
             },
             { 
-                id: 'quantum', name: 'Pháp Sư Lượng Tử', title: 'Đỉnh cao tương lai', desc: 'Đội mũ phép thuật lượng tử, nhân đôi mọi phần thưởng thu thập.', price: 15000, 
-                bodyColor: '#7e22ce', headColor: '#f3e8ff', hatColor: '#581c87', isCloud: false,
-                defense: 'Tối ưu', magnetPower: 'Toàn làn', scoreBonus: 'x2.0', outfit: 'Áo choàng & Mũ pháp sư lượng tử'
+                id: 'quantum', name: 'Pháp Sư Lượng Tử', title: 'Đỉnh cao tương lai', desc: 'Đội mũ chóp phép thuật huyền bí, giúp nhân đôi toàn bộ phần thưởng thu thập.', price: 15000, 
+                defense: 'Tối ưu', magnetPower: 'Toàn làn', scoreBonus: 'x2.0', outfit: 'Mũ & Áo choàng pháp sư lượng tử'
             }
         ];
 
@@ -501,13 +496,12 @@
             osc.stop(audioCtx.currentTime + 0.25);
         }
 
-        // Âm thanh CHIẾN THẮNG (SFX Vui tai vút lên)
         function playSoundWin() {
             if (!gameState.sfxEnabled) return;
             initAudio();
             if (!audioCtx) return;
             let now = audioCtx.currentTime;
-            let notes = [523.25, 659.25, 783.99, 1046.50]; // Đồ, Mi, Sol, Đồ cao
+            let notes = [523.25, 659.25, 783.99, 1046.50];
             notes.forEach((freq, idx) => {
                 let osc = audioCtx.createOscillator();
                 let gain = audioCtx.createGain();
@@ -522,7 +516,6 @@
             });
         }
 
-        // Âm thanh THUA CUỘC / HẾT MẠNG (SFX Trầm buồn đi xuống)
         function playSoundLose() {
             if (!gameState.sfxEnabled) return;
             initAudio();
@@ -701,7 +694,7 @@
             document.getElementById('total-coins').innerText = gameState.totalCoins;
             const cObj = CHARACTERS_DATA.find(c => c.id === gameState.equippedChar) || CHARACTERS_DATA[0];
             const pObj = PACKS_DATA.find(p => p.id === gameState.equippedPack) || PACKS_DATA[0];
-            document.getElementById('equipped-char-label').innerText = `👤 ${cObj.name.split(' ')[0]}`;
+            document.getElementById('equipped-char-label').innerText = `☁️ ${cObj.name.split(' ')[0]}`;
             document.getElementById('equipped-pack-label').innerText = `🔋 ${pObj.name.split(' ')[1] || 'Pin'}`;
         }
 
@@ -815,116 +808,156 @@
             });
         }
 
-        // --- HÀM VẼ NHÂN VẬT & TRANG PHỤC CHI TIẾT LÊN CANVAS ---
-        function drawCharacter(ctx, px, py, pw, ph, charId, gameFrame) {
-            let runBob = Math.sin(gameFrame * 0.35) * 3;
-            let currentY = py + runBob;
+        // --- HÀM VẼ LINH VẬT BABY CLOUD SIÊU CUTE GIỐNG ẢNH BẠN GỬI ---
+        function drawCuteMascot(ctx, cx, cy, charId, gameFrame) {
+            let bounce = Math.sin(gameFrame * 0.3) * 3;
+            let currentY = cy + bounce;
+
+            ctx.save();
+            ctx.translate(cx, currentY);
+
+            // Đổ bóng dưới chân
+            ctx.fillStyle = 'rgba(0,0,0,0.15)';
+            ctx.beginPath();
+            ctx.ellipse(0, 34, 18, 5, 0, 0, Math.PI * 2);
+            ctx.fill();
 
             if (charId === 'buddy') {
-                // Eco Buddy: Mây xanh thân thiện
+                // --- ECO BUDDY (BABY CLOUD CHUẨN MẪU BẠN GỬI) ---
+                // Thân mây fluffy trắng ấm áp
                 ctx.fillStyle = '#fdfbf7';
-                ctx.beginPath();
-                ctx.arc(px + pw / 2, currentY + 24, 18, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.lineWidth = 2;
                 ctx.strokeStyle = '#5c4738';
+                ctx.lineWidth = 2.5;
+
+                ctx.beginPath();
+                ctx.arc(0, 4, 21, 0, Math.PI * 2);
+                ctx.fill();
                 ctx.stroke();
+
+                // Tai lá cây đôi ở đỉnh đầu
                 ctx.fillStyle = '#467551';
                 ctx.beginPath();
-                ctx.ellipse(px + 6, currentY + 8, 5, 8, -0.4, 0, Math.PI * 2);
-                ctx.ellipse(px + pw - 6, currentY + 8, 5, 8, 0.4, 0, Math.PI * 2);
+                ctx.ellipse(-5, -19, 5, 9, -0.4, 0, Math.PI * 2);
+                ctx.ellipse(6, -18, 5, 9, 0.4, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.stroke();
+
+                // Khăn choàng xanh lá quanh cổ
+                ctx.fillStyle = '#467551';
+                ctx.beginPath();
+                ctx.roundRect(-16, 10, 32, 8, 4);
+                ctx.fill();
+                ctx.stroke();
+
+                // Mắt cười & Má hồng siêu cute
+                ctx.fillStyle = '#3b302a';
+                ctx.beginPath();
+                ctx.arc(-6, 2, 2.2, 0, Math.PI * 2);
+                ctx.arc(6, 2, 2.2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Miệng cườim
+                ctx.beginPath();
+                ctx.arc(0, 4, 3, 0, Math.PI);
+                ctx.stroke();
+
+                // Má hồng
+                ctx.fillStyle = 'rgba(235, 130, 130, 0.45)';
+                ctx.beginPath();
+                ctx.arc(-11, 5, 4, 0, Math.PI * 2);
+                ctx.arc(11, 5, 4, 0, Math.PI * 2);
+                ctx.fill();
+
             } else if (charId === 'solar') {
-                // Kỹ Sư Mặt Trời: Đội nón bảo hộ màu vàng có vành & kính bảo hộ
+                // --- KỸ SƯ MẶT TRỜI: Đội nón vàng & Kính quang năng ---
+                ctx.fillStyle = '#fef3c7';
+                ctx.strokeStyle = '#5c4738';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.arc(0, 4, 21, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Nón kỹ sư bảo hộ màu cam/vàng
                 ctx.fillStyle = '#d97706';
                 ctx.beginPath();
-                ctx.roundRect(px + 5, currentY + 16, pw - 10, ph - 20, 4);
-                ctx.fill();
-                ctx.strokeRect(px + 5, currentY + 16, pw - 10, ph - 20);
-                
-                // Đầu & Kính
-                ctx.fillStyle = '#fde68a';
-                ctx.fillRect(px + 10, currentY, 18, 16);
-                ctx.strokeRect(px + 10, currentY, 18, 16);
-                
-                ctx.fillStyle = '#1e3a8a'; // Kính bảo hộ ngang
-                ctx.fillRect(px + 11, currentY + 5, 16, 5);
-
-                // Nón bảo hộ kỹ sư
-                ctx.fillStyle = '#eab308';
-                ctx.beginPath();
-                ctx.ellipse(px + pw / 2, currentY - 2, 14, 5, 0, 0, Math.PI * 2);
+                ctx.ellipse(0, -17, 15, 6, 0, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.stroke();
+
+                // Kính phản quang
+                ctx.fillStyle = '#1e3a8a';
+                ctx.fillRect(-10, 0, 20, 7);
+                ctx.strokeRect(-10, 0, 20, 7);
+
             } else if (charId === 'wind') {
-                // Chiến Binh Gió: Áo choàng xanh dương bay phấp phới & tóc năng lượng
+                // --- CHIẾN BINH GIÓ: Áo choàng xanh dương bay phấp phới ---
+                ctx.fillStyle = '#e0f2fe';
+                ctx.strokeStyle = '#5c4738';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.arc(0, 4, 21, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Áo choàng gió phía sau
                 ctx.fillStyle = '#0284c7';
                 ctx.beginPath();
-                ctx.roundRect(px + 5, currentY + 16, pw - 10, ph - 20, 4);
+                ctx.moveTo(-10, 10);
+                ctx.lineTo(-22 + Math.sin(gameFrame * 0.4) * 8, 26);
+                ctx.lineTo(-5, 20);
                 ctx.fill();
-                ctx.strokeRect(px + 5, currentY + 16, pw - 10, ph - 20);
 
-                // Áo choàng gió phía sau bay
-                ctx.fillStyle = '#38bdf8';
+                ctx.fillStyle = '#3b302a';
                 ctx.beginPath();
-                ctx.moveTo(px + 5, currentY + 22);
-                ctx.lineTo(px - 10 + Math.sin(gameFrame * 0.4) * 6, currentY + 38);
-                ctx.lineTo(px + 5, currentY + 35);
+                ctx.arc(-6, 2, 2.2, 0, Math.PI * 2);
+                ctx.arc(6, 2, 2.2, 0, Math.PI * 2);
                 ctx.fill();
 
-                ctx.fillStyle = '#e0f2fe';
-                ctx.fillRect(px + 10, currentY, 18, 16);
-                ctx.strokeRect(px + 10, currentY, 18, 16);
-
-                // Bờm tóc gió
-                ctx.fillStyle = '#0f766e';
-                ctx.fillRect(px + 8, currentY - 4, 20, 5);
             } else if (charId === 'netzero') {
-                // Hiệp Sĩ Net-Zero: Giáp năng lượng tối tân xanh lá
+                // --- HIỆP SĨ NET-ZERO: Giáp xanh lá công nghệ cao ---
+                ctx.fillStyle = '#dcfce7';
+                ctx.strokeStyle = '#3b302a';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.arc(0, 4, 21, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Giáp ngực & Lõi năng lượng
                 ctx.fillStyle = '#15803d';
                 ctx.beginPath();
-                ctx.roundRect(px + 3, currentY + 14, pw - 6, ph - 16, 6);
+                ctx.roundRect(-14, 8, 28, 14, 4);
                 ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = '#3b302a';
                 ctx.stroke();
 
-                // Lõi năng lượng trước ngực
                 ctx.fillStyle = '#facc15';
                 ctx.beginPath();
-                ctx.arc(px + pw / 2, currentY + 28, 5, 0, Math.PI * 2);
+                ctx.arc(0, 15, 4, 0, Math.PI * 2);
+                ctx.fill();
+
+            } else if (charId === 'quantum') {
+                // --- PHÁP SƯ LƯỢNG TỬ: Mũ phép thuật tím ---
+                ctx.fillStyle = '#f3e8ff';
+                ctx.strokeStyle = '#581c87';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.arc(0, 4, 21, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.stroke();
 
-                ctx.fillStyle = '#dcfce7';
-                ctx.fillRect(px + 9, currentY, 20, 15);
-                ctx.strokeRect(px + 9, currentY, 20, 15);
-
-                // Mũ giáp hiệp sĩ
-                ctx.fillStyle = '#14532d';
-                ctx.fillRect(px + 7, currentY - 5, 24, 7);
-            } else if (charId === 'quantum') {
-                // Pháp Sư Lượng Tử: Áo choàng tím và mũ chóp phép thuật
+                // Mũ chóp nhọn pháp sư
                 ctx.fillStyle = '#7e22ce';
                 ctx.beginPath();
-                ctx.roundRect(px + 4, currentY + 16, pw - 8, ph - 20, 4);
-                ctx.fill();
-                ctx.strokeRect(px + 4, currentY + 16, pw - 8, ph - 20);
-
-                ctx.fillStyle = '#f3e8ff';
-                ctx.fillRect(px + 10, currentY, 18, 16);
-                ctx.strokeRect(px + 10, currentY, 18, 16);
-
-                // Mũ chóp nhọn pháp sư
-                ctx.fillStyle = '#581c87';
-                ctx.beginPath();
-                ctx.moveTo(px + pw / 2, currentY - 16);
-                ctx.lineTo(px + 4, currentY - 2);
-                ctx.lineTo(px + pw - 4, currentY - 2);
+                ctx.moveTo(0, -24);
+                ctx.lineTo(-12, -8);
+                ctx.lineTo(12, -8);
                 ctx.closePath();
                 ctx.fill();
                 ctx.stroke();
             }
+
+            ctx.restore();
         }
 
         function openReviewModal(charId) {
@@ -955,18 +988,7 @@
                 const pCanvas = document.getElementById('previewCanvas');
                 const pCtx = pCanvas.getContext('2d');
                 pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-
-                let pw = 36;
-                let ph = 50;
-                let px = (pCanvas.width - pw) / 2;
-                let py = (pCanvas.height - ph) / 2 + 4;
-
-                pCtx.fillStyle = 'rgba(0,0,0,0.2)';
-                pCtx.beginPath();
-                pCtx.ellipse(px + pw / 2, py + ph + 2, pw / 2, 4, 0, 0, Math.PI * 2);
-                pCtx.fill();
-
-                drawCharacter(pCtx, px, py, pw, ph, char.id, 0);
+                drawCuteMascot(pCtx, pCanvas.width / 2, pCanvas.height / 2 + 2, char.id, 0);
             }, 50);
         }
 
@@ -1021,8 +1043,8 @@
             lane: 1,
             x: 0,
             y: 0,
-            width: 38,
-            height: 52
+            width: 44,
+            height: 54
         };
 
         let obstacles = [];
@@ -1508,29 +1530,24 @@
             const cObj = CHARACTERS_DATA.find(c => c.id === gameState.equippedChar) || CHARACTERS_DATA[0];
             const pObj = PACKS_DATA.find(p => p.id === gameState.equippedPack) || PACKS_DATA[0];
 
-            let px = player.x;
-            let py = canvas.height - 92;
-            
-            ctx.fillStyle = 'rgba(0,0,0,0.18)';
-            ctx.beginPath();
-            ctx.ellipse(px + player.width / 2, canvas.height - 36, player.width / 2 + 4, 6, 0, 0, Math.PI * 2);
-            ctx.fill();
+            let px = player.x + player.width / 2;
+            let py = canvas.height - 75;
 
             if (gameState.packActiveTimer > 0) {
                 ctx.strokeStyle = pObj.color;
                 ctx.lineWidth = 3;
                 ctx.beginPath();
-                ctx.arc(px + player.width / 2, py + player.height / 2, 34, 0, Math.PI * 2);
+                ctx.arc(px, py, 34, 0, Math.PI * 2);
                 ctx.stroke();
 
                 ctx.fillStyle = pObj.trim;
                 ctx.font = '14px sans-serif';
-                ctx.fillText('⚡', px - 12, py + 10);
-                ctx.fillText('⚡', px + player.width + 2, py + 35);
+                ctx.fillText('⚡', px - 25, py - 10);
+                ctx.fillText('⚡', px + 15, py + 20);
             }
 
-            // Gọi hàm vẽ chi tiết trang phục nhân vật đang chọn
-            drawCharacter(ctx, px, py, player.width, player.height, cObj.id, gameFrame);
+            // Vẽ Mascot Baby Cloud siêu cute đang chạy trên đường
+            drawCuteMascot(ctx, px, py, cObj.id, gameFrame);
         }
 
         function endGameSession(isWin) {
@@ -1542,7 +1559,7 @@
             let starsCount = 1;
 
             if (isWin) {
-                playSoundWin(); // Phát âm thanh chiến thắng
+                playSoundWin();
                 stampEl.innerText = "HOÀN THÀNH HÓA ĐƠN";
                 stampEl.style.color = "#2c4a1d";
                 stampEl.style.borderColor = "#2c4a1d";
@@ -1564,7 +1581,7 @@
                     }
                 }
             } else {
-                playSoundLose(); // Phát âm thanh thua cuộc
+                playSoundLose();
                 stampEl.innerText = "HẾT MẠNG - THỬ LẠI";
                 stampEl.style.color = "#b94a39";
                 stampEl.style.borderColor = "#b94a39";
