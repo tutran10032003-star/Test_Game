@@ -63,7 +63,7 @@
     <!-- MAIN APP CONTAINER -->
     <div id="app" class="w-full max-w-md mx-auto vintage-card p-4 sm:p-5 flex flex-col items-center relative overflow-hidden">
         
-        <!-- HEADER (Đã fix 3 nút bằng nhau, chỉ dùng icon cho gọn) -->
+        <!-- HEADER (Fix 3 nút cân đối, dùng icon chuẩn) -->
         <div class="w-full flex justify-between items-center mb-3 border-b-2 border-dashed border-[#8c7355] pb-2">
             <div>
                 <h1 class="font-black text-lg sm:text-xl text-[#4a3b32] tracking-wider" style="font-family: 'Playfair Display', serif;">ECO SURFER</h1>
@@ -103,9 +103,7 @@
                     <h2 class="text-xs font-bold uppercase tracking-wide text-[#5c4738]">📅 Chọn Tháng Thử Thách (30 Bàn):</h2>
                     <span class="text-[10px] text-[#735d4c] font-semibold">Càng cao càng khó!</span>
                 </div>
-                <div id="months-list" class="space-y-2 max-h-[275px] overflow-y-auto pr-1">
-                    <!-- Dynamically populated 30 months -->
-                </div>
+                <div id="months-list" class="space-y-2 max-h-[275px] overflow-y-auto pr-1"></div>
             </div>
 
             <button onclick="openEndlessMode()" class="w-full vintage-btn py-3 px-4 rounded-xl font-bold text-sm bg-[#d4e4bc] text-[#2c4a1d] border-[#3e6629] shadow-[3px_3px_0px_#3e6629] flex items-center justify-center gap-2">
@@ -115,7 +113,6 @@
 
         <!-- SCREEN: GAMEPLAY -->
         <div id="screen-game" class="w-full hidden flex flex-col items-center space-y-2.5">
-            <!-- Game HUD -->
             <div class="w-full flex justify-between items-center text-xs bg-[#f2ecdc] px-3 py-2 rounded-xl border border-[#c4b59d] font-bold">
                 <div class="flex items-center gap-1">
                     <span id="hud-lives">❤️❤️❤️</span>
@@ -132,29 +129,22 @@
                 </div>
             </div>
 
-            <!-- Thanh trạng thái vật phẩm đang kích hoạt -->
             <div id="active-buffs-bar" class="w-full flex gap-1.5 justify-center min-h-[22px]">
                 <span id="buff-pack" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white animate-pulse">⚡ Khiên Tụ Điện</span>
                 <span id="buff-magnet" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-600 text-white animate-pulse">🧲 Nam Châm Hút Xu</span>
                 <span id="buff-double" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-600 text-white animate-pulse">⚡ x2 Điểm Hóa Đơn</span>
             </div>
 
-            <!-- Canvas Wrapper -->
             <div id="game-area" class="w-full relative aspect-[3/4] bg-[#2a3625] rounded-xl border-2 border-[#5c4738] overflow-hidden shadow-inner cursor-pointer">
                 <canvas id="gameCanvas" class="w-full h-full block"></canvas>
-
-                <!-- Floating notification popup inside game -->
                 <div id="game-popup" class="absolute top-6 left-1/2 transform -translate-x-1/2 bg-[#fdfbf7] border-2 border-[#8c7355] px-3 py-1 rounded-lg shadow-lg text-xs font-bold text-[#8c4a32] opacity-0 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10">
                     +300đ Hóa Đơn!
                 </div>
-
-                <!-- Swipe & Double Tap Hint Overlay -->
                 <div id="swipe-hint" class="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-black/75 text-white px-3.5 py-1.5 rounded-full text-[11px] font-semibold pointer-events-none transition-opacity duration-500 whitespace-nowrap text-center">
                     👈 Vuốt Trái/Phải • Chạm 2 lần bật Siêu Tụ Điện ⚡
                 </div>
             </div>
 
-            <!-- Mobile / Quick Controller Buttons -->
             <div class="w-full grid grid-cols-3 gap-2">
                 <button onclick="movePlayer(-1)" class="vintage-btn py-3 text-xs sm:text-sm rounded-xl bg-[#ebdccb]">⬅️ Trái</button>
                 <button id="btn-superpack" onclick="activateSuperPack()" class="vintage-btn py-3 text-xs sm:text-sm rounded-xl bg-[#d4e4bc] text-[#2c4a1d]">⚡ Tụ Điện (<span id="pack-charges">2</span>)</button>
@@ -222,7 +212,7 @@
         </div>
     </div>
 
-    <!-- SHOP MODAL (KHO ĐỒ: KÍNH LÚP NHỎ GỌN & GIAO DIỆN TỐI ƯU) -->
+    <!-- SHOP MODAL -->
     <div id="shop-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
         <div class="vintage-card bg-[#fdfbf7] p-4 max-w-sm w-full space-y-3 relative max-h-[85vh] flex flex-col">
             <div class="flex justify-between items-center border-b border-dashed border-[#8c7355] pb-2">
@@ -249,21 +239,26 @@
         </div>
     </div>
 
-    <!-- REVIEW CHARACTER MODAL (HIỂN THỊ THÔNG TIN GỌN GÀNG KHI BẤM KÍNH LÚP) -->
+    <!-- REVIEW CHARACTER MODAL (CÓ HIỂN THỊ HÌNH DÁNG NHÂN VẬT) -->
     <div id="review-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
-        <div class="vintage-card bg-[#fdfbf7] p-5 max-w-xs w-full space-y-3 relative">
-            <div class="border-b border-dashed border-[#8c7355] pb-2 text-center">
+        <div class="vintage-card bg-[#fdfbf7] p-5 max-w-xs w-full space-y-3 relative flex flex-col items-center">
+            
+            <!-- Canvas hiển thị hình dáng nhân vật trực quan -->
+            <div class="w-20 h-24 bg-[#2a3625] rounded-xl border-2 border-[#5c4738] relative overflow-hidden flex items-center justify-center shadow-inner">
+                <canvas id="previewCanvas" width="80" height="96"></canvas>
+            </div>
+
+            <div class="border-b border-dashed border-[#8c7355] pb-2 text-center w-full">
                 <h3 id="rev-name" class="font-bold text-base text-[#4a3b32]">Tên Nhân Vật</h3>
                 <p id="rev-title" class="text-[11px] text-[#735d4c] font-semibold">Chuyên gia năng lượng</p>
             </div>
             
-            <div class="space-y-2 text-xs font-medium text-[#5c4738]">
+            <div class="space-y-2 text-xs font-medium text-[#5c4738] w-full">
                 <div class="bg-[#f2ecdc] p-2.5 rounded-xl border border-[#c4b59d]">
                     <p class="font-bold mb-1 text-[#4a3b32]">📝 Mô tả:</p>
                     <p id="rev-desc" class="text-[11px] text-[#735d4c]">Mô tả chi tiết kỹ năng đặc biệt của nhân vật.</p>
                 </div>
                 
-                <!-- Đã thu gọn chữ ở ô vuông thông số để không bị rối mắt -->
                 <div class="space-y-1.5 bg-[#fdfbf7] p-2.5 rounded-lg border border-[#d6c9b4]">
                     <div class="flex justify-between items-center">
                         <span class="flex items-center gap-1">🛡️ Độ bền va chạm:</span> 
@@ -284,7 +279,7 @@
                 </div>
             </div>
 
-            <div class="flex gap-2 pt-1">
+            <div class="flex gap-2 pt-1 w-full">
                 <button onclick="closeReviewModal()" class="flex-1 vintage-btn py-2 bg-[#e6dfcd] text-xs rounded-xl">Đóng</button>
                 <button id="rev-buy-btn" onclick="" class="flex-1 vintage-btn py-2 bg-[#f5e1a4] text-[#5c4738] text-xs rounded-xl font-bold">Mua Ngay</button>
             </div>
@@ -779,6 +774,7 @@
             });
         }
 
+        // --- MỞ REVIEW VÀ VẼ HÌNH DÁNG NHÂN VẬT LÊN CANVAS ---
         function openReviewModal(charId) {
             const char = CHARACTERS_DATA.find(c => c.id === charId);
             if (!char) return;
@@ -802,6 +798,54 @@
             };
 
             document.getElementById('review-modal').classList.remove('hidden');
+
+            // Vẽ hình dáng nhân vật ra canvas review
+            setTimeout(() => {
+                const pCanvas = document.getElementById('previewCanvas');
+                const pCtx = pCanvas.getContext('2d');
+                pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+
+                let pw = 36;
+                let ph = 50;
+                let px = (pCanvas.width - pw) / 2;
+                let py = (pCanvas.height - ph) / 2 + 4;
+
+                // Đổ bóng nhân vật
+                pCtx.fillStyle = 'rgba(0,0,0,0.2)';
+                pCtx.beginPath();
+                pCtx.ellipse(px + pw / 2, py + ph + 2, pw / 2, 4, 0, 0, Math.PI * 2);
+                pCtx.fill();
+
+                if (char.isCloud) {
+                    pCtx.fillStyle = '#fdfbf7';
+                    pCtx.beginPath();
+                    pCtx.arc(px + pw / 2, py + 22, 16, 0, Math.PI * 2);
+                    pCtx.fill();
+                    pCtx.lineWidth = 2;
+                    pCtx.strokeStyle = '#5c4738';
+                    pCtx.stroke();
+                    pCtx.fillStyle = '#467551';
+                    pCtx.beginPath();
+                    pCtx.ellipse(px + 6, py + 8, 4, 7, -0.4, 0, Math.PI * 2);
+                    pCtx.ellipse(px + pw - 6, py + 8, 4, 7, 0.4, 0, Math.PI * 2);
+                    pCtx.fill();
+                } else {
+                    pCtx.fillStyle = char.bodyColor;
+                    pCtx.beginPath();
+                    pCtx.roundRect(px + 4, py + 14, pw - 8, ph - 16, 4);
+                    pCtx.fill();
+                    pCtx.lineWidth = 2;
+                    pCtx.strokeStyle = '#3b302a';
+                    pCtx.stroke();
+
+                    pCtx.fillStyle = char.headColor;
+                    pCtx.fillRect(px + 9, py + 2, 18, 14);
+                    pCtx.strokeRect(px + 9, py + 2, 18, 14);
+
+                    pCtx.fillStyle = char.hatColor;
+                    pCtx.fillRect(px + 6, py - 2, 24, 5);
+                }
+            }, 50);
         }
 
         function closeReviewModal() {
@@ -1423,7 +1467,6 @@
                 stampEl.style.color = "#b94a39";
                 stampEl.style.borderColor = "#b94a39";
                 starsCount = 0;
-                gameState.totalCoins += gameState.coinsCollected;
             }
 
             saveGameData();
