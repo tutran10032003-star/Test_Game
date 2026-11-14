@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Eco Runner: Supercapacitor Energy Surfer</title>
+    <title>Eco Surfer: Supercapacitor Energy Surfer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -65,9 +65,21 @@
         
         <!-- HEADER -->
         <div class="w-full flex justify-between items-center mb-3 border-b-2 border-dashed border-[#8c7355] pb-2">
-            <div>
-                <h1 class="font-black text-lg sm:text-xl text-[#4a3b32] tracking-wider" style="font-family: 'Playfair Display', serif;">ECO SURFER</h1>
-                <p class="text-[11px] text-[#735d4c] font-semibold">Tích Hũ Năng Lượng & Thanh Toán Hóa Đơn</p>
+            <div class="flex items-center gap-2.5 min-w-0">
+                <svg class="w-12 h-12 shrink-0" viewBox="0 0 64 64" role="img" aria-label="Logo Bé Mây Eco Surfer">
+                    <path d="M13 39c-7-1-9-11-3-16 2-2 5-3 8-2C21 9 39 7 45 20c9-2 16 5 14 13-1 5-5 8-11 8H13Z" fill="#fffdf7" stroke="#5c4738" stroke-width="2.5"/>
+                    <path d="M17 20 11 8l13 6M43 18l8-10 1 15" fill="#a3a875" stroke="#5c4738" stroke-width="2" stroke-linejoin="round"/>
+                    <circle cx="25" cy="29" r="2" fill="#3b302a"/><circle cx="39" cy="29" r="2" fill="#3b302a"/>
+                    <path d="M29 34q3 4 6 0" fill="none" stroke="#3b302a" stroke-width="1.8" stroke-linecap="round"/>
+                    <circle cx="19" cy="34" r="3" fill="#e99a91" opacity=".8"/><circle cx="45" cy="34" r="3" fill="#e99a91" opacity=".8"/>
+                    <path d="M17 42q15 7 31-1l-3 8-23 1Z" fill="#467551" stroke="#5c4738" stroke-width="1.8"/>
+                    <path d="M8 55q22-7 48 0l-5 4H14Z" fill="#d4af37" stroke="#5c4738" stroke-width="2"/>
+                    <path d="m25 52 5-5 5 5" fill="none" stroke="#fffdf7" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <div class="min-w-0">
+                    <h1 class="font-black text-lg sm:text-xl text-[#4a3b32] tracking-wider leading-tight" style="font-family: 'Playfair Display', serif;">ECO SURFER</h1>
+                    <p class="text-[10px] sm:text-[11px] text-[#735d4c] font-semibold">Tích Hũ Năng Lượng & Thanh Toán Hóa Đơn</p>
+                </div>
             </div>
             <div class="flex items-center gap-1.5">
                 <button onclick="openShopModal()" title="Kho Đồ" class="vintage-btn w-9 h-9 text-base rounded-lg bg-[#f5e1a4] text-[#5c4738] flex items-center justify-center">
@@ -92,10 +104,7 @@
                         <span id="total-coins" class="text-xl font-black text-[#8c4a32]">0</span>
                     </div>
                 </div>
-                <div class="text-right text-[11px] text-[#4a3b32] bg-[#fdfbf7] px-2.5 py-1.5 rounded-lg border border-[#d6c9b4]">
-                    <p class="font-bold" id="equipped-char-label">☁️ Eco Buddy</p>
-                    <p class="text-[#735d4c] font-semibold" id="equipped-pack-label">🔋 Pin Dự Phòng</p>
-                </div>
+
             </div>
 
             <div class="w-full">
@@ -173,9 +182,16 @@
                 <div class="flex justify-between"><span>Đánh giá sao:</span> <strong id="res-stars">⭐⭐⭐</strong></div>
             </div>
 
-            <div class="w-full flex gap-2">
-                <button onclick="returnToMenu()" class="flex-1 vintage-btn py-2.5 rounded-xl text-xs bg-[#e6dfcd]">🏠 Về Menu</button>
-                <button onclick="restartCurrentGame()" class="flex-1 vintage-btn py-2.5 rounded-xl text-xs bg-[#d4e4bc] text-[#2c4a1d]">🔄 Chạy Lại</button>
+            <div class="w-full flex justify-center gap-4 pt-1">
+                <button onclick="returnToMenu()" title="Về menu" aria-label="Về menu" class="vintage-btn w-12 h-12 rounded-xl bg-[#e6dfcd] flex items-center justify-center text-2xl" style="font-size:0">
+                    <svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="#5c4738" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg>
+                </button>
+                <button onclick="restartCurrentGame()" title="Chơi lại" aria-label="Chơi lại" class="vintage-btn w-12 h-12 rounded-xl bg-[#d4e4bc] flex items-center justify-center" style="font-size:0">
+                    <svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="#2c4a1d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4 17a8 8 0 0 0 13.7 2.3L20 17M4 7l2.3-2.3A8 8 0 0 1 20 12"/></svg>
+                </button>
+                <button id="btn-next-board" onclick="goToNextBoard()" title="Bàn tiếp theo" aria-label="Bàn tiếp theo" class="vintage-btn w-12 h-12 rounded-xl bg-[#f5e1a4] flex items-center justify-center" style="font-size:0">
+                    <svg viewBox="0 0 24 24" width="25" height="25" fill="none" stroke="#5c4738" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4v16l11-8z"/><path d="M19 5v14"/></svg>
+                </button>
             </div>
         </div>
 
@@ -310,28 +326,44 @@
                 defense: '3 mạng', magnetPower: 'Bình thường', scoreBonus: 'x1.0', outfit: 'Khăn choàng & tai lá cây'
             },
             { 
-                id: 'solar', name: 'Kỹ Sư Mặt Trời', title: 'Bậc thầy quang năng', desc: 'Trang bị nón bảo hộ chuyên dụng và kính quang năng, tối ưu hóa năng lượng mặt trời.', price: 1200, 
-                defense: 'Tốt', magnetPower: 'Khá', scoreBonus: 'x1.2', outfit: 'Nón kỹ sư & Kính quang năng'
+                id: 'solar', name: 'Kỹ Sư Mặt Trời', title: 'Bậc thầy quang năng', desc: 'Bé Mây đeo vòng mặt trời và kính năng lượng, mang sắc vàng ấm áp.', price: 1200, 
+                defense: 'Tốt', magnetPower: 'Khá', scoreBonus: 'x1.2', outfit: 'Vòng mặt trời & kính năng lượng'
             },
             { 
-                id: 'wind', name: 'Chiến Binh Gió', title: 'Cơn lốc năng lượng sạch', desc: 'Khoác áo choàng gió lướt đi mượt mà, giảm thiểu 50% sát thương va chạm.', price: 3500, 
-                defense: 'Giảm 50% phạt', magnetPower: 'Nhanh', scoreBonus: 'x1.3', outfit: 'Áo choàng gió tung bay'
+                id: 'wind', name: 'Chiến Binh Gió', title: 'Cơn lốc năng lượng sạch', desc: 'Bé Mây khoác khăn gió xanh biển và vòng xoáy gió mềm mại.', price: 3500, 
+                defense: 'Giảm 50% phạt', magnetPower: 'Nhanh', scoreBonus: 'x1.3', outfit: 'Khăn gió & vòng xoáy'
             },
             { 
-                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Bay lướt vút nhanh với áo choàng đỏ siêu anh hùng và giáp năng lượng tối tân[cite: 6].', price: 7500, 
-                defense: 'Cao cấp', magnetPower: 'Siêu rộng', scoreBonus: 'x1.5', outfit: 'Áo choàng siêu anh hùng & Giáp xanh'
+                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Bé Mây khoác áo choàng xanh đỏ và huy hiệu năng lượng nhỏ xinh.', price: 7500, 
+                defense: 'Cao cấp', magnetPower: 'Siêu rộng', scoreBonus: 'x1.5', outfit: 'Áo choàng & huy hiệu năng lượng'
             },
             { 
-                id: 'quantum', name: 'Pháp Sư Lượng Tử', title: 'Đỉnh cao tương lai', desc: 'Đội mũ chóp phép thuật huyền bí, giúp nhân đôi toàn bộ phần thưởng thu thập.', price: 15000, 
-                defense: 'Tối ưu', magnetPower: 'Toàn làn', scoreBonus: 'x2.0', outfit: 'Mũ & Áo choàng pháp sư lượng tử'
+                id: 'quantum', name: 'Pháp Sư Lượng Tử', title: 'Đỉnh cao tương lai', desc: 'Bé Mây đội mũ phù thủy tím và ngôi sao lượng tử lấp lánh.', price: 15000, 
+                defense: 'Tối ưu', magnetPower: 'Toàn làn', scoreBonus: 'x2.0', outfit: 'Mũ phù thủy & sao lượng tử'
+            },
+            {
+                id: 'aurora', name: 'Vũ Công Cực Quang', title: 'Ánh sáng phương Bắc', desc: 'Bé Mây khoác áo choàng cực quang, cài trâm pha lê đổi sắc.', price: 22000,
+                defense: 'Tối ưu+', magnetPower: 'Toàn làn', scoreBonus: 'x2.1', outfit: 'Áo choàng cực quang & trâm pha lê'
+            },
+            {
+                id: 'ocean', name: 'Nhà Thám Hiểm Đại Dương', title: 'Bảo vệ biển xanh', desc: 'Bé Mây đội mũ thủy thủ, đeo kính lặn và vỏ sò may mắn.', price: 30000,
+                defense: 'Lá chắn biển', magnetPower: 'Toàn làn+', scoreBonus: 'x2.2', outfit: 'Mũ thủy thủ & kính lặn'
+            },
+            {
+                id: 'forest', name: 'Thần Rừng Xanh', title: 'Hộ vệ thiên nhiên', desc: 'Bé Mây đội vương miện lá, mang áo choàng rêu và hoa nhỏ.', price: 40000,
+                defense: 'Hộ vệ rừng', magnetPower: 'Siêu rộng+', scoreBonus: 'x2.3', outfit: 'Vương miện lá & áo choàng rêu'
             }
         ];
 
         const PACKS_DATA = [
-            { id: 'battery', name: '🔋 Pin Dự Phòng Cơ Bản', desc: '2 lần dùng/ván', price: 0, color: '#467551', trim: '#a3e635', charges: 2 },
-            { id: 'supercap', name: '⚡ Siêu Tụ Điện Nhanh', desc: '3 lần dùng/ván', price: 1500, color: '#d97706', trim: '#fef08a', charges: 3 },
-            { id: 'solarpack', name: '☀️ Balo Năng Lượng Mặt Trời', desc: '4 lần dùng/ván', price: 4000, color: '#0369a1', trim: '#7dd3fc', charges: 4 },
-            { id: 'reactor', name: '⚛️ Lò Phản Ứng Xanh Miti', desc: '5 lần dùng/ván', price: 10000, color: '#7e22ce', trim: '#f0abfc', charges: 5 }
+            { id: 'battery', name: '🔋 Pin Dự Phòng Cơ Bản', desc: '2 lần dùng/ván', price: 0, color: '#467551', trim: '#a3e635', charges: 2, icon: '🔋' },
+            { id: 'supercap', name: '⚡ Siêu Tụ Điện Nhanh', desc: '3 lần dùng/ván', price: 1500, color: '#d97706', trim: '#fef08a', charges: 3, icon: '⚡' },
+            { id: 'solarpack', name: '☀️ Balo Năng Lượng Mặt Trời', desc: '4 lần dùng/ván', price: 4000, color: '#0369a1', trim: '#7dd3fc', charges: 4, icon: '☀️' },
+            { id: 'reactor', name: '⚛️ Lò Phản Ứng Xanh Miti', desc: '5 lần dùng/ván', price: 10000, color: '#7e22ce', trim: '#f0abfc', charges: 5, icon: '⚛️' },
+            { id: 'crystal', name: '💎 Lõi Pha Lê', desc: '6 lần dùng/ván · Khiên pha lê', price: 16000, color: '#0e7490', trim: '#a5f3fc', charges: 6, icon: '💎' },
+            { id: 'leafdrive', name: '🌿 Bộ Pin Sinh Học', desc: '7 lần dùng/ván · Công nghệ lá xanh', price: 24000, color: '#15803d', trim: '#bbf7d0', charges: 7, icon: '🌿' },
+            { id: 'auroracore', name: '🌈 Lõi Cực Quang', desc: '8 lần dùng/ván · Năng lượng quang phổ', price: 34000, color: '#9333ea', trim: '#e9d5ff', charges: 8, icon: '🌈' },
+            { id: 'zeroreactor', name: '🚀 Động Cơ Net-Zero X', desc: '9 lần dùng/ván · Cấp tối thượng', price: 48000, color: '#be123c', trim: '#fecdd3', charges: 9, icon: '🚀' }
         ];
 
         const THEMES_POOL = [
@@ -764,20 +796,20 @@
                 } else {
                     const canAfford = gameState.totalCoins >= char.price;
                     btnHtml = `
-                        <div class="flex items-center gap-1.5">
-                            <button onclick="openReviewModal('${char.id}')" class="vintage-btn w-8 h-8 text-sm rounded-lg bg-[#d6c9b4] flex items-center justify-center" title="Xem review">🔍</button>
-                            <button onclick="buyChar('${char.id}')" class="vintage-btn px-2.5 py-1.5 text-[11px] rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${char.price}</button>
+                        <div class="w-full flex items-center justify-end gap-1.5">
+                            <button onclick="openReviewModal('${char.id}')" class="vintage-btn shrink-0 w-8 h-8 text-sm rounded-lg bg-[#d6c9b4] flex items-center justify-center" title="Xem review">🔍</button>
+                            <button onclick="buyChar('${char.id}')" class="vintage-btn shrink-0 w-[76px] px-1 py-1.5 text-[10px] whitespace-nowrap rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${char.price}</button>
                         </div>
                     `;
                 }
 
                 charList.innerHTML += `
-                    <div class="p-2.5 rounded-xl border border-[#c4b59d] bg-[#f2ecdc] flex justify-between items-center">
-                        <div class="pr-2">
-                            <p class="font-bold text-xs text-[#4a3b32]">${char.name}</p>
-                            <p class="text-[10px] text-[#735d4c]">Trang bị: ${char.outfit}</p>
+                    <div class="p-2.5 rounded-xl border border-[#c4b59d] bg-[#f2ecdc] grid grid-cols-[minmax(0,1fr)_116px] gap-2 items-center">
+                        <div class="min-w-0">
+                            <p class="font-bold text-xs text-[#4a3b32] break-words">${char.name}</p>
+                            <p class="text-[10px] text-[#735d4c] break-words">Trang bị: ${char.outfit}</p>
                         </div>
-                        ${btnHtml}
+                        <div class="w-[116px] flex items-center justify-end gap-1.5">${btnHtml}</div>
                     </div>
                 `;
             });
@@ -790,175 +822,78 @@
                 if (isEquipped) {
                     btnHtml = `<span class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-[#467551] text-white">Đang dùng</span>`;
                 } else if (isUnlocked) {
-                    btnHtml = `<button onclick="equipPack('${pack.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg bg-[#e6dfcd]">Chọn</button>`;
+                    btnHtml = `<button onclick="equipPack('${pack.id}')" class="vintage-btn w-[116px] px-1 py-1.5 text-[10px] whitespace-nowrap rounded-lg bg-[#e6dfcd]">Chọn</button>`;
                 } else {
                     const canAfford = gameState.totalCoins >= pack.price;
-                    btnHtml = `<button onclick="buyPack('${pack.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${pack.price}</button>`;
+                    btnHtml = `<button onclick="buyPack('${pack.id}')" class="vintage-btn w-[116px] px-1 py-1.5 text-[10px] whitespace-nowrap rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${pack.price}</button>`;
                 }
 
                 packList.innerHTML += `
-                    <div class="p-2.5 rounded-xl border border-[#c4b59d] bg-[#f2ecdc] flex justify-between items-center">
-                        <div class="pr-2">
-                            <p class="font-bold text-xs text-[#4a3b32]">${pack.name}</p>
-                            <p class="text-[10px] text-[#735d4c]">${pack.desc}</p>
+                    <div class="p-2.5 rounded-xl border border-[#c4b59d] bg-[#f2ecdc] grid grid-cols-[minmax(0,1fr)_116px] gap-2 items-center">
+                        <div class="min-w-0">
+                            <p class="font-bold text-xs text-[#4a3b32] break-words">${pack.name}</p>
+                            <p class="text-[10px] text-[#735d4c] break-words">${pack.desc}</p>
                         </div>
-                        ${btnHtml}
+                        <div class="w-[116px] flex justify-end">${btnHtml}</div>
                     </div>
                 `;
             });
         }
 
-        // --- HÀM VẼ NHÂN VẬT: BABY CLOUD HOẶC SIÊU ANH HÙNG BAY LƯỢN (SUPERMAN STYLE) ---
+        // --- BÉ MÂY: MỌI TRANG PHỤC ĐỀU GIỮ CHUNG TẠO HÌNH MÂY GỐC ---
         function drawCuteMascot(ctx, cx, cy, charId, gameFrame) {
-            let bounce = Math.sin(gameFrame * 0.3) * 3;
-            let currentY = cy + bounce;
-
-            ctx.save();
-            ctx.translate(cx, currentY);
-
-            if (charId === 'buddy') {
-                // --- ECO BUDDY: Đám mây trắng siêu cute với má hồng & tai lá cây[cite: 5] ---
-                ctx.fillStyle = 'rgba(0,0,0,0.15)';
-                ctx.beginPath();
-                ctx.ellipse(0, 34, 18, 5, 0, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.fillStyle = '#fdfbf7';
-                ctx.strokeStyle = '#5c4738';
-                ctx.lineWidth = 2.5;
-
-                ctx.beginPath();
-                ctx.arc(0, 4, 21, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-
-                // Tai lá cây đôi
-                ctx.fillStyle = '#467551';
-                ctx.beginPath();
-                ctx.ellipse(-5, -19, 5, 9, -0.4, 0, Math.PI * 2);
-                ctx.ellipse(6, -18, 5, 9, 0.4, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-
-                // Khăn choàng xanh lá
-                ctx.fillStyle = '#467551';
-                ctx.beginPath();
-                ctx.roundRect(-16, 10, 32, 8, 4);
-                ctx.fill();
-                ctx.stroke();
-
-                // Mắt & Miệng
-                ctx.fillStyle = '#3b302a';
-                ctx.beginPath();
-                ctx.arc(-6, 2, 2.2, 0, Math.PI * 2);
-                ctx.arc(6, 2, 2.2, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(0, 4, 3, 0, Math.PI);
-                ctx.stroke();
-
-                // Má hồng
-                ctx.fillStyle = 'rgba(235, 130, 130, 0.45)';
-                ctx.beginPath();
-                ctx.arc(-11, 5, 4, 0, Math.PI * 2);
-                ctx.arc(11, 5, 4, 0, Math.PI * 2);
-                ctx.fill();
-
-            } else {
-                // --- CÁC NHÂN VẬT HIỆP SĨ / SIÊU ANH HÙNG (DÁNG BAY NGANG SUPERMAN STYLE NHƯ ẢNH BẠN GỬI)[cite: 6] ---
-                let capeColor = '#b94a39';
-                let suitColor = '#0284c7';
-                let emblemColor = '#eab308';
-                let hairColor = '#78350f';
-
-                if (charId === 'solar') { suitColor = '#d97706'; capeColor = '#ea580c'; }
-                else if (charId === 'wind') { suitColor = '#0369a1'; capeColor = '#0f766e'; }
-                else if (charId === 'netzero') { suitColor = '#15803d'; capeColor = '#b94a39'; emblemColor = '#facc15'; }
-                else if (charId === 'quantum') { suitColor = '#7e22ce'; capeColor = '#581c87'; emblemColor = '#f0abfc'; }
-
-                // Vệt tốc độ phía sau (Speed lines)
-                ctx.strokeStyle = 'rgba(92, 71, 56, 0.35)';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.moveTo(-28, -6); ctx.lineTo(-42, -6);
-                ctx.moveTo(-26, 4); ctx.lineTo(-40, 4);
-                ctx.moveTo(-28, 14); ctx.lineTo(-44, 14);
-                ctx.stroke();
-
-                // Áo choàng bay phấp phới phía sau
-                ctx.fillStyle = capeColor;
-                ctx.beginPath();
-                ctx.moveTo(-10, -2);
-                ctx.lineTo(-32 + Math.sin(gameFrame * 0.4) * 6, -16);
-                ctx.lineTo(-28 + Math.sin(gameFrame * 0.3) * 6, 18);
-                ctx.lineTo(0, 6);
-                ctx.closePath();
-                ctx.fill();
-                ctx.strokeStyle = '#3b302a';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-
-                // Thân siêu anh hùng nằm ngang
-                ctx.fillStyle = suitColor;
-                ctx.beginPath();
-                ctx.roundRect(-16, -10, 32, 22, 8);
-                ctx.fill();
-                ctx.stroke();
-
-                // Huy hiệu trước ngực
-                ctx.fillStyle = emblemColor;
-                ctx.beginPath();
-                ctx.arc(0, 0, 5, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-
-                // Tay vươn lên phía trước (Dáng bay superman)
-                ctx.fillStyle = suitColor;
-                ctx.beginPath();
-                ctx.roundRect(10, -18, 22, 10, 4);
-                ctx.fill();
-                ctx.stroke();
-
-                // Găng tay siêu anh hùng
-                ctx.fillStyle = capeColor;
-                ctx.beginPath();
-                ctx.roundRect(22, -18, 12, 10, 3);
-                ctx.fill();
-                ctx.stroke();
-
-                // Chân duỗi phía sau
-                ctx.fillStyle = suitColor;
-                ctx.beginPath();
-                ctx.roundRect(-22, 4, 14, 9, 4);
-                ctx.fill();
-                ctx.stroke();
-
-                // Đầu & Tóc bồng bềnh
-                ctx.fillStyle = '#fde68a'; // Mặt
-                ctx.beginPath();
-                ctx.arc(10, -8, 11, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-
-                // Mắt cười & Miệng cười
-                ctx.fillStyle = '#3b302a';
-                ctx.beginPath();
-                ctx.arc(13, -10, 1.8, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(14, -6, 2.5, 0, Math.PI);
-                ctx.stroke();
-
-                // Tóc bồng bềnh thời trang phía sau đầu
-                ctx.fillStyle = hairColor;
-                ctx.beginPath();
-                ctx.arc(4, -14, 10, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
+            const bounce = Math.sin(gameFrame * 0.3) * 2.5;
+            ctx.save(); ctx.translate(cx, cy + bounce);
+            const palettes = {
+                buddy:{scarf:'#467551',accent:'#a3a875'}, solar:{scarf:'#d97706',accent:'#f5c84c'},
+                wind:{scarf:'#287fa0',accent:'#8ed3dc'}, netzero:{scarf:'#467551',accent:'#b94a39'},
+                quantum:{scarf:'#7652a8',accent:'#c7a4ff'}, aurora:{scarf:'#0e7490',accent:'#67e8f9'},
+                ocean:{scarf:'#0369a1',accent:'#38bdf8'}, forest:{scarf:'#15803d',accent:'#86efac'}
+            };
+            const p=palettes[charId]||palettes.buddy;
+            ctx.fillStyle='rgba(0,0,0,0.13)';ctx.beginPath();ctx.ellipse(0,31,19,5,0,0,Math.PI*2);ctx.fill();
+            if(charId==='netzero'){
+                ctx.fillStyle=p.accent;ctx.strokeStyle='#5c4738';ctx.lineWidth=2;ctx.beginPath();
+                ctx.moveTo(-10,5);ctx.lineTo(-31,-4+Math.sin(gameFrame*.25)*4);ctx.lineTo(-25,25);ctx.lineTo(-2,15);ctx.closePath();ctx.fill();ctx.stroke();
             }
-
+            ctx.fillStyle='#a3a875';ctx.strokeStyle='#756b49';ctx.lineWidth=2;ctx.beginPath();
+            ctx.ellipse(-9,-17,5.5,10,-.48,0,Math.PI*2);ctx.ellipse(8,-18,5.5,10,.48,0,Math.PI*2);ctx.fill();ctx.stroke();
+            ctx.strokeStyle='#e5edcf';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(-10,-23);ctx.lineTo(-8,-12);ctx.moveTo(7,-24);ctx.lineTo(9,-13);ctx.stroke();
+            ctx.fillStyle='#fffdf7';ctx.strokeStyle='#75604d';ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.beginPath();
+            ctx.moveTo(-20,13);ctx.bezierCurveTo(-29,12,-30,1,-22,-5);ctx.bezierCurveTo(-24,-16,-11,-23,-2,-17);
+            ctx.bezierCurveTo(5,-27,19,-20,19,-10);ctx.bezierCurveTo(31,-7,31,8,21,13);ctx.bezierCurveTo(14,22,-12,22,-20,13);
+            ctx.closePath();ctx.fill();ctx.stroke();
+            if(charId==='solar'){
+                ctx.fillStyle=p.accent;ctx.strokeStyle='#8c6428';ctx.lineWidth=1.8;ctx.beginPath();ctx.arc(20,-20,6,0,Math.PI*2);ctx.fill();ctx.stroke();
+                ctx.strokeStyle='#e0a52f';ctx.beginPath();for(let a=0;a<8;a++){const t=a*Math.PI/4;ctx.moveTo(20+Math.cos(t)*8,-20+Math.sin(t)*8);ctx.lineTo(20+Math.cos(t)*11,-20+Math.sin(t)*11);}ctx.stroke();
+                ctx.fillStyle='#d97706';ctx.fillRect(-10,-15,20,4);ctx.strokeStyle='#8c6428';ctx.strokeRect(-10,-15,20,4);
+                ctx.beginPath();ctx.moveTo(-3,-15);ctx.lineTo(-3,-11);ctx.moveTo(4,-15);ctx.lineTo(4,-11);ctx.stroke();
+            }else if(charId==='wind'){
+                ctx.strokeStyle=p.accent;ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(0,-22,8,Math.PI*.15,Math.PI*1.8);ctx.stroke();
+                ctx.fillStyle=p.accent;ctx.beginPath();ctx.arc(8,-22,2.5,0,Math.PI*2);ctx.fill();
+            }else if(charId==='quantum'){
+                ctx.fillStyle='#7652a8';ctx.strokeStyle='#4f376f';ctx.lineWidth=2;ctx.beginPath();
+                ctx.moveTo(-13,-14);ctx.lineTo(-5,-34);ctx.lineTo(1,-20);ctx.lineTo(9,-31);ctx.lineTo(14,-13);
+                ctx.quadraticCurveTo(0,-8,-13,-14);ctx.closePath();ctx.fill();ctx.stroke();
+                ctx.fillStyle='#f5d77b';ctx.beginPath();ctx.arc(-5,-24,2,0,Math.PI*2);ctx.arc(8,-22,2,0,Math.PI*2);ctx.fill();
+            }else if(charId==='aurora'){
+                ctx.strokeStyle=p.accent;ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,-17,17,Math.PI*1.08,Math.PI*1.92);ctx.stroke();
+                ctx.fillStyle='#e0f2fe';ctx.beginPath();ctx.moveTo(0,-35);ctx.lineTo(5,-27);ctx.lineTo(0,-21);ctx.lineTo(-5,-27);ctx.closePath();ctx.fill();
+            }else if(charId==='ocean'){
+                ctx.fillStyle='#075985';ctx.strokeStyle='#164e63';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(0,-20,15,5,0,Math.PI,Math.PI*2);ctx.fill();ctx.stroke();
+                ctx.fillStyle='#bae6fd';ctx.fillRect(-10,-20,20,3);
+                ctx.strokeStyle=p.accent;ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,-2,13,.15,Math.PI-.15);ctx.stroke();
+            }else if(charId==='forest'){
+                ctx.fillStyle='#15803d';ctx.strokeStyle='#166534';ctx.lineWidth=1.5;ctx.beginPath();
+                ctx.moveTo(-15,-17);ctx.lineTo(-10,-29);ctx.lineTo(-4,-20);ctx.lineTo(2,-34);ctx.lineTo(7,-20);ctx.lineTo(14,-28);ctx.lineTo(17,-15);ctx.closePath();ctx.fill();ctx.stroke();
+                ctx.fillStyle='#fda4af';ctx.beginPath();ctx.arc(20,-8,3,0,Math.PI*2);ctx.fill();
+            }
+            ctx.fillStyle='#3b302a';ctx.beginPath();ctx.arc(-6.5,1,2,0,Math.PI*2);ctx.arc(6.5,1,2,0,Math.PI*2);ctx.fill();
+            ctx.strokeStyle='#3b302a';ctx.lineWidth=1.7;ctx.beginPath();ctx.arc(0,5,3.2,.12,Math.PI-.12);ctx.stroke();
+            ctx.fillStyle='rgba(235,130,130,0.48)';ctx.beginPath();ctx.ellipse(-13,7,4.2,2.7,0,0,Math.PI*2);ctx.ellipse(13,7,4.2,2.7,0,0,Math.PI*2);ctx.fill();
+            ctx.fillStyle=p.scarf;ctx.strokeStyle='#5c4738';ctx.lineWidth=1.8;ctx.beginPath();ctx.roundRect(-17,13,34,7,3.5);ctx.fill();ctx.stroke();
+            ctx.beginPath();ctx.moveTo(8,17);ctx.lineTo(13+Math.sin(gameFrame*.18)*2,27);ctx.lineTo(18,17);ctx.closePath();ctx.fill();ctx.stroke();
+            if(charId==='netzero'){ctx.fillStyle='#f5d77b';ctx.strokeStyle='#8c6428';ctx.lineWidth=1;ctx.beginPath();ctx.arc(0,16.5,3,0,Math.PI*2);ctx.fill();ctx.stroke();}
             ctx.restore();
         }
 
@@ -1232,6 +1167,11 @@
                 gameState.zone = 'night';
                 gameState.gameSpeed = Math.max(4.5, gameState.baseSpeed - 0.7 + progressiveBoost);
             }
+
+            // Laptop +15%; điện thoại/tablet cảm ứng -15%.
+            const fineDesktop = window.matchMedia('(min-width: 768px) and (hover: hover) and (pointer: fine)').matches;
+            const touchDevice = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+            gameState.gameSpeed *= fineDesktop ? 1.15 : (touchDevice ? 0.85 : 1);
 
             roadOffset = (roadOffset + gameState.gameSpeed) % 40;
 
@@ -1544,8 +1484,8 @@
 
                 ctx.fillStyle = pObj.trim;
                 ctx.font = '14px sans-serif';
-                ctx.fillText('⚡', px - 25, py - 10);
-                ctx.fillText('⚡', px + 15, py + 20);
+                ctx.fillText(pObj.icon || '⚡', px - 25, py - 10);
+                ctx.fillText(pObj.icon || '⚡', px + 15, py + 20);
             }
 
             // Vẽ nhân vật (Baby Cloud hoặc Hiệp sĩ bay lướt ngang siêu đẹp)
@@ -1600,6 +1540,19 @@
 
         function returnToMenu() {
             switchScreen('menu');
+        }
+
+        function goToNextBoard() {
+            if (gameState.isEndless || !gameState.currentMonthId) {
+                switchScreen('menu');
+                return;
+            }
+            const nextM = MONTHS_DATA.find(m => m.id === gameState.currentMonthId + 1);
+            if (nextM && nextM.unlocked) {
+                startMonthGame(nextM.id);
+            } else {
+                switchScreen('menu');
+            }
         }
 
         window.addEventListener('resize', () => {
