@@ -306,7 +306,7 @@
     <script>
         const CHARACTERS_DATA = [
             { 
-                id: 'buddy', name: 'Eco Buddy (Baby Cloud)', title: 'Linh vật mây xanh đáng yêu', desc: 'Mâm mây nhỏ nhắn, mang tai lá cây và chiếc khăn quàng xanh thân thiện[cite: 5].', price: 0, 
+                id: 'buddy', name: 'Eco Buddy (Baby Cloud)', title: 'Linh vật mây xanh đáng yêu', desc: 'Đám mây trắng nhỏ nhắn, mang tai lá cây và chiếc khăn quàng xanh thân thiện[cite: 5].', price: 0, 
                 defense: '3 mạng', magnetPower: 'Bình thường', scoreBonus: 'x1.0', outfit: 'Khăn choàng & tai lá cây'
             },
             { 
@@ -318,8 +318,8 @@
                 defense: 'Giảm 50% phạt', magnetPower: 'Nhanh', scoreBonus: 'x1.3', outfit: 'Áo choàng gió tung bay'
             },
             { 
-                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Mặc bộ giáp năng lượng tối tân với lõi phát sáng rực rỡ, hút xu phạm vi siêu rộng.', price: 7500, 
-                defense: 'Cao cấp', magnetPower: 'Siêu rộng', scoreBonus: 'x1.5', outfit: 'Giáp năng lượng xanh tối tân'
+                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Bay lướt vút nhanh với áo choàng đỏ siêu anh hùng và giáp năng lượng tối tân[cite: 6].', price: 7500, 
+                defense: 'Cao cấp', magnetPower: 'Siêu rộng', scoreBonus: 'x1.5', outfit: 'Áo choàng siêu anh hùng & Giáp xanh'
             },
             { 
                 id: 'quantum', name: 'Pháp Sư Lượng Tử', title: 'Đỉnh cao tương lai', desc: 'Đội mũ chóp phép thuật huyền bí, giúp nhân đôi toàn bộ phần thưởng thu thập.', price: 15000, 
@@ -808,7 +808,7 @@
             });
         }
 
-        // --- HÀM VẼ LINH VẬT BABY CLOUD SIÊU CUTE GIỐNG ẢNH BẠN GỬI ---
+        // --- HÀM VẼ NHÂN VẬT: BABY CLOUD HOẶC SIÊU ANH HÙNG BAY LƯỢN (SUPERMAN STYLE) ---
         function drawCuteMascot(ctx, cx, cy, charId, gameFrame) {
             let bounce = Math.sin(gameFrame * 0.3) * 3;
             let currentY = cy + bounce;
@@ -816,15 +816,13 @@
             ctx.save();
             ctx.translate(cx, currentY);
 
-            // Đổ bóng dưới chân
-            ctx.fillStyle = 'rgba(0,0,0,0.15)';
-            ctx.beginPath();
-            ctx.ellipse(0, 34, 18, 5, 0, 0, Math.PI * 2);
-            ctx.fill();
-
             if (charId === 'buddy') {
-                // --- ECO BUDDY (BABY CLOUD CHUẨN MẪU BẠN GỬI) ---
-                // Thân mây fluffy trắng ấm áp
+                // --- ECO BUDDY: Đám mây trắng siêu cute với má hồng & tai lá cây[cite: 5] ---
+                ctx.fillStyle = 'rgba(0,0,0,0.15)';
+                ctx.beginPath();
+                ctx.ellipse(0, 34, 18, 5, 0, 0, Math.PI * 2);
+                ctx.fill();
+
                 ctx.fillStyle = '#fdfbf7';
                 ctx.strokeStyle = '#5c4738';
                 ctx.lineWidth = 2.5;
@@ -834,7 +832,7 @@
                 ctx.fill();
                 ctx.stroke();
 
-                // Tai lá cây đôi ở đỉnh đầu
+                // Tai lá cây đôi
                 ctx.fillStyle = '#467551';
                 ctx.beginPath();
                 ctx.ellipse(-5, -19, 5, 9, -0.4, 0, Math.PI * 2);
@@ -842,21 +840,20 @@
                 ctx.fill();
                 ctx.stroke();
 
-                // Khăn choàng xanh lá quanh cổ
+                // Khăn choàng xanh lá
                 ctx.fillStyle = '#467551';
                 ctx.beginPath();
                 ctx.roundRect(-16, 10, 32, 8, 4);
                 ctx.fill();
                 ctx.stroke();
 
-                // Mắt cười & Má hồng siêu cute
+                // Mắt & Miệng
                 ctx.fillStyle = '#3b302a';
                 ctx.beginPath();
                 ctx.arc(-6, 2, 2.2, 0, Math.PI * 2);
                 ctx.arc(6, 2, 2.2, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Miệng cườim
                 ctx.beginPath();
                 ctx.arc(0, 4, 3, 0, Math.PI);
                 ctx.stroke();
@@ -868,91 +865,96 @@
                 ctx.arc(11, 5, 4, 0, Math.PI * 2);
                 ctx.fill();
 
-            } else if (charId === 'solar') {
-                // --- KỸ SƯ MẶT TRỜI: Đội nón vàng & Kính quang năng ---
-                ctx.fillStyle = '#fef3c7';
-                ctx.strokeStyle = '#5c4738';
-                ctx.lineWidth = 2.5;
+            } else {
+                // --- CÁC NHÂN VẬT HIỆP SĨ / SIÊU ANH HÙNG (DÁNG BAY NGANG SUPERMAN STYLE NHƯ ẢNH BẠN GỬI)[cite: 6] ---
+                let capeColor = '#b94a39';
+                let suitColor = '#0284c7';
+                let emblemColor = '#eab308';
+                let hairColor = '#78350f';
+
+                if (charId === 'solar') { suitColor = '#d97706'; capeColor = '#ea580c'; }
+                else if (charId === 'wind') { suitColor = '#0369a1'; capeColor = '#0f766e'; }
+                else if (charId === 'netzero') { suitColor = '#15803d'; capeColor = '#b94a39'; emblemColor = '#facc15'; }
+                else if (charId === 'quantum') { suitColor = '#7e22ce'; capeColor = '#581c87'; emblemColor = '#f0abfc'; }
+
+                // Vệt tốc độ phía sau (Speed lines)
+                ctx.strokeStyle = 'rgba(92, 71, 56, 0.35)';
+                ctx.lineWidth = 2;
                 ctx.beginPath();
-                ctx.arc(0, 4, 21, 0, Math.PI * 2);
+                ctx.moveTo(-28, -6); ctx.lineTo(-42, -6);
+                ctx.moveTo(-26, 4); ctx.lineTo(-40, 4);
+                ctx.moveTo(-28, 14); ctx.lineTo(-44, 14);
+                ctx.stroke();
+
+                // Áo choàng bay phấp phới phía sau
+                ctx.fillStyle = capeColor;
+                ctx.beginPath();
+                ctx.moveTo(-10, -2);
+                ctx.lineTo(-32 + Math.sin(gameFrame * 0.4) * 6, -16);
+                ctx.lineTo(-28 + Math.sin(gameFrame * 0.3) * 6, 18);
+                ctx.lineTo(0, 6);
+                ctx.closePath();
+                ctx.fill();
+                ctx.strokeStyle = '#3b302a';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Thân siêu anh hùng nằm ngang
+                ctx.fillStyle = suitColor;
+                ctx.beginPath();
+                ctx.roundRect(-16, -10, 32, 22, 8);
                 ctx.fill();
                 ctx.stroke();
 
-                // Nón kỹ sư bảo hộ màu cam/vàng
-                ctx.fillStyle = '#d97706';
+                // Huy hiệu trước ngực
+                ctx.fillStyle = emblemColor;
                 ctx.beginPath();
-                ctx.ellipse(0, -17, 15, 6, 0, 0, Math.PI * 2);
+                ctx.arc(0, 0, 5, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.stroke();
 
-                // Kính phản quang
-                ctx.fillStyle = '#1e3a8a';
-                ctx.fillRect(-10, 0, 20, 7);
-                ctx.strokeRect(-10, 0, 20, 7);
-
-            } else if (charId === 'wind') {
-                // --- CHIẾN BINH GIÓ: Áo choàng xanh dương bay phấp phới ---
-                ctx.fillStyle = '#e0f2fe';
-                ctx.strokeStyle = '#5c4738';
-                ctx.lineWidth = 2.5;
+                // Tay vươn lên phía trước (Dáng bay superman)
+                ctx.fillStyle = suitColor;
                 ctx.beginPath();
-                ctx.arc(0, 4, 21, 0, Math.PI * 2);
+                ctx.roundRect(10, -18, 22, 10, 4);
                 ctx.fill();
                 ctx.stroke();
 
-                // Áo choàng gió phía sau
-                ctx.fillStyle = '#0284c7';
+                // Găng tay siêu anh hùng
+                ctx.fillStyle = capeColor;
                 ctx.beginPath();
-                ctx.moveTo(-10, 10);
-                ctx.lineTo(-22 + Math.sin(gameFrame * 0.4) * 8, 26);
-                ctx.lineTo(-5, 20);
+                ctx.roundRect(22, -18, 12, 10, 3);
                 ctx.fill();
+                ctx.stroke();
 
+                // Chân duỗi phía sau
+                ctx.fillStyle = suitColor;
+                ctx.beginPath();
+                ctx.roundRect(-22, 4, 14, 9, 4);
+                ctx.fill();
+                ctx.stroke();
+
+                // Đầu & Tóc bồng bềnh
+                ctx.fillStyle = '#fde68a'; // Mặt
+                ctx.beginPath();
+                ctx.arc(10, -8, 11, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Mắt cười & Miệng cười
                 ctx.fillStyle = '#3b302a';
                 ctx.beginPath();
-                ctx.arc(-6, 2, 2.2, 0, Math.PI * 2);
-                ctx.arc(6, 2, 2.2, 0, Math.PI * 2);
+                ctx.arc(13, -10, 1.8, 0, Math.PI * 2);
                 ctx.fill();
 
-            } else if (charId === 'netzero') {
-                // --- HIỆP SĨ NET-ZERO: Giáp xanh lá công nghệ cao ---
-                ctx.fillStyle = '#dcfce7';
-                ctx.strokeStyle = '#3b302a';
-                ctx.lineWidth = 2.5;
                 ctx.beginPath();
-                ctx.arc(0, 4, 21, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.arc(14, -6, 2.5, 0, Math.PI);
                 ctx.stroke();
 
-                // Giáp ngực & Lõi năng lượng
-                ctx.fillStyle = '#15803d';
+                // Tóc bồng bềnh thời trang phía sau đầu
+                ctx.fillStyle = hairColor;
                 ctx.beginPath();
-                ctx.roundRect(-14, 8, 28, 14, 4);
-                ctx.fill();
-                ctx.stroke();
-
-                ctx.fillStyle = '#facc15';
-                ctx.beginPath();
-                ctx.arc(0, 15, 4, 0, Math.PI * 2);
-                ctx.fill();
-
-            } else if (charId === 'quantum') {
-                // --- PHÁP SƯ LƯỢNG TỬ: Mũ phép thuật tím ---
-                ctx.fillStyle = '#f3e8ff';
-                ctx.strokeStyle = '#581c87';
-                ctx.lineWidth = 2.5;
-                ctx.beginPath();
-                ctx.arc(0, 4, 21, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-
-                // Mũ chóp nhọn pháp sư
-                ctx.fillStyle = '#7e22ce';
-                ctx.beginPath();
-                ctx.moveTo(0, -24);
-                ctx.lineTo(-12, -8);
-                ctx.lineTo(12, -8);
-                ctx.closePath();
+                ctx.arc(4, -14, 10, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.stroke();
             }
@@ -1546,7 +1548,7 @@
                 ctx.fillText('⚡', px + 15, py + 20);
             }
 
-            // Vẽ Mascot Baby Cloud siêu cute đang chạy trên đường
+            // Vẽ nhân vật (Baby Cloud hoặc Hiệp sĩ bay lướt ngang siêu đẹp)
             drawCuteMascot(ctx, px, py, cObj.id, gameFrame);
         }
 
