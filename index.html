@@ -2,11 +2,15 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subway Eco Runner 🏃‍♂️⚡</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Eco Runner Mobile 3D 🏃‍♂️⚡</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700;900&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+            touch-action: pan-y; /* Giúp vuốt mượt mà trên mobile, tránh bị cuộn trang */
+        }
         body {
             font-family: 'Quicksand', sans-serif;
             background-color: #fcf8f2;
@@ -18,57 +22,57 @@
             min-height: 100vh;
             margin: 0;
             user-select: none;
+            overflow: hidden;
         }
-        .game-container {
-            width: 100%;
-            max-width: 400px;
-            background: linear-gradient(145deg, #fffdfa, #f7f1e5);
+        .vintage-panel-3d {
+            background: linear-gradient(145deg, #fffdfa 0%, #f7f1e5 100%);
             border: 3px solid #5c4738;
             box-shadow: 6px 6px 0 #5c4738;
-            border-radius: 24px;
+            border-radius: 1.8rem;
+            width: 92%;
+            max-width: 400px;
             padding: 20px;
             text-align: center;
         }
-        .track-box {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            background: #2b3a42;
+        .eco-playfield-3d {
             border: 3px solid #5c4738;
-            border-radius: 16px;
-            padding: 12px;
-            min-height: 280px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
-            margin: 15px 0;
+            border-radius: 18px;
+            background: linear-gradient(145deg, #fffaf1, #e8d7be);
+            padding: 16px;
+            box-shadow: inset 0 4px 10px rgba(92, 71, 56, 0.15), 0 4px 0 rgba(92, 71, 56, 0.2);
+            cursor: grab;
         }
-        .lane {
-            background: #1f2a30;
-            border: 2px dashed #4b6270;
-            border-radius: 12px;
+        .eco-lane-3d {
+            min-height: 90px;
+            border: 2px dashed #8c7355;
+            border-radius: 14px;
+            background: #fdf8ee;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 8px 0;
-            min-height: 250px;
-            font-size: 32px;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            transition: all 0.1s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
-        .lane.active-lane {
-            background: #26353d;
-            border-color: #A8C7A0;
+        .eco-lane-3d.active {
+            background: #e4ecd9;
+            border: 2px solid #54794f;
+            box-shadow: 0 4px 0 #3b5437, inset 0 2px 6px rgba(255,255,255,0.8);
+            transform: scale(1.03);
         }
-        .control-btn {
-            background: #A8C7A0;
+        .eco-action-3d {
             border: 2px solid #5c4738;
-            color: #2b3a42;
-            font-weight: 900;
-            font-size: 18px;
+            background: linear-gradient(135deg, #b8dcaf, #96ca8b);
+            color: #2b3a28;
+            border-radius: 14px;
             padding: 14px;
-            border-radius: 16px;
+            font-weight: 900;
+            font-size: 15px;
             box-shadow: 0 4px 0 #5c4738;
             cursor: pointer;
-            transition: all 0.05s ease;
+            transition: all 0.08s ease;
         }
-        .control-btn:active {
+        .eco-action-3d:active {
             transform: translateY(3px);
             box-shadow: 0 1px 0 #5c4738;
         }
@@ -76,121 +80,111 @@
 </head>
 <body>
 
-    <div class="game-container">
-        <div class="flex justify-between items-center mb-2 px-2">
-            <span class="font-black text-sm">🚇 SUBWAY ECO RUNNER</span>
-            <span id="score-display" class="bg-[#364954] text-amber-300 px-3 py-1 rounded-full text-xs font-black border border-[#5c4738]">⭐ 0</span>
+    <div class="vintage-panel-3d space-y-4">
+        <div class="flex justify-between items-center px-1">
+            <span class="font-black text-sm text-[#4a3b32]">🏃‍♂️ ECO RUNNER MOBILE</span>
+            <span id="runner-score" class="bg-[#8c7355] text-white px-3 py-1 rounded-full text-xs font-black border border-[#5c4738] shadow-sm">⭐ 0 / 8</span>
         </div>
         
-        <p class="text-xs text-[#7a6452] font-bold">Né chướng ngại vật 🚧 và ăn ngôi sao ⭐!</p>
+        <p class="text-xs text-[#7a6452] font-bold">👉 **Vuốt màn hình sang Trái / Phải** hoặc bấm nút bên dưới để điều khiển nhân vật!</p>
 
-        <!-- Khung đường ray -->
-        <div class="track-box" id="track-container">
-            <!-- Render bằng Javascript -->
+        <!-- Khung chơi hỗ trợ cảm ứng vuốt (Swipe) -->
+        <div class="eco-playfield-3d space-y-2.5" id="swipe-box">
+            <div id="runner-lanes" class="grid grid-cols-3 gap-2.5">
+                <div class="eco-lane-3d">🌿</div>
+                <div class="eco-lane-3d active">🏃‍♂️</div>
+                <div class="eco-lane-3d">⚡</div>
+            </div>
         </div>
 
-        <!-- Nút điều khiển 2 bên -->
-        <div class="grid grid-cols-2 gap-4 mt-3">
-            <button class="control-btn" onclick="move(-1)">⬅️ TRÁI</button>
-            <button class="control-btn" onclick="move(1)">PHẢI ➡️</button>
+        <!-- Nút bấm dự phòng trên điện thoại -->
+        <div class="flex justify-center gap-4 pt-1">
+            <button class="eco-action-3d flex-1" onclick="moveEcoRunner(-1)">⬅️ TRÁI</button>
+            <button class="eco-action-3d flex-1" onclick="moveEcoRunner(1)">PHẢI ➡️</button>
         </div>
     </div>
 
     <script>
-        let lane = 1; // 0: Trái, 1: Giữa, 2: Phải
-        let score = 0;
-        let rows = [];
-        let timer = null;
+        let ecoRunnerPos = 1; 
+        let ecoRunnerStep = 0; 
+        let ecoGameScore = 0;
 
-        function initGame() {
-            lane = 1;
-            score = 0;
-            rows = [
-                { obs: [null, '🚧', null], item: ['⭐', null, null] },
-                { obs: [null, null, '⚠️'], item: [null, '⭐', null] },
-                { obs: ['🚧', null, null], item: [null, null, '⭐'] },
-                { obs: [null, '⚠️', null], item: ['⭐', null, null] }
-            ];
-            render();
-            if(timer) clearInterval(timer);
-            timer = setInterval(gameLoop, 1100); // Tốc độ chạy tự động
+        const hazards3D = ["🗑️", "💡", "🔌", "📺", "🧊", "🧯", "⚠️", "❌"];
+        const safe3D = ["⭐", "🌱", "🍃", "🌞", "🌿", "💚", "🌻", "🌳"];
+
+        function startEcoRunner() {
+            ecoRunnerPos = 1; 
+            ecoRunnerStep = 0; 
+            ecoGameScore = 0;
+            drawEcoRunner();
         }
 
-        function gameLoop() {
-            // Tạo hàng mới phía trên rơi xuống
-            const oList = [null, '🚧', '⚠️', null];
-            const iList = ['⭐', null, '🍃', '⭐'];
-            
-            const newRow = {
-                obs: [oList[Math.floor(Math.random()*4)], oList[Math.floor(Math.random()*4)], oList[Math.floor(Math.random()*4)]],
-                item: [iList[Math.floor(Math.random()*4)], iList[Math.floor(Math.random()*4)], iList[Math.floor(Math.random()*4)]]
-            };
+        function drawEcoRunner() {
+            const lanes = document.getElementById("runner-lanes");
+            if(!lanes) return;
 
-            rows.pop();
-            rows.unshift(newRow);
-
-            // Kiểm tra va chạm ở hàng dưới cùng
-            const bottom = rows[rows.length - 1];
-            if(bottom.obs[lane]) {
-                alert("💥 Game Over! Va phải chướng ngại vật. Tổng điểm: " + score);
-                initGame();
-                return;
-            } else if(bottom.item[lane]) {
-                score += 10;
-                bottom.item[lane] = null; // Ăn xong mất sao
-            }
-
-            render();
-        }
-
-        function render() {
-            const container = document.getElementById('track-container');
-            let html = '';
-
-            for(let l = 0; l < 3; l++) {
-                let laneContent = '';
-                for(let r = 0; r < rows.length; r++) {
-                    let cell = '·';
-                    if(r === rows.length - 1 && l === lane) {
-                        cell = '🏃‍♂️'; // Nhân vật
-                    } else if(rows[r].obs[l]) {
-                        cell = rows[r].obs[l];
-                    } else if(rows[r].item[l]) {
-                        cell = rows[r].item[l];
-                    }
-                    laneContent += `<div style="height: 50px; display:flex; align-items:center; justify-content:center;">${cell}</div>`;
+            const target = ecoRunnerStep % 3;
+            const items = [0, 1, 2].map((_, i) => {
+                if (i === target) {
+                    return hazards3D[ecoRunnerStep % hazards3D.length];
+                } else {
+                    return safe3D[(ecoRunnerStep + i) % safe3D.length];
                 }
-                html += `<div class="lane ${l === lane ? 'active-lane' : ''}">${laneContent}</div>`;
-            }
+            });
 
-            container.innerHTML = html;
-            document.getElementById('score-display').innerText = "⭐ " + score;
+            items[ecoRunnerPos] = "🏃‍♂️";
+
+            lanes.innerHTML = items.map((v, i) => `
+                <div class="eco-lane-3d ${i === ecoRunnerPos ? 'active' : ''}">
+                    <span style="filter: drop-shadow(2px 3px 2px rgba(0,0,0,0.15));">${v}</span>
+                </div>
+            `).join("");
         }
 
-        function move(dir) {
-            lane = Math.max(0, Math.min(2, lane + dir));
+        function moveEcoRunner(dir) {
+            ecoRunnerPos = Math.max(0, Math.min(2, ecoRunnerPos + dir));
+            ecoRunnerStep++;
+            ecoGameScore++;
             
-            // Check ngay khi bấm đổi làn
-            const bottom = rows[rows.length - 1];
-            if(bottom.obs[lane]) {
-                alert("💥 Game Over! Va phải chướng ngại vật. Tổng điểm: " + score);
-                initGame();
-                return;
-            } else if(bottom.item[lane]) {
-                score += 10;
-                bottom.item[lane] = null;
-            }
-            render();
+            const score = document.getElementById("runner-score");
+            if(score) score.innerText = "⭐ " + ecoGameScore + " / 8";
+            
+            drawEcoRunner();
         }
 
-        // Bắt phím mũi tên bàn phím
+        // --- TÍNH NĂNG VUỐT MÀN HÌNH TRÊN ĐIỆN THOẠI (TOUCH SWIPE) ---
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        const swipeBox = document.getElementById('swipe-box');
+
+        swipeBox.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        swipeBox.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            const threshold = 30; // Khoảng cách tối thiểu để tính là vuốt (px)
+            if (touchEndX < touchStartX - threshold) {
+                // Vuốt sang trái
+                moveEcoRunner(-1);
+            } else if (touchEndX > touchStartX + threshold) {
+                // Vuốt sang phải
+                moveEcoRunner(1);
+            }
+        }
+
+        // Hỗ trợ cả phím mũi tên trên bàn phím máy tính
         window.addEventListener('keydown', (e) => {
-            if(e.key === 'ArrowLeft') move(-1);
-            if(e.key === 'ArrowRight') move(1);
+            if(e.key === 'ArrowLeft') moveEcoRunner(-1);
+            if(e.key === 'ArrowRight') moveEcoRunner(1);
         });
 
-        // Bắt đầu chạy ngay khi mở web
-        initGame();
+        startEcoRunner();
     </script>
 </body>
 </html>
