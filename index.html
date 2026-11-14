@@ -63,7 +63,7 @@
     <!-- MAIN APP CONTAINER -->
     <div id="app" class="w-full max-w-md mx-auto vintage-card p-4 sm:p-5 flex flex-col items-center relative overflow-hidden">
         
-        <!-- HEADER (Fix 3 nút cân đối, dùng icon chuẩn) -->
+        <!-- HEADER -->
         <div class="w-full flex justify-between items-center mb-3 border-b-2 border-dashed border-[#8c7355] pb-2">
             <div>
                 <h1 class="font-black text-lg sm:text-xl text-[#4a3b32] tracking-wider" style="font-family: 'Playfair Display', serif;">ECO SURFER</h1>
@@ -239,11 +239,10 @@
         </div>
     </div>
 
-    <!-- REVIEW CHARACTER MODAL (CÓ HIỂN THỊ HÌNH DÁNG NHÂN VẬT) -->
+    <!-- REVIEW CHARACTER MODAL -->
     <div id="review-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
         <div class="vintage-card bg-[#fdfbf7] p-5 max-w-xs w-full space-y-3 relative flex flex-col items-center">
             
-            <!-- Canvas hiển thị hình dáng nhân vật trực quan -->
             <div class="w-20 h-24 bg-[#2a3625] rounded-xl border-2 border-[#5c4738] relative overflow-hidden flex items-center justify-center shadow-inner">
                 <canvas id="previewCanvas" width="80" height="96"></canvas>
             </div>
@@ -255,7 +254,7 @@
             
             <div class="space-y-2 text-xs font-medium text-[#5c4738] w-full">
                 <div class="bg-[#f2ecdc] p-2.5 rounded-xl border border-[#c4b59d]">
-                    <p class="font-bold mb-1 text-[#4a3b32]">📝 Mô tả:</p>
+                    <p class="font-bold mb-1 text-[#4a3b32]">📝 Mô tả & Trang bị:</p>
                     <p id="rev-desc" class="text-[11px] text-[#735d4c]">Mô tả chi tiết kỹ năng đặc biệt của nhân vật.</p>
                 </div>
                 
@@ -307,29 +306,29 @@
     <script>
         const CHARACTERS_DATA = [
             { 
-                id: 'buddy', name: 'Eco Buddy (Mây Xanh)', title: 'Linh vật thân thiện', desc: 'Linh vật tiết kiệm điện tiêu chuẩn, linh hoạt.', price: 0, 
+                id: 'buddy', name: 'Eco Buddy (Mây Xanh)', title: 'Linh vật thân thiện', desc: 'Linh vật tiết kiệm điện tiêu chuẩn, trang bị áo mầm cây cơ bản.', price: 0, 
                 bodyColor: '#5c4738', headColor: '#f5f0e6', hatColor: '#467551', isCloud: true,
-                defense: '3 mạng', magnetPower: 'Bình thường', scoreBonus: 'x1.0'
+                defense: '3 mạng', magnetPower: 'Bình thường', scoreBonus: 'x1.0', outfit: 'Mây xanh thân thiện'
             },
             { 
-                id: 'solar', name: 'Kỹ Sư Mặt Trời', title: 'Bậc thầy quang năng', desc: 'Tận dụng ánh sáng giúp tăng cường hiệu quả hóa đơn xanh.', price: 1200, 
+                id: 'solar', name: 'Kỹ Sư Mặt Trời', title: 'Bậc thầy quang năng', desc: 'Trang bị nón kỹ sư và kính quang năng, giúp tăng cường hiệu quả hóa đơn xanh.', price: 1200, 
                 bodyColor: '#d97706', headColor: '#fde68a', hatColor: '#1e3a8a', isCloud: false,
-                defense: 'Tốt', magnetPower: 'Khá', scoreBonus: 'x1.2'
+                defense: 'Tốt', magnetPower: 'Khá', scoreBonus: 'x1.2', outfit: 'Nón bảo hộ & kính quang năng'
             },
             { 
-                id: 'wind', name: 'Chiến Binh Gió', title: 'Cơn lốc năng lượng sạch', desc: 'Lướt nhẹ nhàng qua giờ cao điểm, giảm thiểu phạt va chạm.', price: 3500, 
+                id: 'wind', name: 'Chiến Binh Gió', title: 'Cơn lốc năng lượng sạch', desc: 'Khoác áo choàng gió tung bay, giúp giảm thiểu 50% phạt khi va chạm.', price: 3500, 
                 bodyColor: '#0284c7', headColor: '#e0f2fe', hatColor: '#0f766e', isCloud: false,
-                defense: 'Giảm 50% phạt', magnetPower: 'Nhanh', scoreBonus: 'x1.3'
+                defense: 'Giảm 50% phạt', magnetPower: 'Nhanh', scoreBonus: 'x1.3', outfit: 'Áo choàng gió lướt nhanh'
             },
             { 
-                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Giáp năng lượng tối tân, hút xu phạm vi siêu rộng.', price: 7500, 
+                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Mặc giáp năng lượng xanh tối tân, hút xu phạm vi siêu rộng.', price: 7500, 
                 bodyColor: '#15803d', headColor: '#dcfce7', hatColor: '#14532d', isCloud: false,
-                defense: 'Cao cấp', magnetPower: 'Siêu rộng', scoreBonus: 'x1.5'
+                defense: 'Cao cấp', magnetPower: 'Siêu rộng', scoreBonus: 'x1.5', outfit: 'Giáp năng lượng xanh tối tân'
             },
             { 
-                id: 'quantum', name: 'Pháp Sư Lượng Tử', title: 'Đỉnh cao tương lai', desc: 'Công nghệ lượng tử giúp nhân đôi mọi phần thưởng.', price: 15000, 
+                id: 'quantum', name: 'Pháp Sư Lượng Tử', title: 'Đỉnh cao tương lai', desc: 'Đội mũ phép thuật lượng tử, nhân đôi mọi phần thưởng thu thập.', price: 15000, 
                 bodyColor: '#7e22ce', headColor: '#f3e8ff', hatColor: '#581c87', isCloud: false,
-                defense: 'Tối ưu', magnetPower: 'Toàn làn', scoreBonus: 'x2.0'
+                defense: 'Tối ưu', magnetPower: 'Toàn làn', scoreBonus: 'x2.0', outfit: 'Áo choàng & Mũ pháp sư lượng tử'
             }
         ];
 
@@ -502,6 +501,48 @@
             osc.stop(audioCtx.currentTime + 0.25);
         }
 
+        // Âm thanh CHIẾN THẮNG (SFX Vui tai vút lên)
+        function playSoundWin() {
+            if (!gameState.sfxEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+            let now = audioCtx.currentTime;
+            let notes = [523.25, 659.25, 783.99, 1046.50]; // Đồ, Mi, Sol, Đồ cao
+            notes.forEach((freq, idx) => {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.1);
+                gain.gain.setValueAtTime(0.2, now + idx * 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.25);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now + idx * 0.1);
+                osc.stop(now + idx * 0.1 + 0.25);
+            });
+        }
+
+        // Âm thanh THUA CUỘC / HẾT MẠNG (SFX Trầm buồn đi xuống)
+        function playSoundLose() {
+            if (!gameState.sfxEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+            let now = audioCtx.currentTime;
+            let notes = [300, 240, 180, 120];
+            notes.forEach((freq, idx) => {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+                gain.gain.setValueAtTime(0.25, now + idx * 0.12);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.3);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now + idx * 0.12);
+                osc.stop(now + idx * 0.12 + 0.3);
+            });
+        }
+
         function startBGM() {
             stopBGM();
             if (!gameState.bgmEnabled) return;
@@ -660,8 +701,8 @@
             document.getElementById('total-coins').innerText = gameState.totalCoins;
             const cObj = CHARACTERS_DATA.find(c => c.id === gameState.equippedChar) || CHARACTERS_DATA[0];
             const pObj = PACKS_DATA.find(p => p.id === gameState.equippedPack) || PACKS_DATA[0];
-            document.getElementById('equipped-char-label').innerText = `👤 ${cObj.name}`;
-            document.getElementById('equipped-pack-label').innerText = `🔋 ${pObj.name}`;
+            document.getElementById('equipped-char-label').innerText = `👤 ${cObj.name.split(' ')[0]}`;
+            document.getElementById('equipped-pack-label').innerText = `🔋 ${pObj.name.split(' ')[1] || 'Pin'}`;
         }
 
         function renderMonthsList() {
@@ -741,7 +782,7 @@
                     <div class="p-2.5 rounded-xl border border-[#c4b59d] bg-[#f2ecdc] flex justify-between items-center">
                         <div class="pr-2">
                             <p class="font-bold text-xs text-[#4a3b32]">${char.name}</p>
-                            <p class="text-[10px] text-[#735d4c]">${char.title}</p>
+                            <p class="text-[10px] text-[#735d4c]">Trang bị: ${char.outfit}</p>
                         </div>
                         ${btnHtml}
                     </div>
@@ -774,7 +815,118 @@
             });
         }
 
-        // --- MỞ REVIEW VÀ VẼ HÌNH DÁNG NHÂN VẬT LÊN CANVAS ---
+        // --- HÀM VẼ NHÂN VẬT & TRANG PHỤC CHI TIẾT LÊN CANVAS ---
+        function drawCharacter(ctx, px, py, pw, ph, charId, gameFrame) {
+            let runBob = Math.sin(gameFrame * 0.35) * 3;
+            let currentY = py + runBob;
+
+            if (charId === 'buddy') {
+                // Eco Buddy: Mây xanh thân thiện
+                ctx.fillStyle = '#fdfbf7';
+                ctx.beginPath();
+                ctx.arc(px + pw / 2, currentY + 24, 18, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#5c4738';
+                ctx.stroke();
+                ctx.fillStyle = '#467551';
+                ctx.beginPath();
+                ctx.ellipse(px + 6, currentY + 8, 5, 8, -0.4, 0, Math.PI * 2);
+                ctx.ellipse(px + pw - 6, currentY + 8, 5, 8, 0.4, 0, Math.PI * 2);
+                ctx.fill();
+            } else if (charId === 'solar') {
+                // Kỹ Sư Mặt Trời: Đội nón bảo hộ màu vàng có vành & kính bảo hộ
+                ctx.fillStyle = '#d97706';
+                ctx.beginPath();
+                ctx.roundRect(px + 5, currentY + 16, pw - 10, ph - 20, 4);
+                ctx.fill();
+                ctx.strokeRect(px + 5, currentY + 16, pw - 10, ph - 20);
+                
+                // Đầu & Kính
+                ctx.fillStyle = '#fde68a';
+                ctx.fillRect(px + 10, currentY, 18, 16);
+                ctx.strokeRect(px + 10, currentY, 18, 16);
+                
+                ctx.fillStyle = '#1e3a8a'; // Kính bảo hộ ngang
+                ctx.fillRect(px + 11, currentY + 5, 16, 5);
+
+                // Nón bảo hộ kỹ sư
+                ctx.fillStyle = '#eab308';
+                ctx.beginPath();
+                ctx.ellipse(px + pw / 2, currentY - 2, 14, 5, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            } else if (charId === 'wind') {
+                // Chiến Binh Gió: Áo choàng xanh dương bay phấp phới & tóc năng lượng
+                ctx.fillStyle = '#0284c7';
+                ctx.beginPath();
+                ctx.roundRect(px + 5, currentY + 16, pw - 10, ph - 20, 4);
+                ctx.fill();
+                ctx.strokeRect(px + 5, currentY + 16, pw - 10, ph - 20);
+
+                // Áo choàng gió phía sau bay
+                ctx.fillStyle = '#38bdf8';
+                ctx.beginPath();
+                ctx.moveTo(px + 5, currentY + 22);
+                ctx.lineTo(px - 10 + Math.sin(gameFrame * 0.4) * 6, currentY + 38);
+                ctx.lineTo(px + 5, currentY + 35);
+                ctx.fill();
+
+                ctx.fillStyle = '#e0f2fe';
+                ctx.fillRect(px + 10, currentY, 18, 16);
+                ctx.strokeRect(px + 10, currentY, 18, 16);
+
+                // Bờm tóc gió
+                ctx.fillStyle = '#0f766e';
+                ctx.fillRect(px + 8, currentY - 4, 20, 5);
+            } else if (charId === 'netzero') {
+                // Hiệp Sĩ Net-Zero: Giáp năng lượng tối tân xanh lá
+                ctx.fillStyle = '#15803d';
+                ctx.beginPath();
+                ctx.roundRect(px + 3, currentY + 14, pw - 6, ph - 16, 6);
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#3b302a';
+                ctx.stroke();
+
+                // Lõi năng lượng trước ngực
+                ctx.fillStyle = '#facc15';
+                ctx.beginPath();
+                ctx.arc(px + pw / 2, currentY + 28, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#dcfce7';
+                ctx.fillRect(px + 9, currentY, 20, 15);
+                ctx.strokeRect(px + 9, currentY, 20, 15);
+
+                // Mũ giáp hiệp sĩ
+                ctx.fillStyle = '#14532d';
+                ctx.fillRect(px + 7, currentY - 5, 24, 7);
+            } else if (charId === 'quantum') {
+                // Pháp Sư Lượng Tử: Áo choàng tím và mũ chóp phép thuật
+                ctx.fillStyle = '#7e22ce';
+                ctx.beginPath();
+                ctx.roundRect(px + 4, currentY + 16, pw - 8, ph - 20, 4);
+                ctx.fill();
+                ctx.strokeRect(px + 4, currentY + 16, pw - 8, ph - 20);
+
+                ctx.fillStyle = '#f3e8ff';
+                ctx.fillRect(px + 10, currentY, 18, 16);
+                ctx.strokeRect(px + 10, currentY, 18, 16);
+
+                // Mũ chóp nhọn pháp sư
+                ctx.fillStyle = '#581c87';
+                ctx.beginPath();
+                ctx.moveTo(px + pw / 2, currentY - 16);
+                ctx.lineTo(px + 4, currentY - 2);
+                ctx.lineTo(px + pw - 4, currentY - 2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            }
+        }
+
         function openReviewModal(charId) {
             const char = CHARACTERS_DATA.find(c => c.id === charId);
             if (!char) return;
@@ -799,7 +951,6 @@
 
             document.getElementById('review-modal').classList.remove('hidden');
 
-            // Vẽ hình dáng nhân vật ra canvas review
             setTimeout(() => {
                 const pCanvas = document.getElementById('previewCanvas');
                 const pCtx = pCanvas.getContext('2d');
@@ -810,41 +961,12 @@
                 let px = (pCanvas.width - pw) / 2;
                 let py = (pCanvas.height - ph) / 2 + 4;
 
-                // Đổ bóng nhân vật
                 pCtx.fillStyle = 'rgba(0,0,0,0.2)';
                 pCtx.beginPath();
                 pCtx.ellipse(px + pw / 2, py + ph + 2, pw / 2, 4, 0, 0, Math.PI * 2);
                 pCtx.fill();
 
-                if (char.isCloud) {
-                    pCtx.fillStyle = '#fdfbf7';
-                    pCtx.beginPath();
-                    pCtx.arc(px + pw / 2, py + 22, 16, 0, Math.PI * 2);
-                    pCtx.fill();
-                    pCtx.lineWidth = 2;
-                    pCtx.strokeStyle = '#5c4738';
-                    pCtx.stroke();
-                    pCtx.fillStyle = '#467551';
-                    pCtx.beginPath();
-                    pCtx.ellipse(px + 6, py + 8, 4, 7, -0.4, 0, Math.PI * 2);
-                    pCtx.ellipse(px + pw - 6, py + 8, 4, 7, 0.4, 0, Math.PI * 2);
-                    pCtx.fill();
-                } else {
-                    pCtx.fillStyle = char.bodyColor;
-                    pCtx.beginPath();
-                    pCtx.roundRect(px + 4, py + 14, pw - 8, ph - 16, 4);
-                    pCtx.fill();
-                    pCtx.lineWidth = 2;
-                    pCtx.strokeStyle = '#3b302a';
-                    pCtx.stroke();
-
-                    pCtx.fillStyle = char.headColor;
-                    pCtx.fillRect(px + 9, py + 2, 18, 14);
-                    pCtx.strokeRect(px + 9, py + 2, 18, 14);
-
-                    pCtx.fillStyle = char.hatColor;
-                    pCtx.fillRect(px + 6, py - 2, 24, 5);
-                }
+                drawCharacter(pCtx, px, py, pw, ph, char.id, 0);
             }, 50);
         }
 
@@ -1386,9 +1508,8 @@
             const cObj = CHARACTERS_DATA.find(c => c.id === gameState.equippedChar) || CHARACTERS_DATA[0];
             const pObj = PACKS_DATA.find(p => p.id === gameState.equippedPack) || PACKS_DATA[0];
 
-            let runBob = Math.sin(gameFrame * 0.35) * 3;
             let px = player.x;
-            let py = canvas.height - 92 + runBob;
+            let py = canvas.height - 92;
             
             ctx.fillStyle = 'rgba(0,0,0,0.18)';
             ctx.beginPath();
@@ -1408,29 +1529,8 @@
                 ctx.fillText('⚡', px + player.width + 2, py + 35);
             }
 
-            if (cObj.isCloud) {
-                ctx.fillStyle = '#fdfbf7';
-                ctx.beginPath();
-                ctx.arc(px + player.width / 2, py + 24, 18, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = '#5c4738';
-                ctx.stroke();
-                ctx.fillStyle = '#467551';
-                ctx.beginPath();
-                ctx.ellipse(px + 6, py + 8, 5, 8, -0.4, 0, Math.PI * 2);
-                ctx.ellipse(px + player.width - 6, py + 8, 5, 8, 0.4, 0, Math.PI * 2);
-                ctx.fill();
-            } else {
-                ctx.fillStyle = cObj.bodyColor;
-                ctx.beginPath();
-                ctx.roundRect(px + 5, py + 16, player.width - 10, player.height - 20, 4);
-                ctx.fill();
-                ctx.fillStyle = cObj.headColor;
-                ctx.fillRect(px + 10, py, 18, 16);
-                ctx.fillStyle = cObj.hatColor;
-                ctx.fillRect(px + 7, py - 4, 24, 6);
-            }
+            // Gọi hàm vẽ chi tiết trang phục nhân vật đang chọn
+            drawCharacter(ctx, px, py, player.width, player.height, cObj.id, gameFrame);
         }
 
         function endGameSession(isWin) {
@@ -1442,6 +1542,7 @@
             let starsCount = 1;
 
             if (isWin) {
+                playSoundWin(); // Phát âm thanh chiến thắng
                 stampEl.innerText = "HOÀN THÀNH HÓA ĐƠN";
                 stampEl.style.color = "#2c4a1d";
                 stampEl.style.borderColor = "#2c4a1d";
@@ -1463,6 +1564,7 @@
                     }
                 }
             } else {
+                playSoundLose(); // Phát âm thanh thua cuộc
                 stampEl.innerText = "HẾT MẠNG - THỬ LẠI";
                 stampEl.style.color = "#b94a39";
                 stampEl.style.borderColor = "#b94a39";
