@@ -77,7 +77,6 @@
 
         <!-- SCREEN: MENU / MONTH SELECTOR -->
         <div id="screen-menu" class="w-full flex flex-col items-center space-y-4 py-2">
-            <!-- Tổng xu tích lũy (Dùng SVG thay thế emoji tránh lỗi font) -->
             <div class="w-full bg-[#f2ecdc] p-3.5 rounded-xl border border-[#c4b59d] text-center shadow-sm">
                 <p class="text-xs text-[#614e3e] font-medium">Số dư xu tiết kiệm tích lũy:</p>
                 <div class="flex items-center justify-center gap-1.5 mt-1">
@@ -91,7 +90,6 @@
                     <svg class="w-4 h-4 text-[#5c4738]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     <h2 class="text-xs font-bold uppercase tracking-wide text-[#5c4738]">Chọn 30 Tháng Thanh Toán Hóa Đơn:</h2>
                 </div>
-                <!-- Khung chứa 30 màn chơi, tăng chiều cao lên 280px cho dễ cuộn -->
                 <div id="months-list" class="space-y-2 max-h-[280px] overflow-y-auto pr-1">
                     <!-- Dynamically populated 30 months -->
                 </div>
@@ -189,6 +187,84 @@
 
     <!-- SCRIPT LOGIC -->
     <script>
+        // --- HỆ THỐNG ÂM THANH WEB AUDIO API (KHÔNG CẦN FILE NGOÀI) ---
+        let audioCtx = null;
+        let bgmTimer = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Tiếng nhặt xu/hóa đơn vui tai
+        function playSoundCoin() {
+            initAudio();
+            if (!audioCtx) return;
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // Nốt D5
+            osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); // Lên A5
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.15);
+        }
+
+        // Tiếng va chạm chướng ngại vật giật gân
+        function playSoundHit() {
+            initAudio();
+            if (!audioCtx) return;
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(40, audioCtx.currentTime + 0.25);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.25);
+        }
+
+        // Nhạc nền dồn dập tạo cảm giác gấp rút
+        function startBGM() {
+            stopBGM();
+            initAudio();
+            if (!audioCtx) return;
+            
+            let notes = [220, 246.94, 261.63, 293.66, 329.63, 349.23, 392, 440];
+            let step = 0;
+            bgmTimer = setInterval(() => {
+                if (!gameState.isPlaying) return;
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(notes[step % notes.length], audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+                step++;
+            }, 180); // Nhịp nhanh tạo độ gấp rút
+        }
+
+        function stopBGM() {
+            if (bgmTimer) {
+                clearInterval(bgmTimer);
+                bgmTimer = null;
+            }
+        }
+
         // --- HỆ THỐNG 30 THÁNG THỬ THÁCH TIẾT KIỆM ĐIỆN ---
         const THEMES_POOL = [
             "Tết Nguyên Đán", "Mùa Đông Lạnh", "Giao Mùa Xuân", "Nóng Đầu Sớm", "Cao Điểm Nóng", "Đỉnh Điểm Mùa Hè",
@@ -203,7 +279,7 @@
             MONTHS_DATA.push({
                 id: i,
                 name: `Tháng ${i} (${THEMES_POOL[i-1] || 'Tiết Kiệm Xanh'})`,
-                target: 700 + i * 150, // Mục tiêu tăng dần độ khó qua 30 bàn
+                target: 700 + i * 150,
                 reward: 40 + i * 10,
                 unlocked: i === 1 ? true : false,
                 completed: false,
@@ -271,12 +347,14 @@
             document.getElementById('screen-result').classList.add('hidden');
 
             if (screenName === 'menu') {
+                stopBGM();
                 document.getElementById('screen-menu').classList.remove('hidden');
                 renderMonthsList();
                 document.getElementById('total-coins').innerText = gameState.totalCoins;
             } else if (screenName === 'game') {
                 document.getElementById('screen-game').classList.remove('hidden');
             } else if (screenName === 'result') {
+                stopBGM();
                 document.getElementById('screen-result').classList.remove('hidden');
             }
         }
@@ -394,11 +472,13 @@
             setTimeout(() => { hint.style.opacity = '0'; }, 3000);
 
             updateHUD();
+            startBGM(); // Bắt đầu bật nhạc nền dồn dập
             requestAnimationFrame(gameLoop);
         }
 
         function quitGame() {
             gameState.isPlaying = false;
+            stopBGM();
             switchScreen('menu');
         }
 
@@ -589,6 +669,7 @@
             let penalty = Math.floor(gameState.coinsCollected * 0.2);
             gameState.coinsCollected = Math.max(0, gameState.coinsCollected - penalty);
             
+            playSoundHit(); // Phát âm thanh va chạm
             showPopup(`💥 Đụng ${obs.label}! -1❤️ & -20% xu`, '#b94a39');
             updateHUD();
 
@@ -598,6 +679,7 @@
         }
 
         function collectItem(item) {
+            playSoundCoin(); // Phát âm thanh nhặt xu/hóa đơn
             if (item.isBill) {
                 gameState.progressScore += item.value;
                 showPopup(`⚡ +${item.value}đ Hóa đơn!`, '#2c4a1d');
@@ -723,6 +805,7 @@
 
         function endGameSession(isWin) {
             gameState.isPlaying = false;
+            stopBGM();
             switchScreen('result');
 
             let stampEl = document.getElementById('result-stamp');
