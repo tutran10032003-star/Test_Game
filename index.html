@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Eco Runner: Subway Energy Surfer</title>
+    <title>Eco Runner: Supercapacitor Energy Surfer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -67,21 +67,23 @@
         <div class="w-full flex justify-between items-center mb-3 border-b-2 border-dashed border-[#8c7355] pb-2">
             <div>
                 <h1 class="font-black text-lg sm:text-xl text-[#4a3b32] tracking-wider" style="font-family: 'Playfair Display', serif;">ECO SURFER</h1>
-                <p class="text-[11px] text-[#735d4c] font-semibold">Lướt Năng Lượng & Thanh Toán Hóa Đơn</p>
+                <p class="text-[11px] text-[#735d4c] font-semibold">Tích Hũ Năng Lượng & Thanh Toán Hóa Đơn</p>
             </div>
             <div class="flex items-center gap-1.5">
-                <button onclick="openShopModal()" class="vintage-btn px-2.5 py-1.5 text-xs rounded-lg bg-[#f5e1a4] text-[#5c4738] flex items-center gap-1">
-                    🛹 Tủ Đồ
+                <button onclick="openShopModal()" class="vintage-btn px-2 py-1.5 text-xs rounded-lg bg-[#f5e1a4] text-[#5c4738] flex items-center gap-1">
+                    🔋 Kho Đồ
                 </button>
-                <button onclick="openRulesModal()" class="vintage-btn px-2.5 py-1.5 text-xs rounded-lg flex items-center gap-1">
+                <button onclick="openRulesModal()" class="vintage-btn px-2 py-1.5 text-xs rounded-lg flex items-center gap-1">
                     📜 Luật
+                </button>
+                <button onclick="openAudioModal()" id="header-audio-btn" title="Cài đặt âm thanh" class="vintage-btn px-2 py-1.5 text-xs rounded-lg bg-[#e6dfcd]">
+                    🔊
                 </button>
             </div>
         </div>
 
         <!-- SCREEN: MENU / MONTH SELECTOR -->
         <div id="screen-menu" class="w-full flex flex-col items-center space-y-3.5 py-1">
-            <!-- Thanh thông tin Xu & Trang bị đang chọn -->
             <div class="w-full bg-[#f2ecdc] p-3 rounded-xl border border-[#c4b59d] flex justify-between items-center shadow-sm">
                 <div>
                     <p class="text-[11px] text-[#614e3e] font-semibold">Xu tiết kiệm hiện có:</p>
@@ -92,7 +94,7 @@
                 </div>
                 <div class="text-right text-[11px] text-[#4a3b32] bg-[#fdfbf7] px-2.5 py-1.5 rounded-lg border border-[#d6c9b4]">
                     <p class="font-bold" id="equipped-char-label">☁️ Eco Buddy</p>
-                    <p class="text-[#735d4c] font-semibold" id="equipped-board-label">🍃 Ván Lá Xanh</p>
+                    <p class="text-[#735d4c] font-semibold" id="equipped-pack-label">🔋 Pin Dự Phòng</p>
                 </div>
             </div>
 
@@ -130,9 +132,9 @@
                 </div>
             </div>
 
-            <!-- Thanh trạng thái vật phẩm đang kích hoạt (Ván trượt, Nam châm, x2) -->
+            <!-- Thanh trạng thái vật phẩm đang kích hoạt -->
             <div id="active-buffs-bar" class="w-full flex gap-1.5 justify-center min-h-[22px]">
-                <span id="buff-board" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white animate-pulse">🛹 Khiên Ván Trượt</span>
+                <span id="buff-pack" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white animate-pulse">⚡ Khiên Tụ Điện</span>
                 <span id="buff-magnet" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-600 text-white animate-pulse">🧲 Nam Châm Hút Xu</span>
                 <span id="buff-double" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-600 text-white animate-pulse">⚡ x2 Điểm Hóa Đơn</span>
             </div>
@@ -148,14 +150,14 @@
 
                 <!-- Swipe & Double Tap Hint Overlay -->
                 <div id="swipe-hint" class="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-black/75 text-white px-3.5 py-1.5 rounded-full text-[11px] font-semibold pointer-events-none transition-opacity duration-500 whitespace-nowrap text-center">
-                    👈 Vuốt Trái/Phải • Chạm 2 lần bật Ván Trượt 🛹
+                    👈 Vuốt Trái/Phải • Chạm 2 lần bật Siêu Tụ Điện ⚡
                 </div>
             </div>
 
             <!-- Mobile / Quick Controller Buttons -->
             <div class="w-full grid grid-cols-3 gap-2">
                 <button onclick="movePlayer(-1)" class="vintage-btn py-3 text-xs sm:text-sm rounded-xl bg-[#ebdccb]">⬅️ Trái</button>
-                <button id="btn-hoverboard" onclick="activateHoverboard()" class="vintage-btn py-3 text-xs sm:text-sm rounded-xl bg-[#d4e4bc] text-[#2c4a1d]">🛹 Ván (<span id="board-charges">2</span>)</button>
+                <button id="btn-superpack" onclick="activateSuperPack()" class="vintage-btn py-3 text-xs sm:text-sm rounded-xl bg-[#d4e4bc] text-[#2c4a1d]">⚡ Tụ Điện (<span id="pack-charges">2</span>)</button>
                 <button onclick="movePlayer(1)" class="vintage-btn py-3 text-xs sm:text-sm rounded-xl bg-[#ebdccb]">Phải ➡️</button>
             </div>
 
@@ -189,11 +191,44 @@
 
     </div>
 
-    <!-- SHOP MODAL (NHÂN VẬT & VÁN TRƯỢT TIẾT KIỆM ĐIỆN) -->
+    <!-- AUDIO SETTINGS MODAL -->
+    <div id="audio-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
+        <div class="vintage-card bg-[#fdfbf7] p-5 max-w-xs w-full space-y-4 relative">
+            <h3 class="font-bold text-base text-[#4a3b32] border-b border-dashed border-[#8c7355] pb-2 text-center">🎛️ Cài Đặt Âm Thanh</h3>
+            
+            <div class="space-y-3 text-xs font-semibold">
+                <!-- Toggle Nhạc nền (BGM) -->
+                <div class="flex items-center justify-between bg-[#f2ecdc] p-3 rounded-xl border border-[#c4b59d]">
+                    <div>
+                        <p class="font-bold text-[#4a3b32]">🎵 Nhạc nền khi chạy</p>
+                        <p class="text-[10px] text-[#735d4c]">Giai điệu nhịp độ nhanh</p>
+                    </div>
+                    <button id="toggle-bgm-btn" onclick="toggleBGMSetting()" class="vintage-btn px-3 py-1.5 rounded-lg text-xs min-w-[68px] bg-[#d4e4bc] text-[#2c4a1d]">
+                        Đang Bật
+                    </button>
+                </div>
+
+                <!-- Toggle Hiệu ứng & Nút bấm (SFX) -->
+                <div class="flex items-center justify-between bg-[#f2ecdc] p-3 rounded-xl border border-[#c4b59d]">
+                    <div>
+                        <p class="font-bold text-[#4a3b32]">🔊 Hiệu ứng & Nút bấm</p>
+                        <p class="text-[10px] text-[#735d4c]">Tiếng bấm nút, nhặt xu, va chạm</p>
+                    </div>
+                    <button id="toggle-sfx-btn" onclick="toggleSFXSetting()" class="vintage-btn px-3 py-1.5 rounded-lg text-xs min-w-[68px] bg-[#d4e4bc] text-[#2c4a1d]">
+                        Đang Bật
+                    </button>
+                </div>
+            </div>
+
+            <button onclick="closeAudioModal()" class="w-full vintage-btn py-2.5 bg-[#e6dfcd] text-[#3b302a] font-bold text-xs rounded-xl">Xong</button>
+        </div>
+    </div>
+
+    <!-- SHOP MODAL (KHO ĐỒ & NHÂN VẬT ĐÃ ĐƯỢC ĐẠNG HÓA & KHÓ HƠN) -->
     <div id="shop-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
         <div class="vintage-card bg-[#fdfbf7] p-4 max-w-sm w-full space-y-3 relative max-h-[85vh] flex flex-col">
             <div class="flex justify-between items-center border-b border-dashed border-[#8c7355] pb-2">
-                <h3 class="font-bold text-base text-[#4a3b32]">🛹 Tủ Đồ Eco Surfer</h3>
+                <h3 class="font-bold text-base text-[#4a3b32]">🔋 Kho Thiết Bị Năng Lượng Xanh</h3>
                 <div class="flex items-center gap-1 bg-[#f2ecdc] px-2.5 py-1 rounded-lg border border-[#c4b59d] text-xs font-bold text-[#8c4a32]">
                     <svg class="w-3.5 h-3.5 inline-block" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#d4af37" stroke="#5c4738" stroke-width="2"/><text x="12" y="16" font-size="12" font-weight="bold" fill="#fff" text-anchor="middle">$</text></svg>
                     <span id="shop-coins">0</span>
@@ -201,20 +236,50 @@
             </div>
 
             <div class="overflow-y-auto space-y-4 pr-1 flex-1">
-                <!-- Chọn Nhân Vật -->
                 <div>
                     <h4 class="text-xs font-bold uppercase text-[#5c4738] mb-2">👤 Chọn Nhân Vật (Eco Buddies):</h4>
                     <div id="shop-chars-list" class="space-y-2"></div>
                 </div>
 
-                <!-- Chọn Ván Trượt -->
                 <div>
-                    <h4 class="text-xs font-bold uppercase text-[#5c4738] mb-2">🛹 Chọn Ván Trượt Năng Lượng:</h4>
-                    <div id="shop-boards-list" class="space-y-2"></div>
+                    <h4 class="text-xs font-bold uppercase text-[#5c4738] mb-2">⚡ Chọn Balo Siêu Tụ Điện:</h4>
+                    <div id="shop-packs-list" class="space-y-2"></div>
                 </div>
             </div>
 
-            <button onclick="closeShopModal()" class="w-full vintage-btn py-2.5 bg-[#e6dfcd] text-[#3b302a] font-bold text-xs rounded-xl">Đóng Tủ Đồ</button>
+            <button onclick="closeShopModal()" class="w-full vintage-btn py-2.5 bg-[#e6dfcd] text-[#3b302a] font-bold text-xs rounded-xl">Đóng Kho Đồ</button>
+        </div>
+    </div>
+
+    <!-- REVIEW CHARACTER MODAL (USER REVIEW TRƯỚC KHI MUA) -->
+    <div id="review-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
+        <div class="vintage-card bg-[#fdfbf7] p-5 max-w-xs w-full space-y-3 relative">
+            <div class="border-b border-dashed border-[#8c7355] pb-2 text-center">
+                <h3 id="rev-name" class="font-bold text-base text-[#4a3b32]">Tên Nhân Vật</h3>
+                <p id="rev-title" class="text-[11px] text-[#735d4c] font-semibold">Chuyên gia năng lượng</p>
+            </div>
+            
+            <div class="space-y-2 text-xs font-medium text-[#5c4738]">
+                <div class="bg-[#f2ecdc] p-2.5 rounded-xl border border-[#c4b59d]">
+                    <p class="font-bold mb-1 text-[#4a3b32]">📝 Đánh giá kỹ năng:</p>
+                    <p id="rev-desc" class="text-[11px] text-[#735d4c]">Mô tả chi tiết kỹ năng đặc biệt của nhân vật này khi chạy trên đường băng.</p>
+                </div>
+                
+                <div class="space-y-1 bg-[#fdfbf7] p-2 rounded-lg border border-[#d6c9b4]">
+                    <div class="flex justify-between"><span>🛡️ Độ bền chịu va chạm:</span> <strong id="rev-stat-defense">Tốt</strong></div>
+                    <div class="flex justify-between"><span>🪙 Khả năng hút xu:</span> <strong id="rev-stat-magnet">Tiêu chuẩn</strong></div>
+                    <div class="flex justify-between"><span>⭐ Hệ số điểm hóa đơn:</span> <strong id="rev-stat-score">x1.0</strong></div>
+                </div>
+
+                <div class="text-center pt-1">
+                    <span class="text-xs font-bold text-[#8c4a32]" id="rev-price-tag">Giá: 1500 xu</span>
+                </div>
+            </div>
+
+            <div class="flex gap-2 pt-1">
+                <button onclick="closeReviewModal()" class="flex-1 vintage-btn py-2 bg-[#e6dfcd] text-xs rounded-xl">Đóng</button>
+                <button id="rev-buy-btn" onclick="" class="flex-1 vintage-btn py-2 bg-[#f5e1a4] text-[#5c4738] text-xs rounded-xl font-bold">Mua Ngay</button>
+            </div>
         </div>
     </div>
 
@@ -224,10 +289,10 @@
             <h3 class="font-bold text-base text-[#4a3b32] border-b pb-1">📜 Hướng dẫn chơi Eco Surfer</h3>
             <ul class="text-xs space-y-2 text-[#5c4738] list-disc pl-4 font-medium leading-relaxed">
                 <li><strong>Di chuyển:</strong> Vuốt Trái/Phải trên màn hình (hoặc phím <strong>A/D</strong>, mũi tên).</li>
-                <li><strong>Bật Ván Trượt (Khiên bảo vệ):</strong> Bấm nút <strong>🛹 Ván</strong> (hoặc chạm 2 lần vào màn hình / phím <strong>Space</strong>) để lướt ván trong 8 giây. Nếu đụng thiết bị tốn điện khi đang đi ván, bạn sẽ <strong>không bị mất mạng</strong>!</li>
+                <li><strong>Bật Siêu Tụ Điện (Khiên Năng Lượng):</strong> Bấm nút <strong>⚡ Tụ Điện</strong> (hoặc chạm 2 lần vào màn hình / phím <strong>Space</strong>) để kích hoạt khiên bảo vệ trong 8 giây. Nếu đụng thiết bị tốn điện khi bật khiên, bạn sẽ <strong>không bị mất mạng</strong>!</li>
                 <li><strong>Vật phẩm hỗ trợ:</strong>
-                    <br>- 🧲 <strong>Nam châm:</strong> Hút toàn bộ xu trên 3 làn.
-                    <br>- ⚡ <strong>Pin Sạc Nhanh:</strong> Nhân đôi điểm thanh toán hóa đơn.
+                    <br>- 🧲 <strong>Nam châm:</strong> Hút toàn bộ xu trên 3 làn (tốc độ mượt mà hơn).
+                    <br>- ⚡ <strong>Pin Sạc Nhanh:</strong> Nhân đôi điểm hóa đơn.
                     <br>- 📄 <strong>Hóa đơn xanh:</strong> Cộng ngay 300đ vào mục tiêu tháng.
                 </li>
                 <li><strong>Độ khó tăng dần:</strong> Mỗi tháng tăng lên tốc độ sẽ nhanh hơn, chướng ngại vật nhiều hơn và mục tiêu cao hơn!</li>
@@ -238,22 +303,42 @@
 
     <!-- SCRIPT LOGIC -->
     <script>
-        // --- DỮ LIỆU NHÂN VẬT & VÁN TRƯỢT (CHỦ ĐỀ TIẾT KIỆM ĐIỆN) ---
+        // --- DỮ LIỆU NHÂN VẬT ĐÃ ĐƯỢC ĐẠNG HÓA & MỞ RỘNG (GIÁ KHÓ HƠN) ---
         const CHARACTERS_DATA = [
-            { id: 'buddy', name: 'Eco Buddy (Mây Xanh)', desc: 'Linh vật tiết kiệm điện thân thiện', price: 0, bodyColor: '#5c4738', headColor: '#f5f0e6', hatColor: '#467551', isCloud: true },
-            { id: 'solar', name: 'Kỹ Sư Mặt Trời', desc: 'Tận dụng năng lượng tái tạo ban ngày', price: 300, bodyColor: '#d97706', headColor: '#fde68a', hatColor: '#1e3a8a', isCloud: false },
-            { id: 'wind', name: 'Chiến Binh Gió', desc: 'Lướt nhẹ nhàng, giảm tải giờ cao điểm', price: 800, bodyColor: '#0284c7', headColor: '#e0f2fe', hatColor: '#0f766e', isCloud: false },
-            { id: 'netzero', name: 'Hiệp Sĩ Net-Zero', desc: 'Bậc thầy tối ưu hóa điện năng gia đình', price: 1800, bodyColor: '#15803d', headColor: '#dcfce7', hatColor: '#14532d', isCloud: false }
+            { 
+                id: 'buddy', name: 'Eco Buddy (Mây Xanh)', title: 'Linh vật thân thiện', desc: 'Linh vật tiết kiệm điện tiêu chuẩn, cực kỳ linh hoạt nhưng không có chỉ số phụ trợ đặc biệt.', price: 0, 
+                bodyColor: '#5c4738', headColor: '#f5f0e6', hatColor: '#467551', isCloud: true,
+                defense: 'Cơ bản (3 mạng)', magnetPower: 'Bình thường', scoreBonus: 'x1.0'
+            },
+            { 
+                id: 'solar', name: 'Kỹ Sư Mặt Trời', title: 'Bậc thầy quang năng', desc: 'Sử dụng công nghệ pin hấp thu ánh sáng giúp tăng cường hiệu quả tích lũy hóa đơn xanh.', price: 1200, 
+                bodyColor: '#d97706', headColor: '#fde68a', hatColor: '#1e3a8a', isCloud: false,
+                defense: 'Tốt', magnetPower: 'Khá', scoreBonus: 'x1.2'
+            },
+            { 
+                id: 'wind', name: 'Chiến Binh Gió', title: 'Cơn lốc năng lượng sạch', desc: 'Lướt nhẹ nhàng qua các giờ cao điểm, giúp giảm thiểu tối đa hệ số phạt khi va chạm chướng ngại vật.', price: 3500, 
+                bodyColor: '#0284c7', headColor: '#e0f2fe', hatColor: '#0f766e', isCloud: false,
+                defense: 'Cao (Giảm phạt va chạm)', magnetPower: 'Nhanh', scoreBonus: 'x1.3'
+            },
+            { 
+                id: 'netzero', name: 'Hiệp Sĩ Net-Zero', title: 'Huyền thoại không phát thải', desc: 'Trang bị giáp năng lượng tối tân, cho phép thu hút xu ở phạm vi siêu rộng và tối ưu hóa hóa đơn cực đỉnh.', price: 7500, 
+                bodyColor: '#15803d', headColor: '#dcfce7', hatColor: '#14532d', isCloud: false,
+                defense: 'Tuyệt đối', magnetPower: 'Siêu rộng (Bán kính lớn)', scoreBonus: 'x1.5'
+            },
+            { 
+                id: 'quantum', name: 'Pháp Sư Lượng Tử', title: 'Đỉnh cao tương lai', desc: 'Công nghệ năng lượng lượng tử giúp nhân đôi mọi phần thưởng thu được trên đường chạy.', price: 15000, 
+                bodyColor: '#7e22ce', headColor: '#f3e8ff', hatColor: '#581c87', isCloud: false,
+                defense: 'Tối ưu', magnetPower: 'Tự động hút toàn làn', scoreBonus: 'x2.0'
+            }
         ];
 
-        const BOARDS_DATA = [
-            { id: 'leaf', name: 'Ván Lá Xanh', desc: 'Ván cơ bản (2 lượt dùng/ván)', price: 0, color: '#467551', trim: '#a3e635', charges: 2 },
-            { id: 'battery', name: 'Ván Pin LFP', desc: 'Bền bỉ hơn (3 lượt dùng/ván)', price: 400, color: '#d97706', trim: '#fef08a', charges: 3 },
-            { id: 'turbine', name: 'Ván Tua-bin Gió', desc: 'Siêu nhẹ (4 lượt dùng/ván)', price: 1000, color: '#0369a1', trim: '#7dd3fc', charges: 4 },
-            { id: 'super', name: 'Ván Siêu Dẫn Xanh', desc: 'Công nghệ đỉnh cao (5 lượt dùng/ván)', price: 2200, color: '#7e22ce', trim: '#f0abfc', charges: 5 }
+        const PACKS_DATA = [
+            { id: 'battery', name: '🔋 Pin Dự Phòng Cơ Bản', desc: 'Balo tích điện tiêu chuẩn (2 lần dùng/ván)', price: 0, color: '#467551', trim: '#a3e635', charges: 2 },
+            { id: 'supercap', name: '⚡ Siêu Tụ Điện Nhanh', desc: 'Tích trữ điện áp cao (3 lần dùng/ván)', price: 1500, color: '#d97706', trim: '#fef08a', charges: 3 },
+            { id: 'solarpack', name: '☀️ Balo Năng Lượng Mặt Trời', desc: 'Tự động tái tạo năng lượng (4 lần dùng/ván)', price: 4000, color: '#0369a1', trim: '#7dd3fc', charges: 4 },
+            { id: 'reactor', name: '⚛️ Lò Phản Ứng Xanh Miti', desc: 'Công nghệ Net-Zero đỉnh cao (5 lần dùng/ván)', price: 10000, color: '#7e22ce', trim: '#f0abfc', charges: 5 }
         ];
 
-        // --- HỆ THỐNG 30 THÁNG (KÉO DÀI MÀN CHƠI & TĂNG ĐỘ KHÓ) ---
         const THEMES_POOL = [
             "Khởi Động Tiết Kiệm", "Mùa Đông Ấm Áp", "Giao Mùa Xuân", "Nắng Đầu Sớm", "Cao Điểm Nóng", "Đỉnh Điểm Mùa Hè",
             "Mùa Mưa Bão", "Tựu Trường Xanh", "Đêm Hội Trăng Rằm", "Gió Bấc Đầu Mùa", "Chuẩn Bị Cuối Năm", "Tổng Kết Năng Lượng",
@@ -267,7 +352,6 @@
             MONTHS_DATA.push({
                 id: i,
                 name: `Tháng ${i}: ${THEMES_POOL[i-1] || 'Tiết Kiệm Xanh'}`,
-                // Kéo dài mục tiêu gấp ~2.5 lần để ván chơi dài và đã tay hơn
                 target: 1600 + i * 450, 
                 reward: 80 + i * 25,
                 unlocked: i === 1 ? true : false,
@@ -291,8 +375,8 @@
             totalCoins: 0,
             unlockedChars: ['buddy'],
             equippedChar: 'buddy',
-            unlockedBoards: ['leaf'],
-            equippedBoard: 'leaf',
+            unlockedPacks: ['battery'],
+            equippedPack: 'battery',
             currentMonthId: null,
             isEndless: false,
             coinsCollected: 0,
@@ -304,14 +388,15 @@
             baseSpeed: 5.2,
             gameSpeed: 5.2,
             isPlaying: false,
-            // Trạng thái ván trượt & vật phẩm
-            boardCharges: 2,
-            boardActiveTimer: 0,
+            packCharges: 2,
+            packActiveTimer: 0,
             magnetTimer: 0,
-            doubleScoreTimer: 0
+            doubleScoreTimer: 0,
+            bgmEnabled: true,
+            sfxEnabled: true
         };
 
-        // --- HỆ THỐNG ÂM THANH WEB AUDIO API ---
+        // --- HỆ THỐNG ÂM THANH TÁCH BIỆT ---
         let audioCtx = null;
         let bgmTimer = null;
 
@@ -324,7 +409,48 @@
             }
         }
 
+        function playSoundClick() {
+            if (!gameState.sfxEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(760, audioCtx.currentTime + 0.045);
+            gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        }
+
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.vintage-btn')) {
+                playSoundClick();
+            }
+        });
+
+        function playSoundSwipe() {
+            if (!gameState.sfxEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(450, audioCtx.currentTime + 0.06);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.06);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.06);
+        }
+
         function playSoundCoin() {
+            if (!gameState.sfxEnabled) return;
             initAudio();
             if (!audioCtx) return;
             let osc = audioCtx.createOscillator();
@@ -341,6 +467,7 @@
         }
 
         function playSoundPowerup() {
+            if (!gameState.sfxEnabled) return;
             initAudio();
             if (!audioCtx) return;
             let osc = audioCtx.createOscillator();
@@ -359,6 +486,7 @@
         }
 
         function playSoundHit() {
+            if (!gameState.sfxEnabled) return;
             initAudio();
             if (!audioCtx) return;
             let osc = audioCtx.createOscillator();
@@ -376,16 +504,16 @@
 
         function startBGM() {
             stopBGM();
+            if (!gameState.bgmEnabled) return;
             initAudio();
             if (!audioCtx) return;
             let notes = [261.63, 293.66, 329.63, 392.00, 440.00, 392.00, 329.63, 293.66];
             let step = 0;
             bgmTimer = setInterval(() => {
-                if (!gameState.isPlaying) return;
+                if (!gameState.isPlaying || !gameState.bgmEnabled) return;
                 let osc = audioCtx.createOscillator();
                 let gain = audioCtx.createGain();
                 osc.type = 'triangle';
-                // Nhạc cao hơn một chút khi vào giờ cao điểm hoặc tốc độ cao
                 let pitchShift = gameState.zone === 'peak' ? 1.15 : 1.0;
                 osc.frequency.setValueAtTime(notes[step % notes.length] * pitchShift, audioCtx.currentTime);
                 gain.gain.setValueAtTime(0.035, audioCtx.currentTime);
@@ -405,6 +533,58 @@
             }
         }
 
+        // --- QUẢN LÝ CÀI ĐẶT ÂM THANH ---
+        function openAudioModal() {
+            updateAudioUI();
+            document.getElementById('audio-modal').classList.remove('hidden');
+        }
+        function closeAudioModal() {
+            document.getElementById('audio-modal').classList.add('hidden');
+        }
+        function toggleBGMSetting() {
+            gameState.bgmEnabled = !gameState.bgmEnabled;
+            if (gameState.bgmEnabled && gameState.isPlaying) {
+                startBGM();
+            } else {
+                stopBGM();
+            }
+            saveGameData();
+            updateAudioUI();
+        }
+        function toggleSFXSetting() {
+            gameState.sfxEnabled = !gameState.sfxEnabled;
+            if (gameState.sfxEnabled) playSoundClick();
+            saveGameData();
+            updateAudioUI();
+        }
+        function updateAudioUI() {
+            const bgmBtn = document.getElementById('toggle-bgm-btn');
+            const sfxBtn = document.getElementById('toggle-sfx-btn');
+            const headerBtn = document.getElementById('header-audio-btn');
+
+            if (gameState.bgmEnabled) {
+                bgmBtn.innerText = 'Đang Bật';
+                bgmBtn.className = 'vintage-btn px-3 py-1.5 rounded-lg text-xs min-w-[68px] bg-[#d4e4bc] text-[#2c4a1d]';
+            } else {
+                bgmBtn.innerText = 'Đã Tắt';
+                bgmBtn.className = 'vintage-btn px-3 py-1.5 rounded-lg text-xs min-w-[68px] bg-[#eae3d2] text-gray-500';
+            }
+
+            if (gameState.sfxEnabled) {
+                sfxBtn.innerText = 'Đang Bật';
+                sfxBtn.className = 'vintage-btn px-3 py-1.5 rounded-lg text-xs min-w-[68px] bg-[#d4e4bc] text-[#2c4a1d]';
+            } else {
+                sfxBtn.innerText = 'Đã Tắt';
+                sfxBtn.className = 'vintage-btn px-3 py-1.5 rounded-lg text-xs min-w-[68px] bg-[#eae3d2] text-gray-500';
+            }
+
+            if (!gameState.bgmEnabled && !gameState.sfxEnabled) {
+                headerBtn.innerText = '🔇';
+            } else {
+                headerBtn.innerText = '🔊';
+            }
+        }
+
         // --- LƯU & TẢI DỮ LIỆU ---
         function loadSavedData() {
             const savedCoins = localStorage.getItem('eco_surfer_coins');
@@ -417,12 +597,18 @@
             const eqChar = localStorage.getItem('eco_surfer_eq_char');
             if (eqChar) gameState.equippedChar = eqChar;
 
-            const savedBoards = localStorage.getItem('eco_surfer_boards');
-            if (savedBoards) {
-                try { gameState.unlockedBoards = JSON.parse(savedBoards); } catch(e) {}
+            const savedPacks = localStorage.getItem('eco_surfer_packs');
+            if (savedPacks) {
+                try { gameState.unlockedPacks = JSON.parse(savedPacks); } catch(e) {}
             }
-            const eqBoard = localStorage.getItem('eco_surfer_eq_board');
-            if (eqBoard) gameState.equippedBoard = eqBoard;
+            const eqPack = localStorage.getItem('eco_surfer_eq_pack');
+            if (eqPack) gameState.equippedPack = eqPack;
+
+            const savedBgm = localStorage.getItem('eco_surfer_bgm');
+            if (savedBgm !== null) gameState.bgmEnabled = savedBgm === 'true';
+
+            const savedSfx = localStorage.getItem('eco_surfer_sfx');
+            if (savedSfx !== null) gameState.sfxEnabled = savedSfx === 'true';
 
             const savedMonths = localStorage.getItem('eco_surfer_months');
             if (savedMonths !== null) {
@@ -443,8 +629,10 @@
             localStorage.setItem('eco_surfer_coins', gameState.totalCoins);
             localStorage.setItem('eco_surfer_chars', JSON.stringify(gameState.unlockedChars));
             localStorage.setItem('eco_surfer_eq_char', gameState.equippedChar);
-            localStorage.setItem('eco_surfer_boards', JSON.stringify(gameState.unlockedBoards));
-            localStorage.setItem('eco_surfer_eq_board', gameState.equippedBoard);
+            localStorage.setItem('eco_surfer_packs', JSON.stringify(gameState.unlockedPacks));
+            localStorage.setItem('eco_surfer_eq_pack', gameState.equippedPack);
+            localStorage.setItem('eco_surfer_bgm', gameState.bgmEnabled);
+            localStorage.setItem('eco_surfer_sfx', gameState.sfxEnabled);
             localStorage.setItem('eco_surfer_months', JSON.stringify(MONTHS_DATA.map(m => ({
                 unlocked: m.unlocked,
                 completed: m.completed,
@@ -452,7 +640,7 @@
             }))));
         }
 
-        // --- QUẢN LÝ MÀN HÌNH & CỬA HÀNG ---
+        // --- QUẢN LÝ MÀN HÌNH & KHO ĐỒ ---
         function switchScreen(screenName) {
             document.getElementById('screen-menu').classList.add('hidden');
             document.getElementById('screen-game').classList.add('hidden');
@@ -474,9 +662,9 @@
         function updateMenuHeaderInfo() {
             document.getElementById('total-coins').innerText = gameState.totalCoins;
             const cObj = CHARACTERS_DATA.find(c => c.id === gameState.equippedChar) || CHARACTERS_DATA[0];
-            const bObj = BOARDS_DATA.find(b => b.id === gameState.equippedBoard) || BOARDS_DATA[0];
+            const pObj = PACKS_DATA.find(p => p.id === gameState.equippedPack) || PACKS_DATA[0];
             document.getElementById('equipped-char-label').innerText = `👤 ${cObj.name}`;
-            document.getElementById('equipped-board-label').innerText = `🛹 ${bObj.name}`;
+            document.getElementById('equipped-pack-label').innerText = `🔋 ${pObj.name}`;
         }
 
         function renderMonthsList() {
@@ -529,9 +717,9 @@
         function renderShop() {
             document.getElementById('shop-coins').innerText = gameState.totalCoins;
             const charList = document.getElementById('shop-chars-list');
-            const boardList = document.getElementById('shop-boards-list');
+            const packList = document.getElementById('shop-packs-list');
             charList.innerHTML = '';
-            boardList.innerHTML = '';
+            packList.innerHTML = '';
 
             CHARACTERS_DATA.forEach(char => {
                 const isUnlocked = gameState.unlockedChars.includes(char.id);
@@ -544,44 +732,79 @@
                     btnHtml = `<button onclick="equipChar('${char.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg bg-[#e6dfcd]">Chọn</button>`;
                 } else {
                     const canAfford = gameState.totalCoins >= char.price;
-                    btnHtml = `<button onclick="buyChar('${char.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${char.price} xu</button>`;
+                    btnHtml = `
+                        <div class="flex gap-1">
+                            <button onclick="openReviewModal('${char.id}')" class="vintage-btn px-2 py-1 text-[10px] rounded-lg bg-[#d6c9b4]" title="Xem review">🔍 Review</button>
+                            <button onclick="buyChar('${char.id}')" class="vintage-btn px-2 py-1 text-[11px] rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${char.price} xu</button>
+                        </div>
+                    `;
                 }
 
                 charList.innerHTML += `
                     <div class="p-2.5 rounded-xl border border-[#c4b59d] bg-[#f2ecdc] flex justify-between items-center">
                         <div>
                             <p class="font-bold text-xs text-[#4a3b32]">${char.name}</p>
-                            <p class="text-[10px] text-[#735d4c]">${char.desc}</p>
+                            <p class="text-[10px] text-[#735d4c]">${char.title} • Giá: ${char.price} xu</p>
                         </div>
                         ${btnHtml}
                     </div>
                 `;
             });
 
-            BOARDS_DATA.forEach(board => {
-                const isUnlocked = gameState.unlockedBoards.includes(board.id);
-                const isEquipped = gameState.equippedBoard === board.id;
+            PACKS_DATA.forEach(pack => {
+                const isUnlocked = gameState.unlockedPacks.includes(pack.id);
+                const isEquipped = gameState.equippedPack === pack.id;
                 let btnHtml = '';
 
                 if (isEquipped) {
                     btnHtml = `<span class="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-[#467551] text-white">Đang dùng</span>`;
                 } else if (isUnlocked) {
-                    btnHtml = `<button onclick="equipBoard('${board.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg bg-[#e6dfcd]">Chọn</button>`;
+                    btnHtml = `<button onclick="equipPack('${pack.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg bg-[#e6dfcd]">Chọn</button>`;
                 } else {
-                    const canAfford = gameState.totalCoins >= board.price;
-                    btnHtml = `<button onclick="buyBoard('${board.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${board.price} xu</button>`;
+                    const canAfford = gameState.totalCoins >= pack.price;
+                    btnHtml = `<button onclick="buyPack('${pack.id}')" class="vintage-btn px-2.5 py-1 text-[11px] rounded-lg ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed'}" ${!canAfford ? 'disabled' : ''}>Mua ${pack.price} xu</button>`;
                 }
 
-                boardList.innerHTML += `
+                packList.innerHTML += `
                     <div class="p-2.5 rounded-xl border border-[#c4b59d] bg-[#f2ecdc] flex justify-between items-center">
                         <div>
-                            <p class="font-bold text-xs text-[#4a3b32]">${board.name}</p>
-                            <p class="text-[10px] text-[#735d4c]">${board.desc}</p>
+                            <p class="font-bold text-xs text-[#4a3b32]">${pack.name}</p>
+                            <p class="text-[10px] text-[#735d4c]">${pack.desc}</p>
                         </div>
                         ${btnHtml}
                     </div>
                 `;
             });
+        }
+
+        // --- TÍNH NĂNG REVIEW NHÂN VẬT ---
+        function openReviewModal(charId) {
+            const char = CHARACTERS_DATA.find(c => c.id === charId);
+            if (!char) return;
+
+            document.getElementById('rev-name').innerText = char.name;
+            document.getElementById('rev-title').innerText = char.title;
+            document.getElementById('rev-desc').innerText = char.desc;
+            document.getElementById('rev-stat-defense').innerText = char.defense;
+            document.getElementById('rev-stat-magnet').innerText = char.magnetPower;
+            document.getElementById('rev-stat-score').innerText = char.scoreBonus;
+            document.getElementById('rev-price-tag').innerText = `Giá: ${char.price} xu`;
+
+            const buyBtn = document.getElementById('rev-buy-btn');
+            const canAfford = gameState.totalCoins >= char.price;
+            buyBtn.innerText = `Mua ${char.price} xu`;
+            buyBtn.disabled = !canAfford;
+            buyBtn.className = `flex-1 vintage-btn py-2 text-xs rounded-lg font-bold ${canAfford ? 'bg-[#f5e1a4] text-[#5c4738]' : 'opacity-50 cursor-not-allowed bg-[#e6dfcd]'}`;
+            buyBtn.onclick = () => {
+                buyChar(char.id);
+                closeReviewModal();
+            };
+
+            document.getElementById('review-modal').classList.remove('hidden');
+        }
+
+        function closeReviewModal() {
+            document.getElementById('review-modal').classList.add('hidden');
         }
 
         function buyChar(id) {
@@ -596,24 +819,22 @@
         }
         function equipChar(id) {
             gameState.equippedChar = id;
-            playSoundCoin();
             saveGameData();
             renderShop();
         }
 
-        function buyBoard(id) {
-            const board = BOARDS_DATA.find(b => b.id === id);
-            if (!board || gameState.totalCoins < board.price) return;
-            gameState.totalCoins -= board.price;
-            gameState.unlockedBoards.push(id);
-            gameState.equippedBoard = id;
+        function buyPack(id) {
+            const pack = PACKS_DATA.find(p => p.id === id);
+            if (!pack || gameState.totalCoins < pack.price) return;
+            gameState.totalCoins -= pack.price;
+            gameState.unlockedPacks.push(id);
+            gameState.equippedPack = id;
             playSoundPowerup();
             saveGameData();
             renderShop();
         }
-        function equipBoard(id) {
-            gameState.equippedBoard = id;
-            playSoundCoin();
+        function equipPack(id) {
+            gameState.equippedPack = id;
             saveGameData();
             renderShop();
         }
@@ -657,7 +878,6 @@
             gameState.currentMonthId = monthId;
             gameState.isEndless = false;
             gameState.targetScore = month.target;
-            // Tốc độ khởi điểm tăng dần theo cấp độ tháng (tháng càng cao càng nhanh)
             gameState.baseSpeed = 5.0 + Math.min(3.5, monthId * 0.12);
             initGameSession();
         }
@@ -674,7 +894,7 @@
             switchScreen('game');
             resizeCanvas();
 
-            const equippedBoardObj = BOARDS_DATA.find(b => b.id === gameState.equippedBoard) || BOARDS_DATA[0];
+            const equippedPackObj = PACKS_DATA.find(p => p.id === gameState.equippedPack) || PACKS_DATA[0];
 
             gameState.coinsCollected = 0;
             gameState.lives = 3;
@@ -684,8 +904,8 @@
             gameState.gameSpeed = gameState.baseSpeed;
             gameState.isPlaying = true;
 
-            gameState.boardCharges = equippedBoardObj.charges;
-            gameState.boardActiveTimer = 0;
+            gameState.packCharges = equippedPackObj.charges;
+            gameState.packActiveTimer = 0;
             gameState.magnetTimer = 0;
             gameState.doubleScoreTimer = 0;
 
@@ -721,27 +941,27 @@
             }
         }
 
-        // --- KÍCH HOẠT VÁN TRƯỢT (SUBWAY SURFERS STYLE) ---
-        function activateHoverboard() {
+        function activateSuperPack() {
             if (!gameState.isPlaying) return;
-            if (gameState.boardActiveTimer > 0) return; // Đang lướt ván rồi
-            if (gameState.boardCharges <= 0) {
-                showPopup('⚠️ Đã hết lượt Ván Trượt trong ván này!', '#b94a39');
+            if (gameState.packActiveTimer > 0) return;
+            if (gameState.packCharges <= 0) {
+                showPopup('⚠️ Đã hết lượt kích hoạt Siêu Tụ Điện trong ván này!', '#b94a39');
                 return;
             }
-            gameState.boardCharges--;
-            gameState.boardActiveTimer = 480; // ~8 giây (60fps)
+            gameState.packCharges--;
+            gameState.packActiveTimer = 480;
             playSoundPowerup();
-            showPopup('🛹 Bật Ván Trượt! Miễn nhiễm 1 lần va chạm', '#2c4a1d');
+            showPopup('⚡ Kích hoạt Siêu Tụ Điện! Khiên năng lượng bảo vệ', '#2c4a1d');
             updateHUD();
         }
 
-        // --- ĐIỀU KHIỂN ---
         function movePlayer(dir) {
             if (!gameState.isPlaying) return;
+            let prevLane = player.lane;
             player.lane += dir;
             if (player.lane < 0) player.lane = 0;
             if (player.lane > 2) player.lane = 2;
+            if (prevLane !== player.lane) playSoundSwipe();
         }
 
         window.addEventListener('keydown', (e) => {
@@ -750,7 +970,7 @@
             if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') movePlayer(1);
             if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
                 e.preventDefault();
-                activateHoverboard();
+                activateSuperPack();
             }
         });
 
@@ -763,10 +983,9 @@
             touchStartX = e.touches[0].clientX;
             touchMoved = false;
 
-            // Kiểm tra chạm 2 lần (Double Tap) để bật Ván Trượt giống Subway Surfers
             let now = Date.now();
             if (now - lastTapTime < 280) {
-                activateHoverboard();
+                activateSuperPack();
             }
             lastTapTime = now;
         }, { passive: true });
@@ -797,25 +1016,21 @@
         }, { passive: true });
 
         gameArea.addEventListener('dblclick', () => {
-            if (gameState.isPlaying) activateHoverboard();
+            if (gameState.isPlaying) activateSuperPack();
         });
 
-        // --- VÒNG LẶP GAME ---
         function gameLoop() {
             if (!gameState.isPlaying) return;
 
             gameFrame++;
             gameState.zoneTimer++;
 
-            // Giảm thời gian hiệu lực vật phẩm
-            if (gameState.boardActiveTimer > 0) gameState.boardActiveTimer--;
+            if (gameState.packActiveTimer > 0) gameState.packActiveTimer--;
             if (gameState.magnetTimer > 0) gameState.magnetTimer--;
             if (gameState.doubleScoreTimer > 0) gameState.doubleScoreTimer--;
 
-            // Độ khó tăng dần ngay trong lúc chạy (cứ mỗi 600 frame tăng thêm 0.25 tốc độ)
             let progressiveBoost = Math.min(3.5, Math.floor(gameFrame / 600) * 0.25);
 
-            // Chuyển đổi khung giờ Ngày -> Cao Điểm -> Đêm
             let cycle = gameState.zoneTimer % 1800;
             if (cycle < 650) {
                 gameState.zone = 'day';
@@ -830,7 +1045,6 @@
 
             roadOffset = (roadOffset + gameState.gameSpeed) % 40;
 
-            // Sinh vật thể nhanh hơn khi cấp độ cao
             spawnTimer++;
             let levelDifficultyFactor = Math.min(18, (gameState.currentMonthId || 5) * 0.6 + Math.floor(gameFrame / 500));
             let spawnInterval = Math.max(32, (gameState.zone === 'peak' ? 48 : 62) - levelDifficultyFactor);
@@ -856,7 +1070,6 @@
             let lanes = [0, 1, 2];
             lanes.sort(() => Math.random() - 0.5);
 
-            // Cấp độ cao hoặc giờ cao điểm thường xuyên xuất hiện 2 chướng ngại vật (chừa 1 làn lách)
             let highLevelChance = Math.min(0.65, 0.25 + (gameState.currentMonthId || 1) * 0.015);
             let numObstacles = (gameState.zone === 'peak' || Math.random() < highLevelChance) ? 2 : 1;
             if (gameState.zone === 'night') numObstacles = 1;
@@ -875,7 +1088,6 @@
                 });
             }
 
-            // Sinh vật phẩm ở làn còn trống (đa dạng: Xu, Hóa Đơn, Nam Châm, Pin x2)
             let freeLane = lanes[numObstacles];
             if (Math.random() < 0.85) {
                 let r = Math.random();
@@ -883,19 +1095,19 @@
                 let val = 50;
 
                 if (r < 0.08) {
-                    itemType = 'magnet'; // Nam châm hút xu
+                    itemType = 'magnet';
                     val = 0;
                 } else if (r < 0.16) {
-                    itemType = 'double'; // Pin sạc x2 điểm
+                    itemType = 'double';
                     val = 0;
                 } else if (r < 0.40) {
-                    itemType = 'bill'; // Túi hóa đơn xanh
+                    itemType = 'bill';
                     val = 300;
                 }
 
                 collectibles.push({
                     lane: freeLane,
-                    x: null, // Sẽ tính theo làn hoặc hút về player
+                    x: null,
                     y: -60,
                     width: 34,
                     height: 34,
@@ -915,7 +1127,6 @@
             let playerCenterX = player.x + player.width / 2;
             let playerCenterY = canvas.height - 65;
 
-            // Cập nhật chướng ngại vật
             for (let i = obstacles.length - 1; i >= 0; i--) {
                 obstacles[i].y += gameState.gameSpeed;
 
@@ -933,24 +1144,18 @@
                 }
             }
 
-            // Cập nhật vật phẩm thu thập
             for (let i = collectibles.length - 1; i >= 0; i--) {
                 let col = collectibles[i];
                 col.y += gameState.gameSpeed;
 
-                if (col.x === null) {
-                    col.x = col.lane * laneWidth + laneWidth / 2;
-                } else {
-                    col.x = col.lane * laneWidth + laneWidth / 2;
-                }
+                col.x = col.lane * laneWidth + laneWidth / 2;
 
-                // Hiệu ứng Nam châm hút xu & hóa đơn từ cả 3 làn về phía nhân vật
-                if (gameState.magnetTimer > 0 && (col.type === 'coin' || col.type === 'bill') && col.y > 40) {
-                    col.x += (playerCenterX - col.x) * 0.18;
-                    col.y += (playerCenterY - col.y) * 0.12;
-                    // Kiểm tra khoảng cách hút trúng
+                // Tối ưu nam châm hút xu mượt mà hơn, tránh bay loạn xạ quá hỗn độn
+                if (gameState.magnetTimer > 0 && (col.type === 'coin' || col.type === 'bill') && col.y > 20) {
+                    col.x += (playerCenterX - col.x) * 0.12;
+                    col.y += (playerCenterY - col.y) * 0.10;
                     let dist = Math.hypot(playerCenterX - col.x, playerCenterY - col.y);
-                    if (dist < 38) {
+                    if (dist < 40) {
                         collectItem(col);
                         collectibles.splice(i, 1);
                         continue;
@@ -972,21 +1177,21 @@
         }
 
         function hitObstacle(obs) {
-            // Nếu đang lướt Ván Trượt -> Ván đỡ đòn thay cho mất mạng!
-            if (gameState.boardActiveTimer > 0) {
-                gameState.boardActiveTimer = 0; // Nổ ván trượt để bảo vệ người chơi
+            if (gameState.packActiveTimer > 0) {
+                gameState.packActiveTimer = 0;
                 playSoundPowerup();
-                showPopup(`🛡️ Ván Trượt đã đỡ cú đụng ${obs.label}!`, '#2c4a1d');
+                showPopup(`⚡ Siêu Tụ Điện đã xả năng lượng chặn ${obs.label}!`, '#2c4a1d');
                 updateHUD();
                 return;
             }
 
             gameState.lives--;
-            let penalty = Math.floor(gameState.coinsCollected * 0.2);
+            let penaltyPercent = gameState.equippedChar === 'wind' ? 0.10 : 0.20;
+            let penalty = Math.floor(gameState.coinsCollected * penaltyPercent);
             gameState.coinsCollected = Math.max(0, gameState.coinsCollected - penalty);
             
             playSoundHit();
-            showPopup(`💥 Đụng ${obs.label}! -1❤️ & -20% xu`, '#b94a39');
+            showPopup(`💥 Đụng ${obs.label}! -1❤️ & mất xu`, '#b94a39');
             updateHUD();
 
             if (gameState.lives <= 0) {
@@ -995,18 +1200,25 @@
         }
 
         function collectItem(item) {
+            const cObj = CHARACTERS_DATA.find(c => c.id === gameState.equippedChar) || CHARACTERS_DATA[0];
+            let scoreMult = 1.0;
+            if (cObj.id === 'solar') scoreMult = 1.2;
+            else if (cObj.id === 'wind') scoreMult = 1.3;
+            else if (cObj.id === 'netzero') scoreMult = 1.5;
+            else if (cObj.id === 'quantum') scoreMult = 2.0;
+
             if (item.type === 'magnet') {
-                gameState.magnetTimer = 420; // 7 giây
+                gameState.magnetTimer = 420;
                 playSoundPowerup();
                 showPopup(`🧲 Nam Châm Hút Xu (7 giây)!`, '#be123c');
             } else if (item.type === 'double') {
-                gameState.doubleScoreTimer = 420; // 7 giây
+                gameState.doubleScoreTimer = 420;
                 playSoundPowerup();
                 showPopup(`⚡ Pin Sạc Nhanh: x2 Điểm Hóa Đơn!`, '#b45309');
             } else if (item.type === 'bill') {
                 playSoundCoin();
                 let mult = gameState.doubleScoreTimer > 0 ? 2 : 1;
-                let pts = item.value * mult;
+                let pts = Math.floor(item.value * mult * scoreMult);
                 gameState.progressScore += pts;
                 showPopup(`📄 +${pts}đ Hóa đơn xanh!`, '#2c4a1d');
             } else {
@@ -1014,8 +1226,9 @@
                 let zoneMult = gameState.zone === 'peak' ? 2 : 1;
                 let itemMult = gameState.doubleScoreTimer > 0 ? 2 : 1;
                 let earned = item.value * zoneMult;
+                if (cObj.id === 'quantum') earned *= 2;
                 gameState.coinsCollected += earned;
-                gameState.progressScore += Math.floor(earned / 2) * itemMult;
+                gameState.progressScore += Math.floor((earned / 2) * itemMult * scoreMult);
                 showPopup(`🪙 +${earned} Xu`, '#8c4a32');
             }
             updateHUD();
@@ -1039,10 +1252,9 @@
             document.getElementById('hud-score').innerText = gameState.coinsCollected;
             document.getElementById('hud-progress').innerText = gameState.progressScore;
             document.getElementById('hud-target').innerText = gameState.targetScore;
-            document.getElementById('board-charges').innerText = gameState.boardCharges;
+            document.getElementById('pack-charges').innerText = gameState.packCharges;
 
-            // Cập nhật hiển thị các buff đang bật
-            document.getElementById('buff-board').classList.toggle('hidden', gameState.boardActiveTimer <= 0);
+            document.getElementById('buff-pack').classList.toggle('hidden', gameState.packActiveTimer <= 0);
             document.getElementById('buff-magnet').classList.toggle('hidden', gameState.magnetTimer <= 0);
             document.getElementById('buff-double').classList.toggle('hidden', gameState.doubleScoreTimer <= 0);
 
@@ -1080,7 +1292,6 @@
             ctx.fillRect(0, 0, 8, canvas.height);
             ctx.fillRect(canvas.width - 8, 0, 8, canvas.height);
 
-            // Vẽ chướng ngại vật
             obstacles.forEach(obs => {
                 let w = Math.min(laneWidth - 14, 78);
                 let ox = obs.lane * laneWidth + (laneWidth - w) / 2;
@@ -1104,7 +1315,6 @@
                 ctx.fillText(obs.label, ox + w / 2, oy + 43);
             });
 
-            // Vẽ vật phẩm (Xu, Hóa đơn, Nam châm, Pin x2)
             collectibles.forEach(col => {
                 let cx = col.x !== null ? col.x : (col.lane * laneWidth + laneWidth / 2);
                 let cy = col.y + 15;
@@ -1131,41 +1341,32 @@
                 ctx.fillText(iconChar, cx, cy + 5);
             });
 
-            // --- VẼ NHÂN VẬT & VÁN TRƯỢT ĐÃ CHỌN ---
             const cObj = CHARACTERS_DATA.find(c => c.id === gameState.equippedChar) || CHARACTERS_DATA[0];
-            const bObj = BOARDS_DATA.find(b => b.id === gameState.equippedBoard) || BOARDS_DATA[0];
+            const pObj = PACKS_DATA.find(p => p.id === gameState.equippedPack) || PACKS_DATA[0];
 
-            let runBob = gameState.boardActiveTimer > 0 ? Math.sin(gameFrame * 0.2) * 1.5 : Math.sin(gameFrame * 0.35) * 3;
+            let runBob = Math.sin(gameFrame * 0.35) * 3;
             let px = player.x;
             let py = canvas.height - 92 + runBob;
             
-            // Bóng dưới đất
             ctx.fillStyle = 'rgba(0,0,0,0.18)';
             ctx.beginPath();
             ctx.ellipse(px + player.width / 2, canvas.height - 36, player.width / 2 + 4, 6, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Nếu đang bật Ván Trượt -> Vẽ ván trượt phát sáng dưới chân nhân vật
-            if (gameState.boardActiveTimer > 0) {
-                ctx.fillStyle = bObj.color;
-                ctx.beginPath();
-                ctx.roundRect(px - 6, py + player.height - 6, player.width + 12, 10, 5);
-                ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = bObj.trim;
-                ctx.stroke();
-
-                // Vòng hào quang bảo vệ quanh nhân vật
-                ctx.strokeStyle = 'rgba(70, 117, 81, 0.45)';
+            if (gameState.packActiveTimer > 0) {
+                ctx.strokeStyle = pObj.color;
                 ctx.lineWidth = 3;
                 ctx.beginPath();
                 ctx.arc(px + player.width / 2, py + player.height / 2, 34, 0, Math.PI * 2);
                 ctx.stroke();
+
+                ctx.fillStyle = pObj.trim;
+                ctx.font = '14px sans-serif';
+                ctx.fillText('⚡', px - 12, py + 10);
+                ctx.fillText('⚡', px + player.width + 2, py + 35);
             }
 
-            // Vẽ nhân vật
             if (cObj.isCloud) {
-                // Nhân vật Eco Buddy (Baby Cloud)
                 ctx.fillStyle = '#fdfbf7';
                 ctx.beginPath();
                 ctx.arc(px + player.width / 2, py + 24, 18, 0, Math.PI * 2);
@@ -1173,14 +1374,12 @@
                 ctx.lineWidth = 2;
                 ctx.strokeStyle = '#5c4738';
                 ctx.stroke();
-                // Tai lá xanh
                 ctx.fillStyle = '#467551';
                 ctx.beginPath();
                 ctx.ellipse(px + 6, py + 8, 5, 8, -0.4, 0, Math.PI * 2);
                 ctx.ellipse(px + player.width - 6, py + 8, 5, 8, 0.4, 0, Math.PI * 2);
                 ctx.fill();
             } else {
-                // Các nhân vật Kỹ sư / Chiến binh / Hiệp sĩ
                 ctx.fillStyle = cObj.bodyColor;
                 ctx.beginPath();
                 ctx.roundRect(px + 5, py + 16, player.width - 10, player.height - 20, 4);
@@ -1247,6 +1446,7 @@
 
         window.onload = function() {
             loadSavedData();
+            updateAudioUI();
             switchScreen('menu');
         };
     </script>
