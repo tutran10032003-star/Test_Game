@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <!-- KHUNG GIAO DIỆN PHÒNG (Y HỆT MẪU BẠN GỬI) -->
+            <!-- KHUNG GIAO DIỆN PHÒNG -->
             <div class="w-full bg-[#fdfbf7] rounded-xl border-2 border-[#5c4738] p-3 shadow-inner flex flex-col space-y-3 relative">
                 
                 <!-- Thanh Tên Phòng & Tầng -->
@@ -136,22 +136,22 @@
                 </div>
             </div>
 
-            <!-- CÁC NÚT ĐIỀU HƯỚNG & NÚT SƠ ĐỒ -->
+            <!-- CÁC NÚT ĐIỀU HƯỚNG & NÚT SƠ ĐỒ THÔNG MINH -->
             <div class="w-full grid grid-cols-3 gap-2 text-center">
-                <button onclick="changeRoom('left')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">⬅️ Trái</button>
+                <button onclick="changeRoom('left')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">⬅️ Phòng Kế</button>
                 <button onclick="openModal('map-modal')" class="vintage-btn py-2 rounded-xl text-xs bg-[#f5e1a4] text-[#5c4738]">🗺️ Sơ Đồ</button>
-                <button onclick="changeRoom('right')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">Phải ➡️</button>
+                <button onclick="changeRoom('right')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">Phòng Kế ➡️</button>
             </div>
             <div class="w-full grid grid-cols-2 gap-2">
-                <button onclick="changeRoom('up')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">⬆️ Lên Lầu 1</button>
-                <button onclick="changeRoom('attic')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">🛖 Lên Gác Mái</button>
+                <button onclick="changeFloor('down')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">⬇️ Xuống Trệt / Sân</button>
+                <button onclick="changeFloor('up')" class="vintage-btn py-2 rounded-xl text-xs bg-[#ebdccb]">⬆️ Lên Lầu / Gác Mái</button>
             </div>
 
         </div>
 
     </div>
 
-    <!-- MODAL SƠ ĐỒ NHÀ (MAP NAVIGATION GIỐNG HELLO NHÀ TRỌ) -->
+    <!-- MODAL SƠ ĐỒ NHÀ -->
     <div id="map-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
         <div class="vintage-card bg-[#fdfbf7] p-4 max-w-sm w-full space-y-3">
             <div class="flex justify-between items-center border-b border-dashed border-[#8c7355] pb-2">
@@ -171,7 +171,7 @@
         </div>
     </div>
 
-    <!-- MODALS KHÁC -->
+    <!-- CÁC MODAL KHÁC -->
     <div id="rules-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center p-4 z-50">
         <div class="vintage-card bg-[#fdfbf7] p-5 max-w-xs w-full space-y-3">
             <h3 class="font-bold text-base text-[#4a3b32] border-b pb-1">📖 Hướng Dẫn Chơi</h3>
@@ -270,10 +270,11 @@
         }
         renderSkins();
 
+        // Danh sách phòng chính xác theo đúng cấu trúc kiến trúc nhà
         const rooms = [
             { 
                 title: 'Sảnh & Phòng Khách Trệt', floor: 'Tầng Trệt',
-                furnitureIcon: '🛋️', furnitureLabel: 'Sofa',
+                furnitureIcon: '🛋️', furnitureLabel: 'Sofa & Thảm',
                 guestAvatar: '🐾', guestName: 'Milo',
                 dialog: '💬 <b>Milo:</b> "Gâu! Chủ nhà Eco Buddy ơi, chơi đùa với Milo đi nào!"'
             },
@@ -291,25 +292,25 @@
             },
             { 
                 title: 'Master Bedroom (Oliver & Mia)', floor: 'Lầu 1 (Mặt tiền)',
-                furnitureIcon: '🪴', furnitureLabel: 'Giường đôi',
+                furnitureIcon: '🛏️', furnitureLabel: 'Giường đôi',
                 guestAvatar: '👫', guestName: 'Oliver & Mia',
                 dialog: '💬 <b>Mia:</b> "Tụi mình vừa tưới cây ngoài ban công xong, xanh mướt luôn!"'
             },
             { 
                 title: 'Phòng Đọc Sách (Bác Arthur)', floor: 'Lầu 1 (Sân sau)',
-                furnitureIcon: '☕', furnitureLabel: 'Kệ sách',
+                furnitureIcon: '📚', furnitureLabel: 'Kệ sách & Trà',
                 guestAvatar: '👴', guestName: 'Bác Arthur',
                 dialog: '👴 <b>Bác Arthur:</b> "Cháu Eco Buddy nhớ kiểm tra vòi nước ở vườn sau nhé, đừng để rỉ nước."'
             },
             { 
                 title: 'Gác Mái (Luna & Toby)', floor: 'Tầng Gác Mái',
-                furnitureIcon: '💻', furnitureLabel: 'Bàn PC',
+                furnitureIcon: '💻', furnitureLabel: 'Bàn PC & Kệ',
                 guestAvatar: '👨‍💻', guestName: 'Toby',
                 dialog: '💬 <b>Toby (Em trai):</b> "Chị Luna ơi, đừng bắt em đi đổ rác nữa mà, để em fix nốt bug này đã!"'
             },
             { 
                 title: 'Sân Sau & Nhà Kho', floor: 'Khu Vườn',
-                furnitureIcon: '🏡', furnitureLabel: 'Pin mặt trời',
+                furnitureIcon: '☀️', furnitureLabel: 'Pin mặt trời',
                 guestAvatar: '🌿', guestName: 'Hệ Thống',
                 dialog: '🌿 <b>[Khu Vườn]:</b> Năng lượng mặt trời đang sạc đầy 100% cho toàn bộ nhà trọ!'
             }
@@ -330,11 +331,20 @@
         }
 
         function changeRoom(dir) {
-            if (dir === 'right') currentRoomIdx = (currentRoomIdx + 1) % rooms.length;
-            else if (dir === 'left') currentRoomIdx = (currentRoomIdx - 1 + rooms.length) % rooms.length;
-            else if (dir === 'down') currentRoomIdx = 6;
-            else if (dir === 'up') currentRoomIdx = 3;
-            else if (dir === 'attic') currentRoomIdx = 5;
+            if (dir === 'right') {
+                currentRoomIdx = (currentRoomIdx + 1) % rooms.length;
+            } else {
+                currentRoomIdx = (currentRoomIdx - 1 + rooms.length) % rooms.length;
+            }
+            updateRoomView();
+        }
+
+        function changeFloor(type) {
+            if (type === 'down') {
+                currentRoomIdx = 0; // Về sảnh trệt
+            } else {
+                currentRoomIdx = 3; // Lên lầu 1
+            }
             updateRoomView();
         }
 
